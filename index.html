@@ -402,6 +402,9 @@ textarea{min-height:80px;resize:vertical}
 #toast.show{opacity:1;transform:translate(-50%,0)}
 [hidden]{display:none!important}
 @media (max-width:430px){.top .logo{display:none}.hbtns{gap:6px}.hbtn{width:38px;height:38px}}
+.pdfout{margin-top:14px}
+.pdfcard{display:flex;gap:12px;align-items:center;background:var(--s1);border:1px solid var(--ln);border-radius:14px;padding:12px}
+.pdfcard .ico{color:var(--crit)}.pdfcard b{display:block;font-size:.85rem;overflow-wrap:anywhere}.pdfcard small{color:var(--mu);font-size:.75rem}
 .rp-tools{display:flex;gap:8px;padding:0 14px 12px;flex-wrap:wrap}
 .rp-tools input{flex:1 1 140px;width:auto}
 .rp{padding:0 14px 20px}
@@ -438,7 +441,7 @@ textarea{min-height:80px;resize:vertical}
 'use strict';
 /* ================= data ================= */
 const KEY = 'icuRound.v1';
-const VERSION = '1.3';
+const VERSION = '1.4';
 const IS_PREVIEW = false;
 const TAG_COLORS = ['#e8384f','#f08c00','#d9a400','#2b9e5f','#0c8599','#3b82f6','#7048e8','#d6336c','#868e96'];
 const DEFAULT_TAGS = [['Isolation','#e8384f'],['Sepsis','#f08c00'],['Post-op','#3b82f6'],['MDR','#7048e8'],['Renal/CRRT','#0c8599'],['Watch closely','#d9a400']];
@@ -473,7 +476,7 @@ const CS_TYPES = ['Blood','Urine','Wound','Tracheal aspirate','Sputum','CSF','Ca
 const CS_STATUS = ['Pending','No growth','Growth'];
 const SERO_RES = ['Positive','Negative','Pending','Equivocal'];
 const BF_PANELS = ['Pneumonia','Blood culture (BCID2)','Meningitis/Encephalitis','Respiratory','GI','Joint infection'];
-const DEPTS = ['Medicine','Nephrology','Cardiology','Neurology','Pulmonology','Gastroenterology','Hepatology','Haematology','Endocrinology','Infectious Disease','Surgery','Neurosurgery','Orthopaedics','Gynae & Obs','Paediatrics','ENT','Psychiatry','Physical Medicine'];
+const DEPTS = ['ICU','Medicine','Nephrology','Cardiology','Neurology','Pulmonology','Gastroenterology','Hepatology','Haematology','Endocrinology','Infectious Disease','Surgery','Neurosurgery','Orthopaedics','Gynae & Obs','Paediatrics','ENT','Psychiatry','Physical Medicine'];
 const MARKS = [['','None'],['red','Red'],['yellow','Yellow'],['green','Green'],['blue','Blue'],['purple','Purple']];
 const slugId = s => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 const clone = o => JSON.parse(JSON.stringify(o));
@@ -545,6 +548,7 @@ function migrate(s){
     p.plans = p.plans || []; p.icuc = p.icuc || []; p.ettHist = p.ettHist || []; p.tags = p.tags || [];
     p.dengue = p.dengue || {on:false, onset:'', lastFever:''};
     p.labs = p.labs || {}; p.labStar = p.labStar || []; p.sero = p.sero || []; p.biofire = p.biofire || []; p.cultures = p.cultures || []; p.consults = p.consults || [];
+    if (p.icuc.length){ p.consults.push(...p.icuc.map(e => Object.assign({}, e, {dept:e.dept || 'ICU'}))); p.icuc = []; } // ICU consultant tab removed in v1.4
   });
   return s;
 }
@@ -561,8 +565,7 @@ function seedDemo(){
   const L = o => Object.fromEntries(Object.entries(o).map(([k, v]) => [k, {v:String(v)}]));
   mk('2203', {name:'Example RB', age:'62', sex:'F', dx:'Severe CAP with septic shock', status:'critical', hospDate:d(4), icuDate:d(3), ett:{date:d(3), ext:null}, tags:tg(['Sepsis','MDR']),
     plans:[{id:uid(), ts:`${d(0)}T08:30`, by:'', html:'<b>Continue NA 0.12 mcg/kg/min</b>, taper if MAP &gt; 70<div><span style="background-color:#fff176">Repeat lactate 12 noon</span></div>'}],
-    icuc:[{id:uid(), ts:`${d(0)}T10:00`, by:'Dr Example', html:'Change to meropenem as per culture. SBT tomorrow.'}],
-    consults:[{id:uid(), ts:`${d(1)}T12:00`, by:'Dr Example N', dept:'Nephrology', html:'No dialysis now. Keep urine output > 0.5 mL/kg/h.'}],
+    consults:[{id:uid(), ts:`${d(1)}T12:00`, by:'Dr Example N', dept:'Nephrology', html:'No dialysis now. Keep urine output > 0.5 mL/kg/h.'}, {id:uid(), ts:`${d(0)}T10:00`, by:'Dr Example', dept:'ICU', html:'Change to meropenem as per culture. SBT tomorrow.'}],
     labs:{[d(1)]:L({crp:210, pct:8.4, hb:10.2, hct:31, wbc:'18,400', plt:'1,32,000', cr:1.9, urea:68, na:132, k:3.3}),
           [d(0)]:L({crp:145, pct:4.1, hb:9.8, hct:30, wbc:'14,200', plt:'1,10,000', cr:1.5, urea:55, na:135, k:3.9})},
     labStar:['crp','pct','cr'],
@@ -580,9 +583,9 @@ function seedDemo(){
   mk('2214', {name:'Example NS', age:'51', sex:'F', dx:'DKA, AKI', status:'serious', hospDate:d(0), icuDate:d(0), tags:tg(['Renal/CRRT'])});
   save();
 }
-if (IS_PREVIEW && !(() => { try { return localStorage.getItem(KEY + '.seeded3'); } catch(e){ return true; } })()){
+if (IS_PREVIEW && !(() => { try { return localStorage.getItem(KEY + '.seeded4'); } catch(e){ return true; } })()){
   const keep = S.settings; S = fresh(); S.settings = keep; seedDemo();
-  try { localStorage.setItem(KEY + '.seeded3', '1'); } catch(e) {}
+  try { localStorage.setItem(KEY + '.seeded4', '1'); } catch(e) {}
 }
 function save(){ try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e){ toast('Could not save — storage full'); } }
 
@@ -843,9 +846,10 @@ function entriesHTML(p, kind, ro){
   const list = p[kind].slice().sort(byTsDesc), t = todayStr();
   const label = {plans:'plan', icuc:'note', consults:'consultant note'}[kind];
   let html = ro ? '' : `<div class="tab-actions"><button class="btn primary" style="flex:1" data-act="newEntry" data-kind="${kind}" data-id="${p.id}">${ic('plus')} New ${label}</button>
-    <button class="btn ghost" data-act="share" data-id="${p.id}" aria-label="Send today's decisions">${ic('send')} Send</button></div>`;
+    <button class="btn ghost" data-act="share" data-id="${p.id}" aria-label="Send today's decisions">${ic('send')} Send</button>
+    <button class="btn ghost" data-act="casepdf" data-id="${p.id}" aria-label="Case summary PDF">PDF</button></div>`;
   if (kind === 'consults' && list.length) html += consChart(p);
-  if (!list.length) return html + `<div class="emptystate">${{plans:'No plan written yet.', icuc:'No ICU consultant note yet.', consults:'No other consultant has been called yet.'}[kind]}</div>`;
+  if (!list.length) return html + `<div class="emptystate">${{plans:'No plan written yet.', icuc:'No ICU consultant note yet.', consults:'No consultant note yet.'}[kind]}</div>`;
   const groups = {};
   list.forEach(e => { const d = e.ts.slice(0, 10); (groups[d] = groups[d] || []).push(e); });
   Object.keys(groups).sort().reverse().forEach((d, i) => {
@@ -1235,9 +1239,9 @@ function renderPatient(id, tab, ro){
   if (!p || (ro && !p.discharge) || (!ro && p.discharge)){ go(ro ? '#/archive' : '#/'); return; }
   const [g1, g2] = colorFor(p);
   const meta = (p.age || p.sex) ? ` <small>${esc(p.age || '')}${esc(p.sex || '')}</small>` : '';
-  const tabs = [['plan','Plan'],['icuc','ICU Consultant'],['cons','Consultants'],['labs','Investigation'],['cs','Culture'],['sero','Serology'],['info','Info']];
+  const tabs = [['plan','Plan'],['cons','Consultants'],['labs','Investigation'],['cs','Culture'],['sero','Serology'],['info','Info']];
   const body = tab === 'info' ? infoHTML(p, ro) : tab === 'labs' ? labsHTML(p, ro) : tab === 'cs' ? csHTML(p, ro) : tab === 'sero' ? seroHTML(p, ro)
-    : entriesHTML(p, tab === 'icuc' ? 'icuc' : tab === 'cons' ? 'consults' : 'plans', ro);
+    : entriesHTML(p, tab === 'cons' ? 'consults' : 'plans', ro);
   view.innerHTML = `
   <header class="ptop" style="--g1:${g1};--g2:${g2}">
     <button class="hbtn" data-act="go" data-to="${ro ? '#/archive' : '#/'}" aria-label="Back">${ic('back')}</button>
@@ -1405,7 +1409,8 @@ function openPMenu(p){
   const no = bedNoOf(p);
   const el = sheet(`<div class="sh-head"><h2>Bed ${esc(no)} · ${esc(p.name || 'Unnamed')}</h2><button class="x" data-close>✕</button></div>
     <div class="menu">
-      <button data-m="send">${ic('send')}<span>Send today's decisions<small>WhatsApp — plans and consultant advice of today</small></span></button>
+      <button data-m="pdf">${ic('report')}<span>Case summary PDF<small>Send on WhatsApp, Messenger or email</small></span></button>
+      <button data-m="send">${ic('send')}<span>Send today's decisions<small>WhatsApp text — plans and consultant advice of today</small></span></button>
       <button data-m="edit">${ic('edit')}<span>Edit details</span></button>
       <button data-m="move">${ic('move')}<span>Move to another bed</span></button>
       <button data-m="leave">${ic('out')}<span>Patient leaving ICU<small>Discharge · Ward transfer · Death · DAMA</small></span></button>
@@ -1416,6 +1421,7 @@ function openPMenu(p){
     const m = e.target.closest('[data-m]')?.dataset.m; if (!m) return;
     closeSheet(el);
     setTimeout(() => {
+      if (m === 'pdf') openCaseSheet({list:[p], auto:true});
       if (m === 'send') openShare([p], `Today's decisions — Bed ${bedNoOf(p)}`);
       if (m === 'edit') openPatientForm({p});
       if (m === 'move') openMove(p);
@@ -1428,13 +1434,14 @@ function openPMenu(p){
 function openAMenu(p){
   const el = sheet(`<div class="sh-head"><h2>${esc(p.name || 'Unnamed')}</h2><button class="x" data-close>✕</button></div>
     <div class="menu">
+      <button data-m="pdf">${ic('report')}<span>Case summary PDF<small>As on the day of leaving ICU</small></span></button>
       <button data-m="restore">${ic('restore')}<span>Bring back to a bed<small>If admitted again or archived by mistake</small></span></button>
       <button data-m="del" class="danger">${ic('trash')}<span>Delete record permanently</span></button>
     </div>`);
   el.addEventListener('click', e => {
     const m = e.target.closest('[data-m]')?.dataset.m; if (!m) return;
     closeSheet(el);
-    setTimeout(() => { if (m === 'restore') openRestore(p); if (m === 'del') delPatient(p, '#/archive'); }, 230);
+    setTimeout(() => { if (m === 'pdf') openCaseSheet({list:[p], date:p.discharge.date, auto:true}); if (m === 'restore') openRestore(p); if (m === 'del') delPatient(p, '#/archive'); }, 230);
   });
 }
 async function delPatient(p, back){
@@ -1585,7 +1592,6 @@ const onDay = (arr, date) => (arr || []).filter(e => e.ts.slice(0, 10) === date)
 function decisionLines(p, opt, date){
   const L = [];
   if (opt.plan){ const es = onDay(p.plans, date); if (es.length){ L.push('_Plan_'); es.forEach(e => L.push(htmlToText(e.html))); } }
-  if (opt.icuc) onDay(p.icuc, date).forEach(e => { L.push(`_ICU consultant${e.by ? ' (' + e.by + ')' : ''}_`); L.push(htmlToText(e.html)); });
   if (opt.cons) onDay(p.consults, date).forEach(e => { L.push(`_${e.dept || 'Consultant'}${e.by ? ' (' + e.by + ')' : ''}_`); L.push(htmlToText(e.html)); });
   return L.filter(Boolean);
 }
@@ -1605,12 +1611,12 @@ function roundText(pts, opt, date){
 }
 const sortedActive = () => active().filter(p => bedById(p.bedId)).sort((a, b) => numCmp(bedNoOf(a), bedNoOf(b)));
 function openShare(pts, title){
-  const date = todayStr(), opt = {plan:true, icuc:true, cons:true};
+  const date = todayStr(), opt = {plan:true, cons:true};
   const el = sheet(`<div class="sh-head"><h2>${esc(title)}</h2><button class="x" data-close>✕</button></div>
     <div class="sh-sub">Only today's written decisions go — no investigation results. You can edit the text before sending.</div>
     <div class="sh-body">
-      <div class="chips" data-group="opt" data-multi data-value="plan,icuc,cons">
-        <button type="button" class="chip on" data-v="plan">Plan</button><button type="button" class="chip on" data-v="icuc">ICU consultant</button><button type="button" class="chip on" data-v="cons">Other consultants</button>
+      <div class="chips" data-group="opt" data-multi data-value="plan,cons">
+        <button type="button" class="chip on" data-v="plan">Plan</button><button type="button" class="chip on" data-v="cons">Consultants</button>
       </div>
       <textarea id="sharetxt" style="margin-top:12px;min-height:280px;font-size:15px;line-height:1.45"></textarea>
     </div>
@@ -1625,7 +1631,7 @@ function openShare(pts, title){
   gen();
   ta.addEventListener('input', sync);
   el.querySelector('[data-group=opt]').addEventListener('change', e => {
-    const v = e.currentTarget.dataset.value.split(','); opt.plan = v.includes('plan'); opt.icuc = v.includes('icuc'); opt.cons = v.includes('cons'); gen();
+    const v = e.currentTarget.dataset.value.split(','); opt.plan = v.includes('plan'); opt.cons = v.includes('cons'); gen();
   });
   el.querySelector('[data-copy]').onclick = () => {
     const done = () => toast('Copied — paste it in WhatsApp');
@@ -1640,13 +1646,226 @@ function openRound(){
   const el = sheet(`<div class="sh-head"><h2>After the round</h2><button class="x" data-close>✕</button></div>
     <div class="menu">
       <button data-m="wa">${ic('send')}<span>Send today's decisions<small>WhatsApp message for all ${n} patients — plans and consultant advice only</small></span></button>
+      <button data-m="pdf">${ic('report')}<span>Case summary PDF<small>One page per patient — pick one, a few or all beds, then send</small></span></button>
       <button data-m="rp">${ic('report')}<span>Today's round report<small>Full page with labs, cultures and plans — print, save as PDF or share</small></span></button>
     </div>`);
   el.addEventListener('click', e => {
     const m = e.target.closest('[data-m]')?.dataset.m; if (!m) return;
     closeSheet(el);
-    setTimeout(() => { if (m === 'wa') openShare(sortedActive(), "Today's decisions — all beds"); if (m === 'rp'){ UI.reportDate = todayStr(); go('/report'); } }, 230);
+    setTimeout(() => { if (m === 'wa') openShare(sortedActive(), "Today's decisions — all beds"); if (m === 'pdf') openCaseSheet(); if (m === 'rp'){ UI.reportDate = todayStr(); go('/report'); } }, 230);
   });
+}
+
+/* ================= case summary PDF ================= */
+const PDF_LIBS = IS_PREVIEW
+  ? ['https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js']
+  : ['vendor/jspdf.umd.min.js', 'vendor/jspdf.plugin.autotable.min.js'];
+let pdfLibP = null;
+function loadPdfLib(){
+  if (window.jspdf && window.jspdf.jsPDF && window.jspdf.jsPDF.API.autoTable) return Promise.resolve();
+  if (pdfLibP) return pdfLibP;
+  const one = src => new Promise((res, rej) => { const s = document.createElement('script'); s.src = src; s.onload = res; s.onerror = () => rej(new Error('load')); document.head.appendChild(s); });
+  pdfLibP = PDF_LIBS.reduce((p, src) => p.then(() => one(src)), Promise.resolve()).catch(e => { pdfLibP = null; throw e; });
+  return pdfLibP;
+}
+// the PDF's built-in font covers English letters only
+const WIN = '€‚ƒ„…†‡ˆ‰Š‹ŒŽ‘’“”•–—˜™š›œžŸ';
+function pdfTxt(s){
+  return String(s ?? '').replace(/→/g, '->').replace(/↑/g, 'up').replace(/↓/g, 'down').replace(/≥/g, '>=').replace(/≤/g, '<=')
+    .replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹]/g, c => '^' + '⁰¹²³⁴⁵⁶⁷⁸⁹'.indexOf(c)).replace(/ /g, ' ')
+    .replace(/[^\n\x20-\xff€‚ƒ„…†‡ˆ‰Š‹ŒŽ‘’“”•–—˜™š›œžŸ]+/g, '?');
+}
+const plainLines = html => htmlToText(html).replace(/\*([^*\n]+)\*/g, '$1').split('\n').filter(Boolean);
+function hexRgb(h){ const n = parseInt(h.slice(1), 16); return [n >> 16 & 255, n >> 8 & 255, n & 255]; }
+const MK_RGB = {red:[255,201,201], yellow:[255,236,153], green:[178,242,187], blue:[165,216,255], purple:[229,219,255]};
+const ABX_TEXT = (x, r) => (x.abx || []).filter(a => a.r === r).map(a => a.name).join(', ');
+
+function casePages(doc, p, date, first){
+  const W = doc.internal.pageSize.getWidth(), H = doc.internal.pageSize.getHeight(), M = 14, CW = W - 2 * M;
+  const [g1] = colorFor(p).map(x => S.settings.theme === 'rednight' ? '#b3261a' : x);
+  const acc = hexRgb(g1);
+  if (!first) doc.addPage();
+  let y = M;
+  const need = h => { if (y + h > H - 14){ doc.addPage(); y = M; } };
+  const heading = t => {
+    need(14); y += 2;
+    doc.setFont('helvetica', 'bold'); doc.setFontSize(10.5); doc.setTextColor(...acc);
+    doc.text(pdfTxt(t).toUpperCase(), M, y + 4); doc.setDrawColor(...acc); doc.setLineWidth(0.4); doc.line(M, y + 6, W - M, y + 6);
+    y += 8.5; doc.setTextColor(25, 25, 25);
+  };
+  const para = (lines, opt = {}) => {
+    doc.setFont('helvetica', opt.bold ? 'bold' : 'normal'); doc.setFontSize(opt.size || 10); doc.setTextColor(...(opt.color || [25, 25, 25]));
+    lines.forEach(l => {
+      const bullet = /^(•|\d+\.)\s/.test(l);
+      const wrapped = doc.splitTextToSize(pdfTxt(l), CW - (bullet ? 4 : 0));
+      wrapped.forEach((w, i) => { need(5); doc.text(w, M + (bullet && i ? 4 : 0), y + 3.4); y += 4.4; });
+    });
+    doc.setTextColor(25, 25, 25);
+  };
+  const table = (o) => {
+    doc.autoTable(Object.assign({startY:y, margin:{left:M, right:M}, styles:{font:'helvetica', fontSize:8.5, cellPadding:1.25, textColor:[25, 25, 25], lineColor:[220, 220, 220], lineWidth:0.2},
+      headStyles:{fillColor:[245, 245, 245], textColor:[90, 90, 90], fontStyle:'bold'}, theme:'grid'}, o));
+    y = doc.lastAutoTable.finalY + 2;
+  };
+
+  // header band
+  doc.setFillColor(...acc); doc.roundedRect(M, y, CW, 19, 3, 3, 'F');
+  doc.setTextColor(255, 255, 255); doc.setFont('helvetica', 'bold'); doc.setFontSize(15);
+  doc.text(pdfTxt(`Bed ${bedNoOf(p)}  ·  ${p.name || 'Unnamed'}${p.age || p.sex ? '  ' + (p.age || '') + (p.sex || '') : ''}`), M + 5, y + 9);
+  doc.setFont('helvetica', 'normal'); doc.setFontSize(9.5);
+  doc.text(pdfTxt(`Case summary  ·  ${fmtLong(date)}`), M + 5, y + 14.8);
+  doc.setFont('helvetica', 'bold');
+  doc.text(pdfTxt(STATUS[p.status].toUpperCase()), W - M - 5, y + 9, {align:'right'});
+  y += 23;
+
+  // details
+  const c = ctrs(p, date), rows = [];
+  rows.push(['Diagnosis', p.dx || '-']);
+  rows.push(['Hospital admission', `${fmtD(p.hospDate)}  (Day ${c.hosp ?? '-'})`]);
+  rows.push(['ICU admission', `${fmtD(p.icuDate)}  (ICU day ${c.icu ?? '-'})${p.source ? '  ·  from ' + p.source : ''}`]);
+  const past = [...(p.ettHist || []), ...(p.ett && p.ett.ext ? [p.ett] : [])];
+  rows.push(['Airway', c.ett ? `Intubated since ${fmtD(p.ett.date)}  (ETT day ${c.ett})` : past.length ? `Extubated ${fmtD(past[past.length - 1].ext)}` : 'Not intubated']);
+  if (p.dengue && p.dengue.on) rows.push(['Dengue', `Fever from ${fmtD(p.dengue.onset)} (Dengue day ${c.dengue ?? '-'})  ·  ${p.dengue.lastFever ? 'last fever ' + fmtD(p.dengue.lastFever) + ' (Afebrile day ' + (c.afeb ?? '-') + ')' : 'still febrile'}`]);
+  if (pTags(p).length) rows.push(['Tags', pTags(p).map(t => t.name).join(', ')]);
+  if (p.discharge) rows.push(['Left ICU', `${p.discharge.outcome}, ${fmtD(p.discharge.date)}`]);
+  table({body:rows.map(r => r.map(pdfTxt)), theme:'plain', styles:{fontSize:9.2, cellPadding:{top:0.9, bottom:0.9, left:0, right:2}}, columnStyles:{0:{cellWidth:38, textColor:[110, 110, 110], fontStyle:'bold'}}});
+
+  // plan
+  let plans = onDay(p.plans, date), planTitle = "Today's plan";
+  if (!plans.length){
+    const last = p.plans.filter(e => e.ts.slice(0, 10) <= date).sort(byTsDesc)[0];
+    if (last){ plans = [last]; planTitle = `Latest plan (${fmtD(last.ts.slice(0, 10))})`; }
+  }
+  heading(planTitle);
+  if (plans.length) plans.forEach(e => para(plainLines(e.html))); else para(['No plan written.'], {color:[120, 120, 120]});
+
+  // consultants
+  const cons = p.consults.filter(e => e.ts.slice(0, 10) <= date);
+  if (cons.length){
+    heading('Consultants');
+    const m = {};
+    cons.forEach(e => { const k = (e.dept || '') + '|' + (e.by || ''), d = e.ts.slice(0, 10); const x = m[k] = m[k] || {dept:e.dept || 'Consultant', by:e.by || '-', first:d, last:d, n:0}; x.n++; if (d < x.first) x.first = d; if (d > x.last) x.last = d; });
+    table({head:[['Department', 'Consultant', 'Seen']], body:Object.values(m).sort((a, b) => b.last.localeCompare(a.last)).map(r => [r.dept, r.by, (r.first === r.last ? fmtD(r.last) : fmtD(r.first, false) + ' - ' + fmtD(r.last)) + (r.n > 1 ? `  (${r.n} times)` : '')].map(pdfTxt)),
+      columnStyles:{0:{cellWidth:42, fontStyle:'bold'}, 2:{cellWidth:58}}});
+    const today = onDay(p.consults, date);
+    if (today.length){
+      y += 1; para(['Advice today:'], {bold:true, size:9.5});
+      today.forEach(e => { para([`${e.dept || 'Consultant'}${e.by ? ' (' + e.by + ')' : ''}:`], {bold:true, size:9, color:[112, 72, 232]}); para(plainLines(e.html)); });
+    }
+  }
+
+  // investigations
+  let am = p.labs[date] || {}, pm = p.labs[date + '~pm'] || {}, invTitle = `Investigations · ${fmtD(date)}`, refDate = date;
+  if (!Object.keys(am).length && !Object.keys(pm).length){
+    const lastK = labDates(p).filter(k => kDate(k) <= date).pop();
+    if (lastK){ refDate = kDate(lastK); am = p.labs[refDate] || {}; pm = p.labs[refDate + '~pm'] || {}; invTitle = `Investigations · latest (${fmtD(refDate)})`; }
+  }
+  heading(invTitle);
+  const prevK = labDates(p).filter(k => kDate(k) < refDate).pop(), prev = prevK ? p.labs[prevK] : {};
+  const hasPM = Object.keys(pm).length > 0, body = [], meta = [];
+  S.labDefs.forEach(g => g.tests.forEach(t => {
+    const a = am[t.id] || {}, b = pm[t.id] || {}; if (!has(a.v) && !has(b.v)) return;
+    const pv = (prev[t.id] || {}).v, rng = (has(t.lo) || has(t.hi)) ? `${has(t.lo) ? t.lo : ''} - ${has(t.hi) ? t.hi : ''}` : '';
+    body.push([t.name + (t.unit ? `  (${t.unit})` : ''), has(pv) ? pv : '', has(a.v) ? a.v : '', ...(hasPM ? [has(b.v) ? b.v : ''] : []), rng].map(pdfTxt));
+    meta.push({t, a, b});
+  }));
+  if (body.length){
+    const vcol = hasPM ? [2, 3] : [2];
+    table({head:[['Test', prevK ? kLabel(prevK, true).replace('Today', fmtD(kDate(prevK), false)) : 'Previous', hasPM ? 'Morning' : fmtD(refDate, false), ...(hasPM ? ['Evening'] : []), 'Normal'].map(pdfTxt)],
+      body, columnStyles:{0:{cellWidth:58}, 1:{halign:'right', textColor:[120, 120, 120]}, 2:{halign:'right', fontStyle:'bold'}, 3:{halign:'right', fontStyle:'bold'}, [hasPM ? 4 : 3]:{halign:'right', textColor:[120, 120, 120], fontStyle:'normal'}},
+      didParseCell:d => {
+        if (d.section !== 'body' || !vcol.includes(d.column.index)) return;
+        const x = meta[d.row.index], cell = d.column.index === 2 ? x.a : x.b;
+        if (flagOf(x.t, cell.v)) d.cell.styles.textColor = [214, 0, 28];
+        if (cell.c && MK_RGB[cell.c]) d.cell.styles.fillColor = MK_RGB[cell.c];
+      }});
+    para(['Red = outside normal range. Shaded = marked on the ward round.'], {size:7.5, color:[130, 130, 130]});
+  } else para(['No investigation result written.'], {color:[120, 120, 120]});
+
+  // culture
+  const cs = p.cultures.filter(x => (x.date || '') <= date).sort((a, b) => (b.date || '').localeCompare(a.date || '')).slice(0, 8);
+  if (cs.length){
+    heading('Culture & sensitivity');
+    table({head:[['Sample', 'Sent', 'Result', 'Sensitive', 'Resistant']], body:cs.map(x => [x.type, fmtD(x.date, false), x.status + (x.org ? ': ' + x.org : '') + (x.count ? ' (' + x.count + ')' : ''),
+      [ABX_TEXT(x, 'S'), ABX_TEXT(x, 'I') ? 'Intermediate: ' + ABX_TEXT(x, 'I') : ''].filter(Boolean).join('\n'), ABX_TEXT(x, 'R')].map(pdfTxt)),
+      columnStyles:{0:{cellWidth:26, fontStyle:'bold'}, 1:{cellWidth:16}, 2:{cellWidth:44}, 3:{textColor:[43, 138, 62]}, 4:{textColor:[214, 0, 28]}}});
+  }
+
+  // serology & BioFire
+  const latestSero = S.seroDefs.map(d => ({d, e:p.sero.filter(x => x.tid === d.id && x.date <= date).sort((a, b) => b.date.localeCompare(a.date))[0]})).filter(x => x.e);
+  const bf = p.biofire.filter(x => x.date <= date).sort((a, b) => b.date.localeCompare(a.date));
+  if (latestSero.length || bf.length){
+    heading('Serology / BioFire');
+    const body2 = [...latestSero.map(({d, e}) => [d.name, fmtD(e.date, false), e.result + (e.note ? '  (' + e.note + ')' : '')]),
+      ...bf.map(b => ['BioFire ' + b.panel, fmtD(b.date, false), (b.detected || 'Not detected') + (b.genes ? '  ·  genes: ' + b.genes : '')])];
+    table({head:[['Test', 'Date', 'Result']], body:body2.map(r => r.map(pdfTxt)), columnStyles:{0:{cellWidth:48, fontStyle:'bold'}, 1:{cellWidth:18}},
+      didParseCell:d => { if (d.section === 'body' && d.column.index === 2){ const t = String(d.cell.raw); if (t.startsWith('Positive')) d.cell.styles.textColor = [214, 0, 28]; else if (t.startsWith('Negative')) d.cell.styles.textColor = [43, 138, 62]; } }});
+  }
+}
+async function makeCasePdf(pts, date){
+  await loadPdfLib();
+  const doc = new window.jspdf.jsPDF({unit:'mm', format:'a4'});
+  pts.forEach((p, i) => casePages(doc, p, date, i === 0));
+  const n = doc.getNumberOfPages(), W = doc.internal.pageSize.getWidth(), H = doc.internal.pageSize.getHeight();
+  for (let i = 1; i <= n; i++){
+    doc.setPage(i); doc.setFont('helvetica', 'normal'); doc.setFontSize(7.5); doc.setTextColor(140, 140, 140);
+    doc.text(pdfTxt(`ICU Round  ·  made ${fmtD(todayStr())} ${nowTime()}`), 14, H - 7);
+    doc.text(`Page ${i} of ${n}`, W - 14, H - 7, {align:'right'});
+  }
+  return doc.output('blob');
+}
+function openCaseSheet(opts = {}){
+  const list = opts.list || sortedActive(), t = todayStr();
+  if (!list.length) return toast('No patient to summarise');
+  const pre = opts.ids || [];
+  let file = null;
+  const el = sheet(`<div class="sh-head"><h2>Case summary PDF</h2><button class="x" data-close>✕</button></div>
+    <div class="sh-sub">One page per patient: details, diagnosis, plan, consultants, investigations, culture and serology. Send it on WhatsApp, Messenger or email.</div>
+    <div class="sh-body">
+      <label class="f"><span>Summary of</span><input type="date" name="d" value="${opts.date || t}" max="${t}"></label>
+      ${list.length > 1 ? `<div class="f"><span style="display:flex;justify-content:space-between">Beds <button type="button" class="btn ghost sm" data-all>Select all</button></span>
+        <div class="chips" data-group="pts" data-multi data-value="${pre.join(',')}">${list.map(p => `<button type="button" class="chip ${pre.includes(p.id) ? 'on' : ''}" data-v="${p.id}"><b>${esc(bedNoOf(p))}</b> · ${esc(p.name || 'Unnamed')}</button>`).join('')}</div></div>`
+        : `<div class="f"><span>Patient</span><b>Bed ${esc(bedNoOf(list[0]))} · ${esc(list[0].name || 'Unnamed')}</b></div>`}
+      <div id="pdfout" class="pdfout" hidden></div>
+    </div>
+    <div class="sh-foot"><button class="btn ghost" data-close>Close</button><button class="btn primary" data-make>Make PDF</button></div>`);
+  const chosen = () => list.length === 1 ? list : list.filter(p => chipVal(el, 'pts').split(',').includes(p.id));
+  const reset = () => { file = null; el.querySelector('#pdfout').hidden = true; };
+  el.addEventListener('change', reset);
+  const all = el.querySelector('[data-all]');
+  if (all) all.onclick = () => {
+    const g = el.querySelector('[data-group=pts]'), on = g.querySelectorAll('.chip.on').length < list.length;
+    g.querySelectorAll('.chip').forEach(c => c.classList.toggle('on', on)); g.dataset.value = on ? list.map(p => p.id).join(',') : ''; reset();
+  };
+  const mk = el.querySelector('[data-make]');
+  mk.onclick = async () => {
+    const pts = chosen(), d = el.querySelector('[name=d]').value || t;
+    if (!pts.length) return toast('Choose at least one bed');
+    mk.disabled = true; mk.textContent = 'Making…';
+    try {
+      const blob = await makeCasePdf(pts, d);
+      const name = `Case-summary-${pts.length === 1 ? 'Bed-' + bedNoOf(pts[0]).replace(/[^\w-]+/g, '') : pts.length + '-beds'}-${d}.pdf`;
+      file = new File([blob], name, {type:'application/pdf'});
+      const out = el.querySelector('#pdfout'), kb = Math.max(1, Math.round(blob.size / 1024));
+      const canShare = !IS_PREVIEW && navigator.canShare && navigator.canShare({files:[file]});
+      out.innerHTML = `<div class="pdfcard">${ic('report')}<div><b>${esc(name)}</b><small>${pts.length} patient${pts.length > 1 ? 's' : ''} · ${kb} KB</small></div></div>
+        ${IS_PREVIEW ? '<div class="hint">PDF is ready. Sending the file works in the installed app — this preview cannot hand over files.</div>'
+          : `<div class="row2" style="margin-top:10px">${canShare ? `<button class="btn primary" data-send>${ic('send')} Send PDF</button>` : ''}<button class="btn ghost" data-open ${canShare ? '' : 'style="grid-column:1/-1"'}>Open / save</button></div>
+             ${canShare ? '<div class="hint">Send PDF opens the share menu — choose WhatsApp, Messenger or Mail.</div>' : ''}`}`;
+      out.hidden = false;
+      const sb = out.querySelector('[data-send]');
+      if (sb) sb.onclick = () => navigator.share({files:[file], title:name}).catch(e => { if (e.name !== 'AbortError') toast('Could not open the share menu'); });
+      const ob = out.querySelector('[data-open]');
+      if (ob) ob.onclick = () => {
+        const url = URL.createObjectURL(file), a = document.createElement('a');
+        a.href = url; a.download = name; a.target = '_blank'; document.body.appendChild(a); a.click();
+        setTimeout(() => { URL.revokeObjectURL(url); a.remove(); }, 60000);
+      };
+      out.scrollIntoView({block:'nearest'});
+    } catch(e){ toast(e.message === 'load' ? 'PDF maker could not load. Check the internet once, then try again.' : 'Could not make the PDF'); console.error(e); }
+    mk.disabled = false; mk.textContent = 'Make again';
+  };
+  if (opts.auto) setTimeout(() => mk.click(), 260);
 }
 
 /* ================= round report ================= */
@@ -1677,8 +1896,7 @@ function reportBed(p, date){
     <div class="rp-h"><span class="rp-no">${esc(bedNoOf(p))}</span><div><b>${esc(p.name || 'Unnamed')}</b> <small>${esc(p.age || '')}${esc(p.sex || '')} · ${STATUS[p.status]}</small><div class="rp-dx">${esc(p.dx || '')}</div></div></div>
     <div class="rp-meta">${bits.join(' · ')}${pTags(p).length ? ' · ' + pTags(p).map(t => esc(t.name)).join(', ') : ''}</div>
     ${sec('Plan', notes(p.plans, () => ''))}
-    ${sec('ICU consultant', notes(p.icuc, e => e.by || 'ICU consultant'))}
-    ${sec('Other consultants', notes(p.consults, e => (e.dept || 'Consultant') + (e.by ? ' — ' + e.by : '')))}
+    ${sec('Consultants', notes(p.consults, e => (e.dept || 'Consultant') + (e.by ? ' — ' + e.by : '')))}
     ${sec('Investigation', labs)}
     ${sec('Culture', cs)}
     ${sec('Serology / BioFire', se ? `<div class="rp-serol">${se}</div>` : '')}
@@ -1798,6 +2016,7 @@ function openSettings(){
       <div class="sec"><h3>Font</h3>${chips('font', [['Lato','Lato'],['Roboto','Roboto'],['Poppins','Poppins']], st.font)}</div>
       <div class="sec"><h3>Font style</h3>${chips('bold', [['0','Normal'],['1','Bold']], st.bold ? '1' : '0')}</div>
       <div class="sec"><h3>Text size</h3><div class="stepper"><button class="btn ghost" data-scale="-5">A−</button><b>${st.scale}%</b><button class="btn ghost" data-scale="5">A+</button></div></div>
+      <div class="sec"><h3>Case summary</h3><button class="btn ghost" data-casepdf>${ic('report')} Make a case summary PDF</button></div>
       <div class="sec"><h3>Investigation tests</h3><button class="btn ghost" data-labmgr>${ic('edit')} Tests, units & normal ranges</button></div>
       <div class="sec"><h3>Tags</h3><button class="btn ghost" data-tagmgr>${ic('edit')} Add, rename or delete tags</button></div>
       <div class="sec"><h3>Backup</h3>
@@ -1815,6 +2034,7 @@ function openSettings(){
     const sc = e.target.closest('[data-scale]');
     if (sc){ S.settings.scale = Math.min(130, Math.max(85, S.settings.scale + Number(sc.dataset.scale))); save(); applySettings(); draw(); }
     if (e.target.closest('[data-tagmgr]')){ closeSheet(el); setTimeout(() => openTags(), 230); }
+    if (e.target.closest('[data-casepdf]')){ closeSheet(el); setTimeout(() => openCaseSheet(), 230); }
     if (e.target.closest('[data-labmgr]')){ closeSheet(el); setTimeout(() => openLabDefs(), 230); }
     if (e.target.closest('[data-bk]')) doBackup().then(draw);
     if (e.target.closest('[data-rs]')) el.querySelector('#rsfile').click();
@@ -1866,6 +2086,7 @@ document.addEventListener('click', e => {
     case 'archive': go('#/archive'); break;
     case 'round': openRound(); break;
     case 'share': openShare([p], `Today's decisions — Bed ${bedNoOf(p)}`); break;
+    case 'casepdf': openCaseSheet({list:[p], auto:true}); break;
     case 'rpprint': if (IS_PREVIEW) toast('Printing works in the installed app'); else window.print(); break;
     case 'rpfile': shareReportFile(); break;
     case 'beds': openBeds(); break;

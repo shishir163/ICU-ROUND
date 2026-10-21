@@ -1,6 +1,6 @@
 // ICU Round service worker — change VERSION on every update so phones get the new files
-const VERSION = 'icu-round-v1.3';
-const ASSETS = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png', './icon-maskable-512.png', './apple-touch-icon.png'];
+const VERSION = 'icu-round-v1.4';
+const ASSETS = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png', './icon-maskable-512.png', './apple-touch-icon.png', './vendor/jspdf.umd.min.js', './vendor/jspdf.plugin.autotable.min.js'];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(VERSION).then(c => c.addAll(ASSETS)).then(() => self.skipWaiting()));
