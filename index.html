@@ -1,0 +1,1954 @@
+<!doctype html>
+<html lang="en" data-skin="sunrise">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>ICU Round</title>
+<meta name="theme-color" content="#ff5f45">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="ICU Round">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap">
+<style>
+:root{--font:'Poppins';--fw:400;--scale:1}
+:root,html[data-skin=sunrise]{--bg:#fff6ef;--s1:#fff;--s2:#fff0e5;--tx:#2b1d16;--mu:#8f7768;--ln:#f2dfd1;--p1:#ff5f45;--p2:#ffa63d;--sh:0 8px 22px -12px rgba(214,92,52,.45);--crit:#e8384f;--ser:#f08c00;--stb:#2b9e5f;color-scheme:light}
+html[data-skin=sky]{--bg:#eef5ff;--s1:#fff;--s2:#e4efff;--tx:#14233b;--mu:#62748f;--ln:#d8e5f7;--p1:#2f6bff;--p2:#22c1e8;--sh:0 8px 22px -12px rgba(47,107,255,.45);--crit:#e8384f;--ser:#f08c00;--stb:#2b9e5f;color-scheme:light}
+html[data-skin=mint]{--bg:#ecfaf3;--s1:#fff;--s2:#dff5e9;--tx:#11291f;--mu:#5d7d6e;--ln:#cfeadc;--p1:#0ca678;--p2:#3bc9db;--sh:0 8px 22px -12px rgba(12,166,120,.45);--crit:#e8384f;--ser:#f08c00;--stb:#2b9e5f;color-scheme:light}
+html[data-skin=candy]{--bg:#fbf0ff;--s1:#fff;--s2:#f4e4ff;--tx:#2a1638;--mu:#86709a;--ln:#ecd9f7;--p1:#e64980;--p2:#7048e8;--sh:0 10px 24px -12px rgba(112,72,232,.5);--crit:#e8384f;--ser:#f08c00;--stb:#2b9e5f;color-scheme:light}
+html[data-skin=ocean]{--bg:#081a33;--s1:#0f2a50;--s2:#163762;--tx:#e9f2ff;--mu:#8ea8cc;--ln:#1e406f;--p1:#00a8f0;--p2:#7b5cff;--sh:0 12px 26px -14px rgba(0,0,0,.7);--crit:#ff5c70;--ser:#ffb020;--stb:#3ddc84;color-scheme:dark}
+html[data-skin=royal]{--bg:#170c2b;--s1:#24143f;--s2:#301c55;--tx:#f4ecff;--mu:#a593c4;--ln:#3a2662;--p1:#a855f7;--p2:#ff5fa8;--sh:0 12px 26px -14px rgba(0,0,0,.7);--crit:#ff5c70;--ser:#ffb020;--stb:#3ddc84;color-scheme:dark}
+html[data-skin=midnight]{--bg:#0b0f17;--s1:#141a25;--s2:#1c2433;--tx:#dfe5ef;--mu:#7f8a9d;--ln:#232c3c;--p1:#3d7bff;--p2:#9b6bff;--sh:0 12px 26px -14px rgba(0,0,0,.8);--crit:#ff5c70;--ser:#ffb020;--stb:#3ddc84;color-scheme:dark}
+html[data-skin=amoled]{--bg:#000;--s1:#0c0c0e;--s2:#17171b;--tx:#e8e8ea;--mu:#85858d;--ln:#202026;--p1:#0fb5c6;--p2:#e0479e;--sh:none;--crit:#ff5c70;--ser:#ffb020;--stb:#3ddc84;color-scheme:dark}
+html[data-skin=rednight]{--bg:#0a0101;--s1:#170504;--s2:#220806;--tx:#ff9d8f;--mu:#a6584d;--ln:#3a120c;--p1:#b3261a;--p2:#6e110a;--sh:none;--crit:#ff3b2f;--ser:#e0703a;--stb:#b8644f;color-scheme:dark}
+
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{font-size:calc(16px * var(--scale));-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:var(--font),'Hind Siliguri',system-ui,-apple-system,sans-serif;font-weight:var(--fw);min-height:100vh;padding-bottom:calc(env(safe-area-inset-bottom) + 20px);overflow-x:hidden}
+button{font:inherit;color:inherit;cursor:pointer;touch-action:manipulation}
+h1,h2,h3{margin:0;font-weight:700}
+.ico svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;display:block}
+.ico.fill svg{fill:currentColor;stroke:none}
+
+/* header */
+.top{background:linear-gradient(135deg,var(--p1),var(--p2));color:#fff;padding:calc(env(safe-area-inset-top) + 14px) 16px 18px;border-radius:0 0 26px 26px;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.brand{display:flex;align-items:center;gap:11px;min-width:0}
+.logo{width:42px;height:42px;border-radius:13px;background:rgba(255,255,255,.22);display:grid;place-items:center;flex:none}
+.top h1{font-size:1.35rem;line-height:1.15}
+.top .sub{font-size:.8rem;opacity:.92;margin-top:2px}
+.hbtns{display:flex;gap:8px}
+.hbtn{width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,.2);border:0;color:#fff;display:grid;place-items:center;flex:none}
+.hbtn:active{background:rgba(255,255,255,.35)}
+
+.stats{display:flex;gap:8px;padding:0 14px 12px;overflow-x:auto;scrollbar-width:none}
+.stats::-webkit-scrollbar{display:none}
+.stat{background:var(--s1);border:1px solid var(--ln);border-radius:14px;padding:8px 13px;min-width:max-content;box-shadow:var(--sh)}
+.stat b{display:block;font-size:1.2rem;line-height:1.2}
+.stat span{font-size:.72rem;color:var(--mu);font-weight:600}
+.stat.k1 b{color:var(--p1)}.stat.k2 b{color:var(--crit)}.stat.k3 b{color:#9c5cf5}.stat.k4 b{color:#f76707}
+html[data-skin=rednight] .stat b{color:var(--tx)!important}
+
+.banner{margin:0 14px 12px;background:#fff3bf;color:#5c4400;border-radius:14px;padding:10px 12px;font-weight:600;font-size:.85rem;display:flex;gap:8px;align-items:center;border:0;width:calc(100% - 28px);text-align:left}
+html[data-skin=rednight] .banner{background:#2a0a06;color:var(--tx)}
+
+.toolbar{display:flex;justify-content:space-between;gap:8px;padding:0 14px 12px;flex-wrap:wrap}
+.seg{display:inline-flex;background:var(--s2);border-radius:12px;padding:3px;gap:2px}
+.seg button{border:0;background:transparent;color:var(--mu);font-size:.8rem;font-weight:600;padding:7px 11px;border-radius:9px}
+.seg button.on{background:var(--s1);color:var(--tx);box-shadow:0 1px 4px rgba(0,0,0,.14)}
+
+.gtitle{padding:4px 18px 8px;font-weight:700;font-size:.78rem;color:var(--mu);text-transform:uppercase;letter-spacing:.6px;display:flex;align-items:center;gap:8px}
+.gtitle i{width:9px;height:9px;border-radius:50%;background:var(--mu)}
+.gtitle.critical i{background:var(--crit)}.gtitle.serious i{background:var(--ser)}.gtitle.stable i{background:var(--stb)}
+
+/* cards */
+.grid{display:grid;gap:12px;padding:0 14px 22px}
+.grid.s{grid-template-columns:repeat(auto-fill,minmax(102px,1fr));gap:9px}
+.grid.m{grid-template-columns:repeat(auto-fill,minmax(158px,1fr))}
+.grid.l{grid-template-columns:repeat(auto-fill,minmax(290px,1fr))}
+.card{position:relative;background:var(--s1);border-radius:18px;padding:14px 12px 12px;box-shadow:var(--sh);border:1px solid var(--ln);overflow:hidden;cursor:pointer;color:inherit;display:flex;flex-direction:column;gap:6px;transition:transform .12s;min-width:0}
+.card:active{transform:scale(.97)}
+.card::before{content:'';position:absolute;inset:0 0 auto 0;height:5px;background:linear-gradient(90deg,var(--g1),var(--g2))}
+.card.s{padding:12px 9px 9px;border-radius:15px;gap:4px}
+.card.l{padding:16px 14px 14px;gap:8px}
+.c-top{display:flex;align-items:center;justify-content:space-between;gap:6px}
+.bedno{display:inline-block;font-weight:700;font-size:1.02rem;color:#fff;background:linear-gradient(135deg,var(--g1),var(--g2));padding:3px 10px;border-radius:10px;letter-spacing:.3px;white-space:nowrap}
+.card.s .bedno{font-size:.9rem;padding:2px 8px}
+.c-name{font-weight:700;font-size:1rem;line-height:1.25;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.c-name small{font-weight:500;color:var(--mu);font-size:.8rem}
+.card.s .c-name{font-size:.86rem}
+.c-dx{font-size:.82rem;color:var(--mu);line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.c-ct{display:flex;flex-wrap:wrap;gap:4px;margin-top:auto;padding-top:2px}
+.c-last{font-size:.82rem;background:var(--s2);border-radius:10px;padding:8px 9px;line-height:1.35;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.card.empty{border:1.5px dashed var(--ln);background:transparent;box-shadow:none;min-height:92px}
+.card.s.empty{min-height:74px}
+.card.empty::before{opacity:.35}
+.card.empty .bedno{background:var(--s2);color:var(--mu)}
+.empty-l{margin-top:auto;color:var(--mu);font-weight:600;font-size:.82rem;display:flex;align-items:center;gap:4px}
+.empty-l .ico svg{width:16px;height:16px}
+.card.st-critical{border-color:color-mix(in srgb,var(--crit) 60%,transparent);box-shadow:0 0 0 1.5px color-mix(in srgb,var(--crit) 45%,transparent),var(--sh)}
+
+html[data-skin=ocean] .card.occ,html[data-skin=royal] .card.occ,html[data-skin=midnight] .card.occ,html[data-skin=amoled] .card.occ{background:linear-gradient(165deg,color-mix(in srgb,var(--g1) 24%,var(--s1)),var(--s1) 62%)}
+html[data-skin=candy] .card.occ{background:linear-gradient(145deg,var(--g1),var(--g2));color:#fff;border-color:transparent}
+html[data-skin=candy] .card.occ::before{display:none}
+html[data-skin=candy] .card.occ .bedno{background:rgba(255,255,255,.26)}
+html[data-skin=candy] .card.occ .c-dx,html[data-skin=candy] .card.occ .c-name small{color:rgba(255,255,255,.88)}
+html[data-skin=candy] .card.occ .ct{background:rgba(255,255,255,.24)!important;color:#fff!important}
+html[data-skin=candy] .card.occ .ct.afeb.warn{background:#fff3bf!important;color:#5c4400!important}
+html[data-skin=candy] .card.occ .st{background:#fff!important}
+html[data-skin=candy] .card.occ .c-last{background:rgba(255,255,255,.2)}
+
+/* status pill */
+.st{font-size:.66rem;font-weight:700;padding:3px 8px;border-radius:20px;text-transform:uppercase;letter-spacing:.4px;white-space:nowrap;border:0}
+.st.critical{background:color-mix(in srgb,var(--crit) 16%,transparent);color:var(--crit)}
+.st.serious{background:color-mix(in srgb,var(--ser) 18%,transparent);color:var(--ser)}
+.st.stable{background:color-mix(in srgb,var(--stb) 16%,transparent);color:var(--stb)}
+.card.s .st{width:11px;height:11px;padding:0;border-radius:50%}
+.card.s .st.critical{background:var(--crit)}.card.s .st.serious{background:var(--ser)}.card.s .st.stable{background:var(--stb)}
+
+/* counters */
+.ct{font-size:.7rem;font-weight:700;padding:3px 7px;border-radius:8px;white-space:nowrap}
+.ct.hosp{background:color-mix(in srgb,#5c7cfa 15%,transparent);color:#5c7cfa}
+.ct.icu{background:color-mix(in srgb,var(--p1) 15%,transparent);color:var(--p1)}
+.ct.ett{background:color-mix(in srgb,#9c5cf5 16%,transparent);color:#9c5cf5}
+.ct.den{background:color-mix(in srgb,#f76707 15%,transparent);color:#f76707}
+.ct.afeb{background:color-mix(in srgb,#2b9e5f 15%,transparent);color:#2b9e5f}
+.ct.afeb.warn{background:#ffe066;color:#5c4400}
+html[data-skin=ocean] .ct.icu,html[data-skin=royal] .ct.icu,html[data-skin=midnight] .ct.icu,html[data-skin=amoled] .ct.icu{color:color-mix(in srgb,var(--p1) 70%,#fff)}
+html[data-skin=rednight] .ct{background:#2a0a06!important;color:var(--tx)!important}
+html[data-skin=rednight] .ct.afeb.warn{background:#5a1a10!important}
+.big .ct{font-size:.85rem;padding:6px 11px;border-radius:11px}
+
+/* patient page */
+.ptop{background:linear-gradient(135deg,var(--g1),var(--g2));color:#fff;padding:calc(env(safe-area-inset-top) + 12px) 12px 18px;border-radius:0 0 26px 26px;display:flex;align-items:flex-start;gap:10px}
+.pt-main{flex:1;min-width:0}
+.pt-bed{font-size:.78rem;font-weight:700;opacity:.9;text-transform:uppercase;letter-spacing:.8px}
+.pt-name{font-size:1.3rem;font-weight:700;line-height:1.2;margin-top:2px;word-break:break-word}
+.pt-name small{font-size:.85rem;font-weight:500;opacity:.9}
+.pt-dx{font-size:.88rem;opacity:.92;margin-top:2px}
+.pt-st{margin-top:8px}
+.pt-st .st{background:#fff!important;font-size:.7rem;padding:4px 10px}
+.ctr-row{display:flex;flex-wrap:wrap;gap:6px;padding:12px 14px 4px}
+.arch-note{margin:10px 14px 0;padding:10px 12px;border-radius:14px;background:var(--s2);font-size:.85rem;font-weight:600}
+.tabs{display:flex;flex-wrap:wrap;gap:6px;padding:10px 14px;background:var(--bg)}
+/* investigation */
+.labbar{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:2px 14px 2px}
+.lgrp{background:var(--s1);border:1px solid var(--ln);border-radius:16px;margin:0 14px 10px;box-shadow:var(--sh);overflow:hidden}
+.lgrp summary{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;font-weight:700;cursor:pointer;list-style:none;background:linear-gradient(90deg,color-mix(in srgb,var(--p1) 13%,transparent),transparent 80%)}
+.lgrp summary::-webkit-details-marker{display:none}
+.lgrp summary small{color:var(--mu);font-weight:700;font-size:.75rem}
+.lcols,.lrow{display:grid;grid-template-columns:minmax(0,1fr) repeat(3,minmax(0,76px));gap:5px;align-items:center;padding-left:12px;padding-right:10px}
+.lcols{position:sticky;top:env(safe-area-inset-top,0px);z-index:4;background:var(--bg);margin:0 14px 8px;padding-top:6px;padding-bottom:6px;border:1px solid transparent}
+.lc0{font-size:.66rem;color:var(--mu);font-weight:600;line-height:1.2}
+.colb{border:1.5px solid var(--ln);background:var(--s1);border-radius:11px;padding:5px 2px;display:flex;flex-direction:column;align-items:center;line-height:1.15;min-width:0}
+.colb b{font-size:.74rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.colb small{font-size:.6rem;color:var(--mu);font-weight:600}
+.colb.today{border-color:var(--p1);background:color-mix(in srgb,var(--p1) 10%,var(--s1))}
+.colb.pm b{color:#7048e8}
+.lrow{padding-top:5px;padding-bottom:5px;border-top:1px solid var(--ln)}
+.lcell{position:relative;min-width:0}
+.lcell .tr{position:absolute;left:5px;top:50%;transform:translateY(-50%);font-size:.7rem;color:var(--mu);font-style:normal;font-weight:700;pointer-events:none;z-index:1}
+.lname{border:0;background:none;text-align:left;font-weight:600;font-size:.9rem;padding:4px 0;min-width:0;display:flex;flex-direction:column;align-items:flex-start;line-height:1.2}
+.lname small{font-size:.66rem;color:var(--mu);font-weight:500;margin-top:1px}
+.lstar{color:#f59f00;font-style:normal;margin-right:3px}
+.lin{padding:8px 7px 8px 15px;text-align:right;font-weight:700;font-variant-numeric:tabular-nums;border-radius:10px;min-height:40px}
+.lin:disabled{opacity:1;background:var(--s2)}
+.lin.hi,.lin.lo,.lprev.hi,.lprev.lo{color:var(--crit)}
+.lprev{text-align:right;font-size:.85rem;color:var(--mu);font-weight:600;font-variant-numeric:tabular-nums;padding:4px 5px;border-radius:8px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ltr{font-size:.8rem;color:var(--mu);font-weight:700;text-align:center}
+.mk-red{background:#ffc9c9!important;color:#8a0d0d!important}
+.mk-yellow{background:#ffec99!important;color:#5c4400!important}
+.mk-green{background:#b2f2bb!important;color:#0b4a1d!important}
+.mk-blue{background:#a5d8ff!important;color:#0b3a66!important}
+.mk-purple{background:#e5dbff!important;color:#3b1a7a!important}
+.mkrow{display:flex;flex-wrap:wrap;gap:8px}
+.mkb{border:2px solid var(--ln);border-radius:12px;padding:8px 13px;font-weight:700;font-size:.82rem;background:var(--s1)}
+.mkb.on{outline:3px solid var(--p1);outline-offset:1px}
+.hrow{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-top:1px dashed var(--ln);font-size:.9rem}
+.hrow b{padding:1px 8px;border-radius:8px;font-variant-numeric:tabular-nums}
+.hrow b.hi,.hrow b.lo{color:var(--crit)}
+.impl{display:flex;flex-wrap:wrap;gap:8px}
+.impc{border:1px solid var(--ln);background:var(--s2);border-radius:12px;padding:6px 11px;display:flex;flex-direction:column;align-items:flex-start;min-width:84px;line-height:1.25}
+.impc b{font-size:.72rem;color:var(--mu)}
+.impc span{font-size:1.05rem;font-weight:700;font-variant-numeric:tabular-nums}
+.impc small{font-size:.66rem;color:var(--mu)}
+.impc.hi span,.impc.lo span{color:var(--crit)}
+.ldg{border:1px solid var(--ln);border-radius:14px;padding:10px;margin-bottom:12px;background:var(--s1)}
+.ldg-h{display:flex;gap:8px;margin-bottom:4px}
+.ldg-h input{font-weight:700}
+.ldt{display:grid;grid-template-columns:1fr 1fr 1fr 34px;gap:6px;padding:8px 0;border-top:1px dashed var(--ln);align-items:end}
+.ldt .n{grid-column:1/4}
+.ldt input{padding:8px 9px}
+.mini span{display:block;font-size:.66rem;color:var(--mu);font-weight:600;margin-bottom:2px}
+.c-imp{font-size:.76rem;font-weight:600;color:var(--mu);display:flex;flex-wrap:wrap;gap:4px 10px}
+.c-imp b{color:var(--tx)}
+.c-imp b.hi,.c-imp b.lo{color:var(--crit)}
+html[data-skin=candy] .card.occ .c-imp,html[data-skin=candy] .card.occ .c-imp b{color:#fff}
+/* serology & culture */
+.srow{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:8px;align-items:center;border:0;border-top:1px solid var(--ln);background:none;padding:11px 2px;text-align:left;width:100%}
+.slist .srow:first-child{border-top:0}
+.sn{font-weight:600;font-size:.92rem;min-width:0}
+.sn small{display:block;color:var(--mu);font-size:.72rem;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sd{font-size:.72rem;color:var(--mu);font-weight:600;white-space:nowrap}
+.res{font-size:.72rem;font-weight:700;padding:3px 9px;border-radius:20px;white-space:nowrap}
+.r-positive{background:color-mix(in srgb,var(--crit) 16%,transparent);color:var(--crit)}
+.r-negative{background:color-mix(in srgb,var(--stb) 16%,transparent);color:var(--stb)}
+.r-pending{background:var(--s2);color:var(--mu)}
+.r-equivocal{background:color-mix(in srgb,var(--ser) 18%,transparent);color:var(--ser)}
+.chip.k-Positive.on{background:var(--crit)}.chip.k-Negative.on{background:var(--stb)}.chip.k-Equivocal.on{background:var(--ser)}
+.bf{border-top:1px dashed var(--ln);padding:10px 0 4px}
+.bfl{display:flex;justify-content:space-between;gap:12px;font-size:.88rem;padding:2px 0}
+.bfl span{color:var(--mu);flex:none}
+.bfl b{text-align:right;overflow-wrap:anywhere}
+.cs{background:var(--s1);border:1px solid var(--ln);border-radius:16px;padding:12px;margin:0 14px 10px;box-shadow:var(--sh)}
+.cs-type{font-size:.75rem;font-weight:700;color:#fff;background:linear-gradient(135deg,var(--p1),var(--p2));padding:3px 10px;border-radius:9px;white-space:nowrap}
+.cs-main{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:2px 0 8px}
+.cs-org{font-size:1rem;font-style:italic}
+.cs-main small{color:var(--mu);font-size:.78rem}
+.cst{font-size:.7rem;font-weight:700;padding:3px 9px;border-radius:20px}
+.s-pending{background:var(--s2);color:var(--mu)}
+.s-no-growth{background:color-mix(in srgb,var(--stb) 16%,transparent);color:var(--stb)}
+.s-growth{background:color-mix(in srgb,var(--crit) 16%,transparent);color:var(--crit)}
+.abxs{display:flex;flex-wrap:wrap;gap:5px}
+.ab{font-size:.74rem;font-weight:600;padding:3px 8px;border-radius:8px}
+.ab-S{background:color-mix(in srgb,var(--stb) 15%,transparent);color:var(--stb)}
+.ab-I{background:color-mix(in srgb,var(--ser) 17%,transparent);color:var(--ser)}
+.ab-R{background:color-mix(in srgb,var(--crit) 15%,transparent);color:var(--crit)}
+.abxpick{display:flex;flex-wrap:wrap;gap:6px}
+.abc{border:1.5px solid var(--ln);background:var(--s1);border-radius:10px;padding:7px 10px;font-size:.8rem;font-weight:600}
+.abc b{margin-left:5px}
+.abc.r-S{background:var(--stb);color:#fff;border-color:transparent}
+.abc.r-I{background:var(--ser);color:#fff;border-color:transparent}
+.abc.r-R{background:var(--crit);color:#fff;border-color:transparent}
+/* tags */
+.tg{font-size:.68rem;font-weight:700;padding:2px 8px;border-radius:20px;color:var(--tc);background:color-mix(in srgb,var(--tc) 14%,transparent);border:1px solid color-mix(in srgb,var(--tc) 40%,transparent);white-space:nowrap}
+.tdot{width:9px;height:9px;border-radius:50%;background:var(--tc);display:inline-block}
+.c-tags{display:flex;flex-wrap:wrap;gap:4px}
+html[data-skin=candy] .card.occ .tg,.ptop .tg{background:rgba(255,255,255,.92);border-color:transparent}
+html[data-skin=candy] .card.occ .tdot{box-shadow:0 0 0 1.5px #fff}
+html[data-skin=rednight] .tg,html[data-skin=rednight] .tdot,html[data-skin=rednight] .tagbar button{--tc:var(--tx)!important}
+.tagbar{display:flex;gap:7px;padding:0 14px 12px;overflow-x:auto;scrollbar-width:none}
+.tagbar::-webkit-scrollbar{display:none}
+.tagbar button{flex:none;border:1.5px solid var(--ln);background:var(--s1);border-radius:20px;padding:6px 12px;font-size:.78rem;font-weight:600;display:flex;align-items:center;gap:6px}
+.tagbar button i{width:8px;height:8px;border-radius:50%;background:var(--tc)}
+.tagbar button.on{border-color:var(--tc,var(--p1));background:color-mix(in srgb,var(--tc,var(--p1)) 16%,var(--s1))}
+.tagbar button small{color:var(--mu);font-weight:700}
+.tagbar .ico svg{width:14px;height:14px}
+.pt-st{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.tgadd{border:1.5px dashed rgba(255,255,255,.75);background:transparent;color:#fff;border-radius:20px;padding:3px 10px;font-size:.72rem;font-weight:700}
+.chip.tchip.on{background:var(--tc);color:#fff}
+.chip.tchip::before{content:'';display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--tc);margin-right:6px;vertical-align:1px}
+.chip.tchip.on::before{background:#fff}
+.cdot{width:30px;height:30px;border-radius:50%;border:3px solid var(--s1);box-shadow:0 0 0 1.5px var(--ln);flex:none;padding:0}
+.preview-note{margin:0 14px 12px;padding:8px 12px;border-radius:12px;background:var(--s2);color:var(--mu);font-size:.78rem;font-weight:600}
+.tabs button{flex:1 1 auto;min-width:0;padding-left:10px!important;padding-right:10px!important;font-size:.8rem!important;line-height:1.2;border:1.5px solid var(--ln);background:var(--s1);border-radius:13px;padding:9px 6px;font-size:.85rem;font-weight:600;color:var(--mu)}
+.tabs button.on{background:linear-gradient(135deg,var(--p1),var(--p2));color:#fff;border-color:transparent}
+.tab-actions{display:flex;gap:8px;padding:4px 14px 12px}
+
+.btn{border:0;border-radius:13px;padding:11px 16px;font-weight:600;font-size:.92rem;display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.btn.primary{background:linear-gradient(135deg,var(--p1),var(--p2));color:#fff}
+.btn.ghost{background:var(--s2);color:var(--tx)}
+.btn.danger{background:var(--crit);color:#fff}
+.btn.sm{padding:7px 12px;font-size:.8rem;border-radius:10px}
+.btn .ico svg{width:18px;height:18px}
+.btn.wide{width:100%}
+
+.dgroup{margin-bottom:6px}
+.dhead{display:flex;justify-content:space-between;align-items:center;font-weight:700;padding:6px 18px 8px;color:var(--mu);font-size:.8rem;list-style:none;cursor:pointer}
+.dhead::-webkit-details-marker{display:none}
+.dhead .dl{display:flex;align-items:center;gap:6px}
+.dhead .dl::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--p1)}
+details:not([open]) .dhead{opacity:.85}
+.dhead .chev{transition:transform .2s;font-size:.7rem}
+details[open] .dhead .chev{transform:rotate(90deg)}
+.entry{background:var(--s1);border:1px solid var(--ln);border-left:4px solid var(--p1);border-radius:14px;padding:10px 12px;margin:0 14px 10px;box-shadow:var(--sh)}
+.entry.icuc{border-left-color:var(--p2)}
+.entry.consults{border-left-color:#7048e8}
+.e-dept{font-size:.72rem;font-weight:700;color:#7048e8;background:color-mix(in srgb,#7048e8 13%,transparent);padding:2px 8px;border-radius:8px;white-space:nowrap}
+html[data-skin=ocean] .e-dept,html[data-skin=royal] .e-dept,html[data-skin=midnight] .e-dept,html[data-skin=amoled] .e-dept{color:#b197fc}
+html[data-skin=rednight] .e-dept{color:var(--tx);background:var(--s2)}
+.ctab{display:flex;flex-direction:column}
+.crow{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px;align-items:center;padding:8px 0;border-top:1px solid var(--ln);font-size:.88rem}
+.ctab .crow:first-child{border-top:0}
+.crow b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.crow small{color:var(--mu);font-size:.72rem;white-space:nowrap}
+.e-head{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.e-time{font-size:.75rem;font-weight:700;color:var(--mu)}
+.e-by{font-size:.75rem;font-weight:700;color:var(--p1);background:color-mix(in srgb,var(--p1) 12%,transparent);padding:2px 8px;border-radius:8px}
+.e-head .sp{flex:1}
+.ibtn{width:34px;height:34px;border-radius:10px;border:0;background:var(--s2);color:var(--mu);display:grid;place-items:center}
+.ibtn .ico svg{width:17px;height:17px}
+.ibtn.del:active{color:var(--crit)}
+.emptystate{text-align:center;color:var(--mu);padding:30px 20px;font-size:.9rem}
+
+.rich{line-height:1.55;overflow-wrap:anywhere}
+.rich ul,.rich ol{padding-left:1.35em;margin:.25em 0}
+.rich p{margin:0}
+.rich [style*="background-color"]{color:#1d1d1d;border-radius:3px;padding:0 2px}
+.rich font[size="1"]{font-size:.7em}.rich font[size="2"]{font-size:.85em}.rich font[size="4"]{font-size:1.15em}.rich font[size="5"]{font-size:1.35em}.rich font[size="6"]{font-size:1.7em}.rich font[size="7"]{font-size:2.2em}
+
+.panel{background:var(--s1);border:1px solid var(--ln);border-radius:18px;padding:14px;margin:0 14px 12px;box-shadow:var(--sh)}
+.pan-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.pan-h h3{font-size:1rem}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:8px 14px;margin:0;font-size:.9rem}
+.kv dt{color:var(--mu);font-weight:600}
+.kv dd{margin:0;text-align:right;font-weight:600;overflow-wrap:anywhere}
+.kv dd b{color:var(--p1)}
+.bigline{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.bigline .lbl{font-size:.88rem;color:var(--mu);font-weight:600}
+.bigline .val{font-size:1.5rem;font-weight:700}
+.hist{margin-top:10px;font-size:.82rem;color:var(--mu)}
+.hist div{padding:6px 0;border-top:1px dashed var(--ln)}
+.drow{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:end;margin-bottom:10px}
+.drow .cnt{font-size:1.2rem;font-weight:700;padding-bottom:8px;min-width:70px;text-align:right}
+.drow .cnt.warn{color:#e67700}
+.hint{font-size:.76rem;color:var(--mu);margin-top:4px}
+
+/* archive */
+.search{padding:0 14px 12px}
+.arow{display:flex;gap:12px;align-items:center;background:var(--s1);border:1px solid var(--ln);border-radius:16px;padding:12px;margin:0 14px 10px;cursor:pointer;box-shadow:var(--sh)}
+.a-bed{min-width:56px;text-align:center;font-weight:700;color:#fff;background:linear-gradient(135deg,var(--g1),var(--g2));border-radius:12px;padding:10px 6px;font-size:.9rem}
+.a-main{flex:1;min-width:0}
+.a-main b{font-size:.95rem}
+.a-main small{color:var(--mu)}
+.a-dx{font-size:.82rem;color:var(--mu);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.a-meta{font-size:.75rem;color:var(--mu);margin-top:3px}
+.oc{font-size:.68rem;font-weight:700;padding:4px 8px;border-radius:9px;white-space:nowrap;align-self:flex-start}
+.oc-discharge{background:color-mix(in srgb,var(--stb) 16%,transparent);color:var(--stb)}
+.oc-ward-transfer{background:color-mix(in srgb,#3b82f6 16%,transparent);color:#3b82f6}
+.oc-death{background:color-mix(in srgb,var(--mu) 22%,transparent);color:var(--tx)}
+.oc-dama{background:color-mix(in srgb,var(--ser) 18%,transparent);color:var(--ser)}
+
+/* sheets */
+.wrap{position:fixed;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:flex-end;justify-content:center;opacity:0;transition:opacity .2s;z-index:50}
+.wrap.open{opacity:1}
+.sheet{background:var(--bg);width:100%;max-width:640px;max-height:92dvh;border-radius:24px 24px 0 0;display:flex;flex-direction:column;transform:translateY(40px);transition:transform .22s ease-out;overflow:hidden}
+.wrap.open .sheet{transform:none}
+.sheet.full{height:100dvh;max-height:100dvh;border-radius:0}
+.sh-head{display:flex;align-items:center;gap:10px;padding:16px 16px 10px}
+.sheet.full .sh-head{padding-top:calc(env(safe-area-inset-top) + 10px)}
+.sh-head h2{flex:1;font-size:1.12rem;min-width:0}
+.sh-head .x{width:36px;height:36px;border-radius:50%;border:0;background:var(--s2);font-size:1rem;flex:none}
+.sh-sub{font-size:.85rem;color:var(--mu);padding:0 16px 8px;margin-top:-6px}
+.sh-body{overflow:auto;padding:4px 16px 16px;flex:1;-webkit-overflow-scrolling:touch}
+.sh-foot{display:flex;gap:10px;padding:12px 16px calc(env(safe-area-inset-bottom) + 12px);border-top:1px solid var(--ln);background:var(--bg)}
+.sh-foot .btn{flex:1}
+@media(min-width:700px){.wrap{align-items:center}.sheet{border-radius:24px;max-height:88vh}.sheet.full{height:88vh;border-radius:24px}.sheet.full .sh-head{padding-top:16px}}
+
+.f{display:block;margin-bottom:13px;min-width:0}
+.f>span{display:block;font-size:.78rem;font-weight:600;color:var(--mu);margin-bottom:5px}
+input,select,textarea{width:100%;min-width:0;font:inherit;font-size:max(16px,1rem);color:var(--tx);background:var(--s1);border:1.5px solid var(--ln);border-radius:12px;padding:10px 12px;outline:none;-webkit-appearance:none;appearance:none}
+input[type=date],input[type=time]{min-height:46px;display:block}
+input:focus,select:focus,textarea:focus{border-color:var(--p1)}
+select{background-image:linear-gradient(45deg,transparent 50%,var(--mu) 50%),linear-gradient(135deg,var(--mu) 50%,transparent 50%);background-position:calc(100% - 18px) 50%,calc(100% - 13px) 50%;background-size:5px 5px;background-repeat:no-repeat}
+textarea{min-height:80px;resize:vertical}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.chips{display:flex;flex-wrap:wrap;gap:7px}
+.chip{border:1.5px solid var(--ln);background:var(--s1);font-size:.86rem;font-weight:600;padding:8px 13px;border-radius:20px}
+.chip.on{background:linear-gradient(135deg,var(--p1),var(--p2));color:#fff;border-color:transparent}
+.chip.k-critical.on{background:var(--crit)}.chip.k-serious.on{background:var(--ser)}.chip.k-stable.on{background:var(--stb)}
+.sw{display:flex;align-items:center;gap:11px;padding:8px 0;font-weight:600;cursor:pointer}
+.sw input{position:absolute;opacity:0;width:0;height:0}
+.sw i{width:48px;height:28px;border-radius:20px;background:var(--ln);position:relative;transition:.2s;flex:none}
+.sw i::after{content:'';position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+.sw input:checked+i{background:var(--p1)}
+.sw input:checked+i::after{transform:translateX(20px)}
+.sub-f{padding:6px 0 2px 14px;border-left:3px solid var(--ln);margin:2px 0 10px}
+
+.menu{display:flex;flex-direction:column;gap:8px;padding:0 16px calc(env(safe-area-inset-bottom) + 18px)}
+.menu button{display:flex;align-items:center;gap:12px;text-align:left;border:1px solid var(--ln);background:var(--s1);border-radius:14px;padding:13px 14px;font-weight:600;font-size:.95rem}
+.menu button small{display:block;font-weight:500;color:var(--mu);font-size:.76rem;margin-top:1px}
+.menu button.danger{color:var(--crit)}
+.menu .ico{flex:none}
+
+/* editor */
+.ed-meta{display:flex;gap:8px;padding:0 16px 10px;flex-wrap:wrap}
+.ed-meta input{flex:1;min-width:120px}
+.ed-meta input[name=by]{flex-basis:100%}
+.tb{display:flex;flex-wrap:wrap;gap:6px;padding:8px 12px;border-top:1px solid var(--ln);border-bottom:1px solid var(--ln);background:var(--s1);align-items:center}
+.tb button{min-width:36px;height:36px;border-radius:10px;border:1px solid var(--ln);background:var(--s2);font-weight:700;padding:0 8px;display:grid;place-items:center}
+.tb button:active{background:var(--ln)}
+.tb .sep{width:1px;height:24px;background:var(--ln);margin:0 2px}
+.tb .lb{font-size:.7rem;font-weight:700;color:var(--mu);margin-right:-2px}
+.tb .swc{width:30px;min-width:30px;height:30px;border-radius:50%;padding:0;border:2px solid var(--ln)}
+.tb .sz.s{font-size:.72rem}.tb .sz.m{font-size:.92rem}.tb .sz.l{font-size:1.15rem}.tb .sz.xl{font-size:1.4rem}
+.tb .ico svg{width:18px;height:18px}
+.ed{flex:1;overflow:auto;padding:14px 16px 40px;outline:none;font-size:1.02rem;-webkit-overflow-scrolling:touch;min-height:180px}
+.ed:empty::before{content:attr(data-ph);color:var(--mu)}
+
+/* settings */
+.sec{margin-bottom:18px}
+.sec h3{font-size:.82rem;text-transform:uppercase;letter-spacing:.6px;color:var(--mu);margin-bottom:9px}
+.thm{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.thm button{border:2px solid var(--ln);border-radius:14px;padding:7px;background:var(--s1);font-size:.76rem;font-weight:600;text-align:left}
+.thm button.on{border-color:var(--p1);box-shadow:0 0 0 2px color-mix(in srgb,var(--p1) 30%,transparent)}
+.thm .pv{height:38px;border-radius:9px;margin-bottom:6px;display:flex;align-items:flex-end;gap:4px;padding:5px}
+.thm .pv i{width:14px;height:14px;border-radius:5px}
+.thm small{display:block;color:var(--mu);font-weight:500;font-size:.68rem}
+.stepper{display:flex;align-items:center;gap:12px}
+.stepper b{min-width:56px;text-align:center}
+.bedrow{display:flex;gap:8px;align-items:center;margin-bottom:8px}
+.bedrow input{width:110px;flex:none;font-weight:700}
+.bedrow .occ{flex:1;font-size:.85rem;color:var(--mu);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bedrow .occ.o{color:var(--tx);font-weight:600}
+.pickgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(84px,1fr));gap:8px}
+.pickgrid button{border:0;border-radius:12px;padding:12px 6px;font-weight:700;color:#fff;background:linear-gradient(135deg,var(--g1),var(--g2))}
+
+#toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom) + 96px);transform:translate(-50%,20px);background:#222;color:#fff;padding:11px 18px;border-radius:14px;font-size:.88rem;font-weight:600;opacity:0;pointer-events:none;transition:.25s;z-index:99;max-width:90vw;text-align:center}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+[hidden]{display:none!important}
+@media (max-width:430px){.top .logo{display:none}.hbtns{gap:6px}.hbtn{width:38px;height:38px}}
+.rp-tools{display:flex;gap:8px;padding:0 14px 12px;flex-wrap:wrap}
+.rp-tools input{flex:1 1 140px;width:auto}
+.rp{padding:0 14px 20px}
+.rp-title{margin-bottom:12px}.rp-title h2{font-size:1.1rem}.rp-title div{font-size:.82rem;color:var(--mu)}
+.rp-bed{background:var(--s1);border:1px solid var(--ln);border-radius:16px;padding:12px 14px;margin-bottom:12px;box-shadow:var(--sh);break-inside:avoid}
+.rp-h{display:flex;gap:10px;align-items:center}
+.rp-no{background:linear-gradient(135deg,var(--p1),var(--p2));color:#fff;font-weight:700;border-radius:10px;padding:5px 10px;flex:none}
+.rp-h small{color:var(--mu)}.rp-dx{font-size:.82rem;color:var(--mu)}
+.rp-meta{font-size:.74rem;color:var(--mu);margin:8px 0 2px;font-weight:600}
+.rp-sec{margin-top:10px}.rp-sec h4{margin:0 0 4px;font-size:.7rem;text-transform:uppercase;letter-spacing:.6px;color:var(--mu)}
+.rp-by{font-size:.75rem;font-weight:700;color:#7048e8}.rp-note{margin-bottom:6px;font-size:.9rem}
+.rp-lab{border-collapse:collapse;font-size:.82rem;font-variant-numeric:tabular-nums}
+.rp-lab th,.rp-lab td{border:1px solid var(--ln);padding:4px 8px;text-align:right}
+.rp-lab th:first-child,.rp-lab tbody th{text-align:left;font-weight:600}.rp-lab small{color:var(--mu);font-weight:400}
+.rp-lab .pv{color:var(--mu)}.rp-lab .hi,.rp-lab .lo{color:var(--crit);font-weight:700}
+.rp-sec:has(.rp-lab){overflow-x:auto}
+.rp-line{font-size:.88rem;margin-bottom:6px}.rp-abx{margin-top:4px;display:flex;flex-wrap:wrap;gap:4px}
+.rp-serol{display:flex;flex-direction:column;gap:3px;font-size:.88rem}
+@media print{
+  .noprint,#toast,#sheets,.preview-note{display:none!important}
+  html,body{background:#fff!important;color:#111!important}
+  .rp-bed{box-shadow:none;border-color:#ccc;background:#fff}
+  .rp-no{background:#ff5f45!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .mk-red,.mk-yellow,.mk-green,.mk-blue,.mk-purple,.ab{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+<main id="view"></main>
+<div id="sheets"></div>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+'use strict';
+/* ================= data ================= */
+const KEY = 'icuRound.v1';
+const VERSION = '1.3';
+const IS_PREVIEW = false;
+const TAG_COLORS = ['#e8384f','#f08c00','#d9a400','#2b9e5f','#0c8599','#3b82f6','#7048e8','#d6336c','#868e96'];
+const DEFAULT_TAGS = [['Isolation','#e8384f'],['Sepsis','#f08c00'],['Post-op','#3b82f6'],['MDR','#7048e8'],['Renal/CRRT','#0c8599'],['Watch closely','#d9a400']];
+// normal ranges are common adult reference values; editable in the app to match the hospital lab
+const DEFAULT_LABS = [
+  {id:'g-inf', name:'Inflammatory & Cardiac', tests:[
+    {id:'crp', name:'CRP', unit:'mg/L', lo:0, hi:5}, {id:'pct', name:'Procalcitonin', unit:'ng/mL', lo:0, hi:0.5},
+    {id:'tropi', name:'Troponin I', unit:'ng/mL', lo:0, hi:0.04}, {id:'bnp', name:'BNP', unit:'pg/mL', lo:0, hi:100}]},
+  {id:'g-cbc', name:'CBC', tests:[
+    {id:'hb', name:'Hb', unit:'g/dL', lo:12, hi:17}, {id:'hct', name:'HCT', unit:'%', lo:36, hi:50},
+    {id:'wbc', name:'WBC (TC)', unit:'/cmm', lo:4000, hi:11000}, {id:'plt', name:'Platelet', unit:'/cmm', lo:150000, hi:450000}]},
+  {id:'g-renal', name:'Renal', tests:[
+    {id:'cr', name:'Creatinine', unit:'mg/dL', lo:0.6, hi:1.2}, {id:'urea', name:'Urea', unit:'mg/dL', lo:15, hi:45}]},
+  {id:'g-elec', name:'Electrolytes', tests:[
+    {id:'na', name:'Sodium', unit:'mmol/L', lo:135, hi:145}, {id:'k', name:'Potassium', unit:'mmol/L', lo:3.5, hi:5},
+    {id:'cl', name:'Chloride', unit:'mmol/L', lo:98, hi:107}, {id:'hco3', name:'Bicarbonate', unit:'mmol/L', lo:22, hi:28}]},
+  {id:'g-dic', name:'DIC profile', tests:[
+    {id:'pt', name:'PT', unit:'sec', lo:11, hi:15}, {id:'inr', name:'INR', unit:'', lo:0.8, hi:1.2},
+    {id:'aptt', name:'APTT', unit:'sec', lo:25, hi:38}, {id:'fib', name:'Fibrinogen', unit:'mg/dL', lo:200, hi:400},
+    {id:'ddim', name:'D-dimer', unit:'µg/mL FEU', lo:0, hi:0.5}]},
+  {id:'g-ure', name:'Urine R/E', tests:[
+    {id:'upus', name:'Pus cells', unit:'/HPF', lo:0, hi:5}, {id:'urbc', name:'RBC', unit:'/HPF', lo:0, hi:2}]},
+  {id:'g-lft', name:'LFT', tests:[
+    {id:'bil', name:'Bilirubin', unit:'mg/dL', lo:0.2, hi:1.2}, {id:'alt', name:'ALT', unit:'U/L', lo:0, hi:40},
+    {id:'ast', name:'AST', unit:'U/L', lo:0, hi:40}, {id:'ggt', name:'GGT', unit:'U/L', lo:0, hi:55},
+    {id:'alb', name:'Albumin', unit:'g/dL', lo:3.5, hi:5}]},
+];
+const DEFAULT_SERO = ['COVID RT-PCR','Dengue NS1','Dengue IgM','Dengue IgG','Dengue PCR','CMV','HIV','HBsAg','Anti-HCV'];
+const DEFAULT_ABX = ['Amikacin','Gentamicin','Ciprofloxacin','Levofloxacin','Ceftriaxone','Ceftazidime','Cefepime','Cefoperazone-sulbactam','Piperacillin-tazobactam','Amoxicillin-clavulanate','Meropenem','Imipenem','Ceftazidime-avibactam','Colistin','Polymyxin B','Tigecycline','Minocycline','Doxycycline','Co-trimoxazole','Nitrofurantoin','Fosfomycin','Azithromycin','Vancomycin','Teicoplanin','Linezolid'];
+const ORGANISMS = ['Escherichia coli','Klebsiella pneumoniae','Acinetobacter baumannii','Pseudomonas aeruginosa','Staphylococcus aureus','MRSA','Coagulase-negative Staphylococcus','Enterococcus faecalis','Enterococcus faecium','Proteus mirabilis','Enterobacter spp.','Citrobacter spp.','Serratia marcescens','Stenotrophomonas maltophilia','Burkholderia cepacia','Salmonella Typhi','Streptococcus pneumoniae','Candida albicans','Candida auris','Candida spp.'];
+const CS_TYPES = ['Blood','Urine','Wound','Tracheal aspirate','Sputum','CSF','Catheter tip'];
+const CS_STATUS = ['Pending','No growth','Growth'];
+const SERO_RES = ['Positive','Negative','Pending','Equivocal'];
+const BF_PANELS = ['Pneumonia','Blood culture (BCID2)','Meningitis/Encephalitis','Respiratory','GI','Joint infection'];
+const DEPTS = ['Medicine','Nephrology','Cardiology','Neurology','Pulmonology','Gastroenterology','Hepatology','Haematology','Endocrinology','Infectious Disease','Surgery','Neurosurgery','Orthopaedics','Gynae & Obs','Paediatrics','ENT','Psychiatry','Physical Medicine'];
+const MARKS = [['','None'],['red','Red'],['yellow','Yellow'],['green','Green'],['blue','Blue'],['purple','Purple']];
+const slugId = s => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+const clone = o => JSON.parse(JSON.stringify(o));
+const DEFAULT_BEDS = ['2203','2204','2205','2206','2210','2211','2212','2213','2214','2215','2216','2217'];
+const PALETTE = [['#ff6b6b','#f59f00'],['#22b8cf','#1c7ed6'],['#20c997','#0c8599'],['#9775fa','#6741d9'],['#f783ac','#d6336c'],['#ffa94d','#e8590c'],['#4dabf7','#3b5bdb'],['#51cf66','#2b8a3e'],['#fcc419','#e67700'],['#da77f2','#9c36b5'],['#ff8787','#c92a2a'],['#3bc9db','#5f3dc4']];
+const REDS = [['#b3261a','#5c0d07'],['#8f1c12','#4a0905'],['#a8321f','#540f08']];
+const THEMES = [
+  {id:'sunrise', name:'Sunrise', kind:'Light', pv:['#fff6ef','#ff5f45','#ffa63d']},
+  {id:'sky', name:'Sky', kind:'Light', pv:['#eef5ff','#2f6bff','#22c1e8']},
+  {id:'mint', name:'Mint', kind:'Light', pv:['#ecfaf3','#0ca678','#3bc9db']},
+  {id:'candy', name:'Candy', kind:'Mixed', pv:['#fbf0ff','#e64980','#7048e8']},
+  {id:'ocean', name:'Ocean', kind:'Deep', pv:['#081a33','#00a8f0','#7b5cff']},
+  {id:'royal', name:'Royal', kind:'Deep', pv:['#170c2b','#a855f7','#ff5fa8']},
+  {id:'midnight', name:'Midnight', kind:'Night', pv:['#0b0f17','#3d7bff','#9b6bff']},
+  {id:'amoled', name:'Black', kind:'Night', pv:['#000000','#0fb5c6','#e0479e']},
+  {id:'rednight', name:'Red night', kind:'Night · low glare', pv:['#0a0101','#b3261a','#6e110a']},
+];
+const STATUS = {critical:'Critical', serious:'Serious', stable:'Stable'};
+const OUTCOMES = ['Discharge','Ward transfer','Death','DAMA'];
+const SOURCES = ['Emergency','Ward','OT','Other hospital'];
+const MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const WD = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+
+const I = {
+  archive:'<path d="M3 4h18v4H3zM5 8v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8M10 12h4"/>',
+  bed:'<path d="M2 18V6M2 14h20v4M22 14v-2a3 3 0 0 0-3-3h-8v5"/><circle cx="6.5" cy="11" r="2"/>',
+  settings:'<path d="M4 6h9M17 6h3M4 12h3M11 12h9M4 18h11M19 18h1"/><circle cx="15" cy="6" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="17" cy="18" r="2"/>',
+  back:'<path d="M15 18l-6-6 6-6"/>',
+  more:'<circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/>',
+  plus:'<path d="M12 5v14M5 12h14"/>',
+  edit:'<path d="M4 20h4L19 9l-4-4L4 16v4zM14 6l4 4"/>',
+  trash:'<path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/>',
+  move:'<path d="M7 7h13l-4-4M17 17H4l4 4"/>',
+  out:'<path d="M14 4h5a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-5M10 16l-4-4 4-4M6 12h10"/>',
+  newp:'<circle cx="10" cy="8" r="4"/><path d="M3 21a7 7 0 0 1 14 0M19 8v6M16 11h6"/>',
+  restore:'<path d="M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5"/>',
+  pulse:'<path d="M3 12h4l2-5 4 10 2-5h6"/>',
+  warn:'<path d="M12 3l10 18H2zM12 10v5M12 18v.5"/>',
+  download:'<path d="M12 4v11M7 10l5 5 5-5M5 20h14"/>',
+  upload:'<path d="M12 20V9M7 14l5-5 5 5M5 4h14"/>',
+  copy:'<rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/>',
+  list:'<path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1"/><circle cx="4.5" cy="12" r="1"/><circle cx="4.5" cy="18" r="1"/>',
+  olist:'<path d="M10 6h10M10 12h10M10 18h10M4 4.5h1.5V9M4 9h3M4 14.5c0-1 2.8-1 2.8.5 0 1-2.8 2-2.8 3.5h3"/>',
+  eraser:'<path d="M7 20h13M4 15l9-9 6 6-7 7H8z"/>',
+  marker:'<path d="M9 15l-3 5h6l1-2M9 15l6-11 5 3-6 11z"/>',
+  send:'<path d="M21 3L3 10.5l7 3 3 7zM21 3L10 13.5"/>',
+  report:'<path d="M6 3h9l4 4v14H6zM14 3v5h5M9 12h7M9 16h7"/>',
+};
+const ic = (n, cls='') => `<span class="ico ${cls}"><svg viewBox="0 0 24 24">${I[n]}</svg></span>`;
+
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const pad = n => String(n).padStart(2, '0');
+const $ = s => document.querySelector(s);
+const view = $('#view');
+
+function defSettings(){ return {theme:'sunrise', font:'Poppins', bold:false, scale:100, card:'m', sort:'bed', lastBackup:null, lastBy:'', tagFilter:''}; }
+const defTags = () => DEFAULT_TAGS.map(([name, color]) => ({id:uid(), name, color}));
+function fresh(){ return migrate({v:1, beds:DEFAULT_BEDS.map(no => ({id:uid(), no})), patients:[], tags:defTags(), settings:defSettings()}); }
+function migrate(s){
+  s.settings = Object.assign(defSettings(), s.settings || {});
+  s.beds = Array.isArray(s.beds) ? s.beds : [];
+  s.patients = Array.isArray(s.patients) ? s.patients : [];
+  if (!Array.isArray(s.tags)) s.tags = defTags();
+  if (!Array.isArray(s.labDefs)) s.labDefs = clone(DEFAULT_LABS);
+  if (!Array.isArray(s.seroDefs)) s.seroDefs = DEFAULT_SERO.map(n => ({id:slugId(n), name:n}));
+  if (!Array.isArray(s.abxList)) s.abxList = DEFAULT_ABX.slice();
+  s.patients.forEach(p => {
+    p.plans = p.plans || []; p.icuc = p.icuc || []; p.ettHist = p.ettHist || []; p.tags = p.tags || [];
+    p.dengue = p.dengue || {on:false, onset:'', lastFever:''};
+    p.labs = p.labs || {}; p.labStar = p.labStar || []; p.sero = p.sero || []; p.biofire = p.biofire || []; p.cultures = p.cultures || []; p.consults = p.consults || [];
+  });
+  return s;
+}
+function load(){
+  try { const s = JSON.parse(localStorage.getItem(KEY)); if (s && s.beds) return migrate(s); } catch(e) {}
+  return fresh();
+}
+let S = load();
+// preview copy only: fill a few example patients so the dashboard can be tried at once
+function seedDemo(){
+  const d = n => { const x = new Date(); x.setDate(x.getDate() - n); return `${x.getFullYear()}-${pad(x.getMonth()+1)}-${pad(x.getDate())}`; };
+  const tg = n => S.tags.filter(t => n.includes(t.name)).map(t => t.id);
+  const mk = (no, o) => { const b = S.beds.find(x => x.no === no); S.patients.push(Object.assign({id:uid(), bedId:b.id, plans:[], icuc:[], ettHist:[], ett:null, tags:[], dengue:{on:false, onset:'', lastFever:''}, source:'Emergency', labs:{}, labStar:[], sero:[], biofire:[], cultures:[], consults:[]}, o)); };
+  const L = o => Object.fromEntries(Object.entries(o).map(([k, v]) => [k, {v:String(v)}]));
+  mk('2203', {name:'Example RB', age:'62', sex:'F', dx:'Severe CAP with septic shock', status:'critical', hospDate:d(4), icuDate:d(3), ett:{date:d(3), ext:null}, tags:tg(['Sepsis','MDR']),
+    plans:[{id:uid(), ts:`${d(0)}T08:30`, by:'', html:'<b>Continue NA 0.12 mcg/kg/min</b>, taper if MAP &gt; 70<div><span style="background-color:#fff176">Repeat lactate 12 noon</span></div>'}],
+    icuc:[{id:uid(), ts:`${d(0)}T10:00`, by:'Dr Example', html:'Change to meropenem as per culture. SBT tomorrow.'}],
+    consults:[{id:uid(), ts:`${d(1)}T12:00`, by:'Dr Example N', dept:'Nephrology', html:'No dialysis now. Keep urine output > 0.5 mL/kg/h.'}],
+    labs:{[d(1)]:L({crp:210, pct:8.4, hb:10.2, hct:31, wbc:'18,400', plt:'1,32,000', cr:1.9, urea:68, na:132, k:3.3}),
+          [d(0)]:L({crp:145, pct:4.1, hb:9.8, hct:30, wbc:'14,200', plt:'1,10,000', cr:1.5, urea:55, na:135, k:3.9})},
+    labStar:['crp','pct','cr'],
+    cultures:[{id:uid(), type:'Blood', date:d(3), rdate:d(1), status:'Growth', org:'Klebsiella pneumoniae', count:'Growth after 36 h', note:'',
+      abx:[{name:'Meropenem', r:'S'}, {name:'Amikacin', r:'S'}, {name:'Colistin', r:'S'}, {name:'Ceftriaxone', r:'R'}, {name:'Piperacillin-tazobactam', r:'R'}, {name:'Ciprofloxacin', r:'R'}]},
+      {id:uid(), type:'Tracheal aspirate', date:d(2), rdate:'', status:'Pending', org:'', count:'Gram-negative bacilli seen', note:'', abx:[]}],
+    biofire:[{id:uid(), date:d(2), panel:'Pneumonia', detected:'Klebsiella pneumoniae (10^6)', genes:'CTX-M', note:''}]});
+  mk('2205', {name:'Example AK', age:'28', sex:'M', dx:'Dengue with plasma leakage', status:'serious', source:'Ward', hospDate:d(3), icuDate:d(1), tags:tg(['Watch closely']), dengue:{on:true, onset:d(5), lastFever:d(1)},
+    labs:{[d(3)]:L({hct:40, plt:'95,000'}), [d(1)]:L({hct:44, plt:'38,000', alt:210, ast:340}), [d(0)]:L({hct:49, plt:'22,000', alt:260, ast:410, alb:2.8}), [d(0) + '~pm']:L({hct:46, plt:'19,000', k:3.2, na:131})}, labStar:['hct','plt'],
+    plans:[{id:uid(), ts:`${d(0)}T09:15`, by:'', html:'<ul><li>Fluid as per HCT trend, CBC + HCT 6 hourly</li><li><b>Evening: Na, K and DIC profile</b></li></ul>'}],
+    consults:[{id:uid(), ts:`${d(0)}T11:30`, by:'Dr Example', dept:'Medicine', html:'Agree with plan. Platelet transfusion only if active bleeding.'}],
+    sero:[{id:uid(), tid:'dengue-ns1', date:d(4), result:'Positive', note:''}, {id:uid(), tid:'dengue-igm', date:d(1), result:'Pending', note:''}]});
+  S.patients[1].labs[d(0)].hct.c = 'red';
+  mk('2210', {name:'Example MH', age:'45', sex:'M', dx:'Post-op laparotomy', status:'stable', source:'OT', hospDate:d(2), icuDate:d(2), tags:tg(['Post-op'])});
+  mk('2214', {name:'Example NS', age:'51', sex:'F', dx:'DKA, AKI', status:'serious', hospDate:d(0), icuDate:d(0), tags:tg(['Renal/CRRT'])});
+  save();
+}
+if (IS_PREVIEW && !(() => { try { return localStorage.getItem(KEY + '.seeded3'); } catch(e){ return true; } })()){
+  const keep = S.settings; S = fresh(); S.settings = keep; seedDemo();
+  try { localStorage.setItem(KEY + '.seeded3', '1'); } catch(e) {}
+}
+function save(){ try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e){ toast('Could not save — storage full'); } }
+
+/* ================= dates ================= */
+function todayStr(){ const d = new Date(); return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`; }
+function nowTime(){ const d = new Date(); return `${pad(d.getHours())}:${pad(d.getMinutes())}`; }
+function diff(a, b){ // days from a to b
+  const [y1,m1,d1] = a.split('-').map(Number), [y2,m2,d2] = b.split('-').map(Number);
+  return Math.round((Date.UTC(y2,m2-1,d2) - Date.UTC(y1,m1-1,d1)) / 864e5);
+}
+function fmtD(s, year=true){ if(!s) return '—'; const [y,m,d] = s.split('-').map(Number); return `${d} ${MON[m-1]}${year ? ' ' + y : ''}`; }
+function fmtLong(s){ const [y,m,d] = s.split('-').map(Number); return `${WD[new Date(y,m-1,d).getDay()]}, ${d} ${MON[m-1]} ${y}`; }
+function dayN(from, ref){ if(!from) return null; const n = diff(from, ref) + 1; return n >= 1 ? n : null; }
+
+/* ================= accessors ================= */
+const active = () => S.patients.filter(p => !p.discharge);
+const archived = () => S.patients.filter(p => p.discharge);
+const bedById = id => S.beds.find(b => b.id === id);
+const occupant = bedId => S.patients.find(p => !p.discharge && p.bedId === bedId);
+const getP = id => S.patients.find(p => p.id === id);
+const numCmp = (a, b) => String(a).localeCompare(String(b), undefined, {numeric:true});
+const freeBeds = () => S.beds.filter(b => !occupant(b.id)).sort((a,b) => numCmp(a.no, b.no));
+function bedColor(bed){
+  const pal = S.settings.theme === 'rednight' ? REDS : PALETTE;
+  const i = bed ? Math.max(0, S.beds.indexOf(bed)) : 0;
+  return pal[i % pal.length];
+}
+function colorFor(p){
+  if (p.discharge){ const b = S.beds.find(x => x.no === p.discharge.bedNo); return bedColor(b); }
+  return bedColor(bedById(p.bedId));
+}
+function bedNoOf(p){ return p.discharge ? p.discharge.bedNo : (bedById(p.bedId)?.no || '?'); }
+const byTsDesc = (a, b) => b.ts.localeCompare(a.ts);
+const tagById = id => S.tags.find(t => t.id === id);
+const pTags = p => (p.tags || []).map(tagById).filter(Boolean);
+function tagChips(p, small){
+  return pTags(p).map(t => small ? `<i class="tdot" style="--tc:${t.color}" title="${esc(t.name)}"></i>` : `<span class="tg" style="--tc:${t.color}">${esc(t.name)}</span>`).join('');
+}
+const tagPick = sel => `<div class="chips" data-group="tags" data-multi data-value="${esc(sel.join(','))}">${S.tags.map(t => `<button type="button" class="chip tchip ${sel.includes(t.id) ? 'on' : ''}" style="--tc:${t.color}" data-v="${t.id}">${esc(t.name)}</button>`).join('') || '<span class="hint">No tags yet.</span>'}</div>`;
+function textOf(html){ const d = document.createElement('div'); d.innerHTML = String(html || '').replace(/<(br|\/div|\/p|\/li)[^>]*>/gi, ' $&'); return (d.textContent || '').replace(/\s+/g, ' ').trim(); }
+
+function ctrs(p, refDate){
+  const ref = refDate || (p.discharge ? p.discharge.date : todayStr());
+  const c = {hosp: dayN(p.hospDate, ref), icu: dayN(p.icuDate, ref)};
+  if (p.ett && !p.ett.ext) c.ett = dayN(p.ett.date, ref);
+  if (p.dengue && p.dengue.on){
+    c.dengue = dayN(p.dengue.onset, ref);
+    if (p.dengue.lastFever){ const a = diff(p.dengue.lastFever, ref); if (a >= 0) c.afeb = a; }
+  }
+  return c;
+}
+function ctrChips(p, mode){
+  const c = ctrs(p), o = [], s = mode === 's';
+  if (!s && c.hosp) o.push(`<span class="ct hosp">Hosp D${c.hosp}</span>`);
+  if (c.icu) o.push(`<span class="ct icu">ICU D${c.icu}</span>`);
+  if (c.ett) o.push(`<span class="ct ett">ETT D${c.ett}</span>`);
+  if (c.dengue) o.push(`<span class="ct den">${s ? 'DEN' : 'Dengue'} D${c.dengue}</span>`);
+  if (c.afeb != null) o.push(`<span class="ct afeb ${c.afeb <= 2 ? 'warn' : ''}">${s ? 'AF' : 'Afebrile'} D${c.afeb}</span>`);
+  return o.join('');
+}
+
+/* ================= sanitize rich text ================= */
+const OK_TAGS = new Set(['B','STRONG','I','EM','U','S','STRIKE','SPAN','FONT','BR','DIV','P','UL','OL','LI','MARK','SUB','SUP']);
+const OK_CSS = ['color','background-color','font-size','font-weight','font-style','text-decoration','text-decoration-line'];
+function clean(html){
+  const doc = new DOMParser().parseFromString(`<div id="r">${html || ''}</div>`, 'text/html');
+  const root = doc.getElementById('r');
+  (function walk(node){
+    [...node.children].forEach(el => {
+      if (['SCRIPT','STYLE','IFRAME','OBJECT','EMBED','LINK','META'].includes(el.tagName)){ el.remove(); return; }
+      walk(el);
+      if (!OK_TAGS.has(el.tagName)){ el.replaceWith(...el.childNodes); return; }
+      const css = [];
+      for (const prop of OK_CSS){ const v = el.style.getPropertyValue(prop); if (v) css.push(`${prop}:${v}`); }
+      const color = el.getAttribute('color'), size = el.getAttribute('size');
+      [...el.attributes].forEach(a => el.removeAttribute(a.name));
+      if (css.length) el.setAttribute('style', css.join(';'));
+      if (el.tagName === 'FONT'){ if (color) el.setAttribute('color', color); if (size) el.setAttribute('size', size); }
+    });
+  })(root);
+  return root.innerHTML;
+}
+
+/* ================= settings / theme ================= */
+function applySettings(){
+  const st = S.settings, h = document.documentElement;
+  h.dataset.skin = st.theme;
+  h.style.setProperty('--font', `'${st.font}'`);
+  h.style.setProperty('--fw', st.bold ? 700 : 400);
+  h.style.setProperty('--scale', st.scale / 100);
+  const t = THEMES.find(x => x.id === st.theme) || THEMES[0];
+  document.querySelector('meta[name=theme-color]')?.setAttribute('content', t.pv[1]);
+}
+
+/* ================= toast / sheets ================= */
+let toastT;
+function toast(msg){ const t = $('#toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('show'), 2400); }
+
+function sheet(html, {full=false, onClose=null} = {}){
+  const el = document.createElement('div');
+  el.className = 'wrap';
+  el.innerHTML = `<div class="sheet ${full ? 'full' : ''}" role="dialog">${html}</div>`;
+  el._onClose = onClose;
+  $('#sheets').appendChild(el);
+  requestAnimationFrame(() => el.classList.add('open'));
+  el.addEventListener('click', e => {
+    if (e.target === el && !full) return closeSheet(el);
+    const chip = e.target.closest('.chips .chip');
+    if (chip){
+      const g = chip.parentElement;
+      if ('multi' in g.dataset){
+        chip.classList.toggle('on');
+        g.dataset.value = [...g.querySelectorAll('.chip.on')].map(x => x.dataset.v).join(',');
+      } else {
+        g.querySelectorAll('.chip').forEach(x => x.classList.toggle('on', x === chip));
+        g.dataset.value = chip.dataset.v;
+      }
+      g.dispatchEvent(new Event('change', {bubbles:true}));
+    }
+    if (e.target.closest('[data-close]')) closeSheet(el);
+  });
+  el.addEventListener('change', e => {
+    const t = e.target;
+    if (t.type === 'checkbox' && t.name) el.querySelectorAll(`[data-show="${t.name}"]`).forEach(s => s.hidden = !t.checked);
+  });
+  return el;
+}
+function closeSheet(el){
+  if (!el || el._closing) return; el._closing = true;
+  if (el._onClose) el._onClose();
+  el.classList.remove('open'); setTimeout(() => el.remove(), 220);
+}
+function confirmBox(msg, ok='Confirm', danger=false, sub=''){
+  return new Promise(res => {
+    const el = sheet(`<div class="sh-head"><h2>${esc(msg)}</h2></div>${sub ? `<div class="sh-sub">${esc(sub)}</div>` : ''}
+      <div class="sh-foot"><button class="btn ghost" data-no>Cancel</button><button class="btn ${danger ? 'danger' : 'primary'}" data-yes>${esc(ok)}</button></div>`);
+    el.querySelector('[data-no]').onclick = () => { closeSheet(el); res(false); };
+    el.querySelector('[data-yes]').onclick = () => { closeSheet(el); res(true); };
+    el.addEventListener('click', e => { if (e.target === el) res(false); });
+  });
+}
+const chips = (group, opts, val, kcls=false) => `<div class="chips" data-group="${group}" data-value="${esc(val || '')}">${opts.map(([v, l]) => `<button type="button" class="chip ${kcls ? 'k-' + v : ''} ${v === val ? 'on' : ''}" data-v="${esc(v)}">${esc(l)}</button>`).join('')}</div>`;
+const chipVal = (el, g) => el.querySelector(`[data-group="${g}"]`).dataset.value;
+
+/* ================= router ================= */
+let curRoute = '/', lastRoute = '';
+function route(){
+  const h = curRoute;
+  const parts = h.split('/').filter(Boolean);
+  if (h !== lastRoute){ window.scrollTo(0, 0); lastRoute = h; }
+  if (parts[0] === 'p' && parts[1]) return renderPatient(parts[1], parts[2] || 'plan', false);
+  if (parts[0] === 'a' && parts[1]) return renderPatient(parts[1], parts[2] || 'plan', true);
+  if (parts[0] === 'archive') return renderArchive();
+  if (parts[0] === 'report') return renderReport();
+  renderDash();
+}
+const go = h => { curRoute = String(h).replace(/^#/, '') || '/'; route(); };
+
+/* ================= dashboard ================= */
+function lastPlanText(p){
+  const e = p.plans.slice().sort(byTsDesc)[0];
+  if (!e) return '';
+  const t = textOf(e.html); return t.length > 140 ? t.slice(0, 140) + '…' : t;
+}
+function cardHTML(b){
+  const p = occupant(b.id), [g1, g2] = bedColor(b), sz = S.settings.card;
+  const style = `style="--g1:${g1};--g2:${g2}"`;
+  if (!p) return `<div class="card empty ${sz}" role="button" tabindex="0" data-act="admit" data-bed="${b.id}" ${style}>
+      <div class="c-top"><span class="bedno">${esc(b.no)}</span></div>
+      <div class="empty-l">${ic('plus')}${sz === 's' ? 'Admit' : 'Empty · Admit'}</div></div>`;
+  const last = sz === 'l' ? lastPlanText(p) : '';
+  const imp = sz === 'l' ? starLine(p) : '';
+  const meta = (p.age || p.sex) ? ` <small>${esc(p.age || '')}${esc(p.sex || '')}</small>` : '';
+  return `<div class="card occ ${sz} st-${p.status}" role="button" tabindex="0" data-act="openP" data-id="${p.id}" ${style}>
+    <div class="c-top"><span class="bedno">${esc(b.no)}</span><span class="st ${p.status}">${sz === 's' ? '' : STATUS[p.status]}</span></div>
+    <div class="c-name">${esc(p.name || 'Unnamed')}${sz === 's' ? '' : meta}</div>
+    ${sz !== 's' && p.dx ? `<div class="c-dx">${esc(p.dx)}</div>` : ''}
+    ${pTags(p).length ? `<div class="c-tags">${tagChips(p, sz === 's')}</div>` : ''}
+    <div class="c-ct">${ctrChips(p, sz)}</div>
+    ${imp ? `<div class="c-imp">${imp}</div>` : ''}
+    ${last ? `<div class="c-last"><b>Plan:</b> ${esc(last)}</div>` : ''}
+  </div>`;
+}
+function renderDash(){
+  const st = S.settings, t = todayStr(), act = active();
+  const tf = st.tagFilter && tagById(st.tagFilter) ? st.tagFilter : '';
+  const beds = S.beds.slice().sort((a, b) => numCmp(a.no, b.no)).filter(b => { if (!tf) return true; const p = occupant(b.id); return p && (p.tags || []).includes(tf); });
+  const occ = act.length, crit = act.filter(p => p.status === 'critical').length;
+  const ett = act.filter(p => p.ett && !p.ett.ext).length, den = act.filter(p => p.dengue && p.dengue.on).length;
+  let body = '';
+  if (st.sort === 'cat'){
+    const groups = [['critical','Critical'],['serious','Serious'],['stable','Stable'],['empty','Empty beds']];
+    for (const [k, label] of groups){
+      const list = beds.filter(b => { const p = occupant(b.id); return k === 'empty' ? !p : p && p.status === k; });
+      if (list.length) body += `<div class="gtitle ${k}"><i></i>${label} · ${list.length}</div><div class="grid ${st.card}">${list.map(cardHTML).join('')}</div>`;
+    }
+  } else {
+    let list = beds;
+    if (st.sort === 'az'){
+      const name = b => (occupant(b.id)?.name || '').toLowerCase();
+      list = beds.slice().sort((a, b) => {
+        const pa = occupant(a.id), pb = occupant(b.id);
+        if (pa && !pb) return -1; if (!pa && pb) return 1;
+        if (pa && pb) return name(a).localeCompare(name(b)) || numCmp(a.no, b.no);
+        return numCmp(a.no, b.no);
+      });
+    }
+    body = `<div class="grid ${st.card}">${list.map(cardHTML).join('')}</div>`;
+  }
+  if (!S.beds.length) body = `<div class="emptystate">No beds yet. Tap the bed button above to add beds.</div>`;
+  else if (tf && !beds.length) body = `<div class="emptystate">No patient has the tag “${esc(tagById(tf).name)}” now.</div>`;
+  const tagbar = `<div class="tagbar"><button class="${!tf ? 'on' : ''}" data-act="tagf" data-v="">All</button>${S.tags.map(tg => {
+    const n = act.filter(p => (p.tags || []).includes(tg.id)).length;
+    return `<button class="${tf === tg.id ? 'on' : ''}" style="--tc:${tg.color}" data-act="tagf" data-v="${tg.id}"><i></i>${esc(tg.name)}<small>${n}</small></button>`;
+  }).join('')}<button data-act="tags">${ic('edit')}Tags</button></div>`;
+  let banner = '';
+  if (act.length && !IS_PREVIEW){
+    const lb = st.lastBackup, days = lb ? diff(lb, t) : null;
+    if (!lb || days >= 7) banner = `<button class="banner" data-act="backup">${ic('warn')}<span>${lb ? `Last backup ${days} days ago` : 'No backup taken yet'} — tap to save a backup file</span></button>`;
+  }
+  view.innerHTML = `
+  <header class="top">
+    <div class="brand"><div class="logo">${ic('pulse')}</div><div><h1>ICU Round</h1><div class="sub">${fmtLong(t).replace(/^(\w{3})\w*/, '$1')}</div></div></div>
+    <div class="hbtns">
+      <button class="hbtn" data-act="round" aria-label="Send round or report">${ic('send')}</button>
+      <button class="hbtn" data-act="archive" aria-label="Archive">${ic('archive')}</button>
+      <button class="hbtn" data-act="beds" aria-label="Manage beds">${ic('bed')}</button>
+      <button class="hbtn" data-act="settings" aria-label="Settings">${ic('settings')}</button>
+    </div>
+  </header>
+  ${IS_PREVIEW ? '<div class="preview-note">Preview copy — data here stays only in this browser. Use the installed app for real rounds.</div>' : ''}
+  ${banner}
+  <div class="stats">
+    <div class="stat k1"><b>${occ}/${S.beds.length}</b><span>Occupied</span></div>
+    <div class="stat k2"><b>${crit}</b><span>Critical</span></div>
+    <div class="stat k3"><b>${ett}</b><span>Intubated</span></div>
+    <div class="stat k4"><b>${den}</b><span>Dengue</span></div>
+  </div>
+  <div class="toolbar">
+    <div class="seg">${[['bed','Bed no.'],['az','A–Z'],['cat','Category']].map(([v, l]) => `<button class="${st.sort === v ? 'on' : ''}" data-act="sort" data-v="${v}">${l}</button>`).join('')}</div>
+    <div class="seg">${[['s','S'],['m','M'],['l','L']].map(([v, l]) => `<button class="${st.card === v ? 'on' : ''}" data-act="size" data-v="${v}" aria-label="Card size ${l}">${l}</button>`).join('')}</div>
+  </div>
+  ${tagbar}
+  ${body}`;
+}
+
+/* ================= patient page ================= */
+function consChart(p){
+  const m = {};
+  p.consults.forEach(e => { const k = (e.dept || 'Consultant') + '|' + (e.by || ''); const d = e.ts.slice(0, 10);
+    const x = m[k] = m[k] || {dept:e.dept || 'Consultant', by:e.by || '', first:d, last:d, n:0};
+    x.n++; if (d < x.first) x.first = d; if (d > x.last) x.last = d; });
+  const rows = Object.values(m).sort((a, b) => b.last.localeCompare(a.last));
+  return `<div class="panel"><div class="pan-h"><h3>Who has seen</h3><span class="hint" style="margin:0">${rows.length} consultant${rows.length > 1 ? 's' : ''}</span></div>
+    <div class="ctab">${rows.map(r => `<div class="crow"><span class="e-dept">${esc(r.dept)}</span><b>${esc(r.by || '—')}</b><small>${r.first === r.last ? fmtD(r.last, false) : fmtD(r.first, false) + ' – ' + fmtD(r.last, false)} · ${r.n}×</small></div>`).join('')}</div></div>`;
+}
+function entriesHTML(p, kind, ro){
+  const list = p[kind].slice().sort(byTsDesc), t = todayStr();
+  const label = {plans:'plan', icuc:'note', consults:'consultant note'}[kind];
+  let html = ro ? '' : `<div class="tab-actions"><button class="btn primary" style="flex:1" data-act="newEntry" data-kind="${kind}" data-id="${p.id}">${ic('plus')} New ${label}</button>
+    <button class="btn ghost" data-act="share" data-id="${p.id}" aria-label="Send today's decisions">${ic('send')} Send</button></div>`;
+  if (kind === 'consults' && list.length) html += consChart(p);
+  if (!list.length) return html + `<div class="emptystate">${{plans:'No plan written yet.', icuc:'No ICU consultant note yet.', consults:'No other consultant has been called yet.'}[kind]}</div>`;
+  const groups = {};
+  list.forEach(e => { const d = e.ts.slice(0, 10); (groups[d] = groups[d] || []).push(e); });
+  Object.keys(groups).sort().reverse().forEach((d, i) => {
+    const icuD = p.icuDate ? diff(p.icuDate, d) + 1 : null;
+    const title = d === t ? 'Today' : fmtD(d, d.slice(0, 4) !== t.slice(0, 4));
+    const open = i < 2 ? 'open' : '';
+    html += `<details class="dgroup" ${open}><summary class="dhead"><span class="dl">${title}</span><span>${icuD >= 1 ? 'ICU D' + icuD : ''} <span class="chev">▶</span></span></summary>
+      ${groups[d].map(e => `<article class="entry ${kind}">
+        <div class="e-head"><span class="e-time">${esc(e.ts.slice(11, 16))}</span>${e.dept ? `<span class="e-dept">${esc(e.dept)}</span>` : ''}${e.by ? `<span class="e-by">${esc(e.by)}</span>` : ''}<span class="sp"></span>
+        ${ro ? '' : `<button class="ibtn" data-act="editEntry" data-kind="${kind}" data-id="${p.id}" data-e="${e.id}" aria-label="Edit">${ic('edit')}</button>
+        <button class="ibtn del" data-act="delEntry" data-kind="${kind}" data-id="${p.id}" data-e="${e.id}" aria-label="Delete">${ic('trash')}</button>`}</div>
+        <div class="rich">${clean(e.html)}</div></article>`).join('')}</details>`;
+  });
+  return html;
+}
+function infoHTML(p, ro){
+  const c = ctrs(p), t = todayStr();
+  const ettOn = p.ett && !p.ett.ext;
+  const past = [...p.ettHist, ...(p.ett && p.ett.ext ? [p.ett] : [])];
+  let h = `<div class="panel"><div class="pan-h"><h3>Details</h3>${ro ? '' : `<button class="btn ghost sm" data-act="editP" data-id="${p.id}">${ic('edit')} Edit</button>`}</div>
+    <dl class="kv">
+      <dt>Name</dt><dd>${esc(p.name || '—')}</dd>
+      <dt>Age / Sex</dt><dd>${esc(p.age || '—')} ${esc(p.sex || '')}</dd>
+      <dt>Diagnosis</dt><dd>${esc(p.dx || '—')}</dd>
+      <dt>Condition</dt><dd><span class="st ${p.status}">${STATUS[p.status]}</span></dd>
+      <dt>Came from</dt><dd>${esc(p.source || '—')}</dd>
+      <dt>Hospital admission</dt><dd>${fmtD(p.hospDate)} · <b>D${c.hosp ?? '—'}</b></dd>
+      <dt>ICU admission</dt><dd>${fmtD(p.icuDate)} · <b>D${c.icu ?? '—'}</b></dd>
+    </dl></div>`;
+  h += `<div class="panel"><div class="pan-h"><h3>Airway / Intubation</h3></div>
+    <div class="bigline"><div><div class="lbl">${ettOn ? 'Intubated since ' + fmtD(p.ett.date) : 'Not intubated now'}</div></div>
+    <div class="val">${ettOn ? 'ETT D' + (c.ett ?? '—') : ''}</div></div>
+    ${ro ? '' : `<div style="margin-top:12px">${ettOn
+      ? `<button class="btn ghost wide" data-act="extubate" data-id="${p.id}">Extubate</button>`
+      : `<button class="btn primary wide" data-act="intubate" data-id="${p.id}">${past.length ? 'Re-intubate' : 'Intubate'}</button>`}</div>`}
+    ${past.length ? `<div class="hist">${past.map(e => `<div>${fmtD(e.date, false)} → ${fmtD(e.ext, false)} · ${diff(e.date, e.ext) + 1} days</div>`).join('')}</div>` : ''}
+  </div>`;
+  const dg = p.dengue || {};
+  h += `<div class="panel"><div class="pan-h"><h3>Dengue</h3>${ro ? '' : `<label class="sw" style="padding:0"><input type="checkbox" data-dtoggle="${p.id}" ${dg.on ? 'checked' : ''}><i></i></label>`}</div>
+    ${dg.on ? (ro
+      ? `<dl class="kv"><dt>Fever started</dt><dd>${fmtD(dg.onset)} · <b>D${c.dengue ?? '—'}</b></dd><dt>Last fever</dt><dd>${dg.lastFever ? fmtD(dg.lastFever) + ' · <b>Afebrile D' + (c.afeb ?? '—') + '</b>' : 'Still febrile'}</dd></dl>`
+      : `<div class="drow"><label class="f" style="margin:0"><span>Fever started</span><input type="date" data-dfield="onset" data-id="${p.id}" value="${esc(dg.onset)}" max="${t}"></label><div class="cnt">${c.dengue ? 'D' + c.dengue : '—'}</div></div>
+         <div class="drow"><label class="f" style="margin:0"><span>Last fever day</span><input type="date" data-dfield="lastFever" data-id="${p.id}" value="${esc(dg.lastFever)}" max="${t}"></label><div class="cnt ${c.afeb != null && c.afeb <= 2 ? 'warn' : ''}">${c.afeb != null ? 'Afeb D' + c.afeb : '—'}</div></div>
+         ${dg.lastFever ? `<button class="btn ghost sm" data-act="stillFever" data-id="${p.id}">Fever came back / still febrile</button>` : '<div class="hint">Leave "Last fever day" blank while fever continues.</div>'}`)
+    : `<div class="hint">${ro ? 'Not a dengue patient.' : 'Turn on to count Dengue day and Afebrile day.'}</div>`}
+  </div>`;
+  if (p.discharge){
+    const d = p.discharge;
+    h += `<div class="panel"><div class="pan-h"><h3>Left ICU</h3><span class="oc oc-${d.outcome.toLowerCase().replace(/\s+/g, '-')}">${esc(d.outcome)}</span></div>
+      <dl class="kv"><dt>Date & time</dt><dd>${fmtD(d.date)} ${esc(d.time || '')}</dd><dt>From bed</dt><dd>${esc(d.bedNo)}</dd><dt>ICU stay</dt><dd>${c.icu ?? '—'} days</dd>${d.note ? `<dt>Note</dt><dd>${esc(d.note)}</dd>` : ''}</dl></div>`;
+  }
+  return h;
+}
+/* ---------- investigation ---------- */
+const UI = {cols:{}, closed:{}, reportDate:''};
+const has = x => x !== '' && x != null;
+const num = v => { const n = parseFloat(String(v ?? '').replace(/,/g, '')); return isFinite(n) ? n : null; };
+function flagOf(t, v){
+  const n = num(v); if (!t || n === null) return '';
+  if (has(t.hi) && n > Number(t.hi)) return 'hi';
+  if (has(t.lo) && n < Number(t.lo)) return 'lo';
+  return '';
+}
+function arrowOf(a, b){ const x = num(a), y = num(b); if (x === null || y === null) return ''; return x > y ? '↑' : x < y ? '↓' : '→'; }
+function testById(id){ for (const g of S.labDefs) for (const t of g.tests) if (t.id === id) return t; return null; }
+const labDates = p => Object.keys(p.labs || {}).filter(d => Object.values(p.labs[d]).some(x => x && has(x.v))).sort();
+function latestLab(p, tid){ for (const d of labDates(p).reverse()){ const x = p.labs[d][tid]; if (x && has(x.v)) return {d, ...x}; } return null; }
+const rangeTxt = t => (has(t.lo) || has(t.hi)) ? `Normal ${has(t.lo) ? t.lo : '…'} – ${has(t.hi) ? t.hi : '…'}${t.unit ? ' ' + t.unit : ''}` : 'No normal range set';
+const kDate = k => k.slice(0, 10), kPM = k => k.endsWith('~pm');
+const addDays = (s, n) => { const [y, m, d] = s.split('-').map(Number); return new Date(Date.UTC(y, m - 1, d + n)).toISOString().slice(0, 10); };
+function kLabel(k, short){
+  const t = todayStr(), d = kDate(k);
+  const base = d === t ? 'Today' : d === addDays(t, -1) ? 'Yesterday' : fmtD(d, false);
+  return base + (kPM(k) ? (short ? ' PM' : ' · Evening') : '');
+}
+const kFull = k => fmtD(kDate(k)) + (kPM(k) ? ' · Evening' : '');
+function starLine(p){
+  return (p.labStar || []).map(id => { const t = testById(id), l = latestLab(p, id); return t && l ? `<span>${esc(t.name)} <b class="${flagOf(t, l.v)}">${esc(l.v)}</b></span>` : ''; }).join('');
+}
+function colsOf(p){
+  if (UI.cols[p.id]) return UI.cols[p.id];
+  const keys = labDates(p);
+  if (p.discharge){
+    const last = keys.slice(-3);
+    while (last.length < 3) last.unshift(addDays(kDate(last[0] || p.discharge.date), -1));
+    return last;
+  }
+  const t = todayStr(), y = addDays(t, -1);
+  if (keys.includes(t + '~pm')) return [y, t, t + '~pm'];
+  const older = keys.filter(k => kDate(k) < y).pop() || addDays(t, -2);
+  return [older, y, t];
+}
+function labsHTML(p, ro){
+  const cols = colsOf(p), t = todayStr();
+  const stars = p.labStar.map(id => ({t:testById(id), l:latestLab(p, id)})).filter(x => x.t);
+  let h = '';
+  if (stars.length) h += `<div class="panel"><div class="pan-h"><h3>★ Important</h3><span class="hint" style="margin:0">latest values</span></div><div class="impl">${stars.map(({t:tt, l}) =>
+    `<button class="impc ${l ? flagOf(tt, l.v) : ''}" data-act="labrow" data-id="${p.id}" data-t="${tt.id}"><b>${esc(tt.name)}</b><span>${l ? esc(l.v) : '—'}</span><small>${l ? kLabel(l.d, true) : 'no result'}</small></button>`).join('')}</div></div>`;
+  if (!ro && !cols.includes(t + '~pm')) h += `<div class="tab-actions" style="padding-bottom:6px"><button class="btn ghost sm" data-act="labeve" data-id="${p.id}">${ic('plus')} Evening results today</button></div>`;
+  h += `<div class="lcols"><span class="lc0">Tap a date to change it</span>${cols.map((k, i) =>
+    `<button class="colb ${kDate(k) === t ? 'today' : ''} ${kPM(k) ? 'pm' : ''}" data-act="labcol" data-id="${p.id}" data-i="${i}"><b>${kLabel(k, true)}</b><small>${i === 0 ? 'other day' : kDate(k) === t ? (kPM(k) ? 'evening' : 'morning') : 'change'} ▾</small></button>`).join('')}</div>`;
+  for (const g of S.labDefs){
+    const lastK = cols[2], day = p.labs[lastK] || {};
+    const filled = g.tests.filter(tt => day[tt.id] && has(day[tt.id].v)).length;
+    h += `<details class="lgrp" data-g="${g.id}" ${UI.closed[g.id] ? '' : 'open'}><summary><span>${esc(g.name)}</span><small>${filled}/${g.tests.length}</small></summary>
+      ${g.tests.map(tt => {
+        const star = p.labStar.includes(tt.id);
+        let prev = null;
+        const cells = cols.map((k, i) => {
+          const c = (p.labs[k] || {})[tt.id] || {}, ar = i ? arrowOf(c.v, prev) : '';
+          prev = c.v;
+          return `<div class="lcell"><i class="tr">${ar}</i><input class="lin ${flagOf(tt, c.v)} ${c.c ? 'mk-' + c.c : ''}" data-lab="${tt.id}" data-id="${p.id}" data-k="${k}" value="${esc(c.v || '')}" inputmode="decimal" enterkeyhint="next" autocomplete="off" aria-label="${esc(tt.name)} ${esc(kLabel(k))}" ${ro ? 'disabled' : ''}></div>`;
+        }).join('');
+        return `<div class="lrow"><button class="lname" data-act="labrow" data-id="${p.id}" data-t="${tt.id}"><span>${star ? '<i class="lstar">★</i>' : ''}${esc(tt.name)}</span>${tt.unit ? `<small>${esc(tt.unit)}</small>` : ''}</button>${cells}</div>`;
+      }).join('')}</details>`;
+  }
+  h += `<div class="hint" style="padding:0 16px 10px">Red value = outside normal range. ↑↓ compares with the column on its left. Tap a test name to colour-mark it, mark it important, or see all its results.</div>`;
+  if (!ro) h += `<div class="tab-actions"><button class="btn ghost wide" data-act="labdefs">${ic('edit')} Tests, units & normal ranges (all patients)</button></div>`;
+  return h;
+}
+function openLabCol(p, i){
+  const cols = colsOf(p).slice(), k = cols[i], t = todayStr();
+  const el = sheet(`<div class="sh-head"><h2>Which day for this column?</h2><button class="x" data-close>✕</button></div>
+    <div class="sh-body">
+      <label class="f"><span>Date</span><input type="date" name="d" value="${kDate(k)}" max="${t}"></label>
+      <div class="f"><span>Time of sample</span>${chips('slot', [['am','Morning'],['pm','Evening']], kPM(k) ? 'pm' : 'am')}</div>
+      <div class="hint">Choose Evening for labs sent again later the same day, for example electrolytes or DIC profile.</div>
+    </div>
+    <div class="sh-foot"><button class="btn ghost" data-close>Cancel</button><button class="btn primary" data-save>Show</button></div>`);
+  el.querySelector('[data-save]').onclick = () => {
+    const d = el.querySelector('[name=d]').value; if (!d) return toast('Choose a date');
+    const nk = d + (chipVal(el, 'slot') === 'pm' ? '~pm' : '');
+    if (cols.includes(nk) && cols.indexOf(nk) !== i) return toast('That day is already on screen');
+    cols[i] = nk; UI.cols[p.id] = cols; closeSheet(el); route();
+  };
+}
+function openLabRow(p, tid){
+  const tt = testById(tid); if (!tt) return;
+  const ro = !!p.discharge, cols = colsOf(p);
+  let sel = cols[2];
+  const el = sheet(`<div class="sh-head"><h2>${esc(tt.name)}</h2><button class="x" data-close>✕</button></div>
+    <div class="sh-sub">${esc(rangeTxt(tt))}</div><div class="sh-body" id="lrbody"></div>`);
+  const draw = () => {
+    const cur = (p.labs[sel] || {})[tid] || {};
+    const hist = labDates(p).reverse().map(x => ({d:x, ...(p.labs[x][tid] || {})})).filter(x => has(x.v));
+    el.querySelector('#lrbody').innerHTML = `
+      ${ro ? '' : `<div class="sec"><h3>Colour mark</h3>${chips('mkcol', cols.map(k => [k, kLabel(k, true)]), sel)}
+        <div class="mkrow" style="margin-top:10px">${MARKS.map(([c, n]) => `<button class="mkb ${c ? 'mk-' + c : ''} ${(cur.c || '') === c ? 'on' : ''}" data-mk="${c}">${n}</button>`).join('')}</div></div>
+      <label class="sw"><input type="checkbox" id="labstar" ${p.labStar.includes(tid) ? 'checked' : ''}><i></i>Important — always show on top</label>`}
+      <div class="sec" style="margin-top:12px"><h3>All results</h3>${hist.length ? hist.map(x => `<div class="hrow"><span>${kFull(x.d)}</span><b class="${flagOf(tt, x.v)} ${x.c ? 'mk-' + x.c : ''}">${esc(x.v)}</b></div>`).join('') : '<div class="hint">No result yet.</div>'}</div>`;
+  };
+  draw();
+  el.addEventListener('click', e => {
+    const b = e.target.closest('[data-mk]'); if (!b) return;
+    const day = p.labs[sel] = p.labs[sel] || {}, x = day[tid] = day[tid] || {};
+    if (b.dataset.mk) x.c = b.dataset.mk; else delete x.c;
+    if (!has(x.v) && !x.c) delete day[tid];
+    if (!Object.keys(day).length) delete p.labs[sel];
+    save(); draw(); route();
+  });
+  el.addEventListener('change', e => {
+    if (e.target.dataset && e.target.dataset.group === 'mkcol'){ sel = e.target.dataset.value; draw(); return; }
+    if (e.target.id !== 'labstar') return;
+    p.labStar = p.labStar.filter(x => x !== tid); if (e.target.checked) p.labStar.push(tid);
+    save(); route();
+  });
+}
+function openLabDefs(){
+  const el = sheet(`<div class="sh-head"><h2>Tests & normal ranges</h2><button class="x" data-close>✕</button></div>
+    <div class="sh-sub">One list for the whole app — a unit or range changed here changes it for every patient. A value outside the normal range turns red. Leave Low or High blank if not needed.</div>
+    <div class="sh-body"><div id="ldlist"></div>
+      <div class="bedrow" style="margin-top:6px"><input id="newgroup" placeholder="New group, e.g. ABG" autocomplete="off" style="flex:1;width:auto"><button class="btn primary" id="addgroup">${ic('plus')} Add</button></div>
+    </div>`, {onClose:() => route()});
+  const draw = () => {
+    el.querySelector('#ldlist').innerHTML = S.labDefs.map(g => `<div class="ldg">
+      <div class="ldg-h"><input value="${esc(g.name)}" data-gname="${g.id}" autocomplete="off" aria-label="Group name"><button class="ibtn del" data-delg="${g.id}" aria-label="Delete group">${ic('trash')}</button></div>
+      ${g.tests.map(t => `<div class="ldt">
+        <input class="n" value="${esc(t.name)}" data-tf="name" data-t="${t.id}" placeholder="Test name" autocomplete="off">
+        <button class="ibtn del" data-delt="${t.id}" aria-label="Delete test">${ic('trash')}</button>
+        <label class="mini"><span>Unit</span><input value="${esc(t.unit)}" data-tf="unit" data-t="${t.id}" autocomplete="off"></label>
+        <label class="mini"><span>Low</span><input value="${has(t.lo) ? t.lo : ''}" data-tf="lo" data-t="${t.id}" inputmode="decimal" autocomplete="off"></label>
+        <label class="mini"><span>High</span><input value="${has(t.hi) ? t.hi : ''}" data-tf="hi" data-t="${t.id}" inputmode="decimal" autocomplete="off"></label>
+      </div>`).join('')}
+      <button class="btn ghost sm" data-addt="${g.id}" style="margin-top:6px">${ic('plus')} Add test</button></div>`).join('');
+  };
+  draw();
+  el.addEventListener('change', e => {
+    const d = e.target.dataset;
+    if (d.gname){ const g = S.labDefs.find(x => x.id === d.gname), v = e.target.value.trim(); if (v) g.name = v; else e.target.value = g.name; save(); }
+    if (d.tf){
+      const t = testById(d.t), v = e.target.value.trim();
+      if (d.tf === 'lo' || d.tf === 'hi'){
+        if (v === '') t[d.tf] = '';
+        else if (num(v) === null){ e.target.value = has(t[d.tf]) ? t[d.tf] : ''; return toast('Type a number'); }
+        else t[d.tf] = num(v);
+      } else if (d.tf === 'name'){ if (v) t.name = v; else e.target.value = t.name; }
+      else t[d.tf] = v;
+      save();
+    }
+  });
+  el.addEventListener('click', async e => {
+    const at = e.target.closest('[data-addt]');
+    if (at){
+      S.labDefs.find(x => x.id === at.dataset.addt).tests.push({id:uid(), name:'New test', unit:'', lo:'', hi:''});
+      save(); draw();
+      const grp = [...el.querySelectorAll('.ldg')][S.labDefs.findIndex(x => x.id === at.dataset.addt)];
+      const n = grp.querySelectorAll('.ldt .n'); const last = n[n.length - 1]; last.focus(); last.select();
+    }
+    const dt = e.target.closest('[data-delt]');
+    if (dt){
+      const t = testById(dt.dataset.delt);
+      if (!(await confirmBox(`Delete test “${t.name}”?`, 'Delete', true, 'Results already written for this test will be hidden.'))) return;
+      S.labDefs.forEach(g => g.tests = g.tests.filter(x => x.id !== t.id)); save(); draw();
+    }
+    const dg = e.target.closest('[data-delg]');
+    if (dg){
+      const g = S.labDefs.find(x => x.id === dg.dataset.delg);
+      if (!(await confirmBox(`Delete group “${g.name}” and its ${g.tests.length} tests?`, 'Delete', true))) return;
+      S.labDefs = S.labDefs.filter(x => x !== g); save(); draw();
+    }
+    if (e.target.closest('#addgroup')){
+      const inp = el.querySelector('#newgroup'), v = inp.value.trim();
+      if (!v) return toast('Type a group name');
+      S.labDefs.push({id:uid(), name:v, tests:[{id:uid(), name:'New test', unit:'', lo:'', hi:''}]}); inp.value = ''; save(); draw();
+    }
+  });
+}
+
+/* ---------- serology / virology / BioFire ---------- */
+function seroHTML(p, ro){
+  const entries = id => p.sero.filter(x => x.tid === id).sort((a, b) => b.date.localeCompare(a.date));
+  let h = `<div class="panel"><div class="pan-h"><h3>Serology / Virology</h3>${ro ? '' : `<button class="btn ghost sm" data-act="serodefs">${ic('edit')} Tests</button>`}</div>
+    <div class="slist">${S.seroDefs.map(def => {
+      const all = entries(def.id), l = all[0];
+      return `<button class="srow" data-act="sero" data-id="${p.id}" data-t="${def.id}"><span class="sn">${esc(def.name)}${l && l.note ? `<small>${esc(l.note)}</small>` : ''}</span>
+        ${l ? `<span class="res r-${l.result.toLowerCase()}">${esc(l.result)}</span><span class="sd">${fmtD(l.date, false)}${all.length > 1 ? ' · ' + all.length + '×' : ''}</span>` : `<span></span><span class="sd">${ro ? '—' : '+ Add'}</span>`}</button>`;
+    }).join('')}</div></div>`;
+  const bf = p.biofire.slice().sort((a, b) => b.date.localeCompare(a.date));
+  h += `<div class="panel"><div class="pan-h"><h3>BioFire</h3>${ro ? '' : `<button class="btn primary sm" data-act="biofire" data-id="${p.id}">${ic('plus')} Add</button>`}</div>
+    ${bf.length ? bf.map(b => `<div class="bf"><div class="e-head"><span class="e-time">${fmtD(b.date)}</span><span class="e-by">${esc(b.panel)}</span><span class="sp"></span>
+      ${ro ? '' : `<button class="ibtn" data-act="biofire" data-id="${p.id}" data-b="${b.id}" aria-label="Edit">${ic('edit')}</button><button class="ibtn del" data-act="delbf" data-id="${p.id}" data-b="${b.id}" aria-label="Delete">${ic('trash')}</button>`}</div>
+      <div class="bfl"><span>Detected</span><b>${esc(b.detected || 'Not detected')}</b></div>
+      ${b.genes ? `<div class="bfl"><span>Resistance genes</span><b>${esc(b.genes)}</b></div>` : ''}
+      ${b.note ? `<div class="hint">${esc(b.note)}</div>` : ''}</div>`).join('') : '<div class="hint">No BioFire result yet.</div>'}</div>`;
+  return h;
+}
+function setChip(el, group, val){
+  const g = el.querySelector(`[data-group="${group}"]`); g.dataset.value = val || '';
+  g.querySelectorAll('.chip').forEach(c => c.classList.toggle('on', c.dataset.v === val));
+}
+function openSero(p, tid){
+  const def = S.seroDefs.find(x => x.id === tid); if (!def) return;
+  const ro = !!p.discharge, t = todayStr(); let editing = null;
+  const el = sheet(`<div class="sh-head"><h2>${esc(def.name)}</h2><button class="x" data-close>✕</button></div>
+    <div class="sh-body">
+      ${ro ? '' : `<div id="sform"><label class="f"><span>Date</span><input type="date" name="d" value="${t}" max="${t}"></label>
+        <div class="f"><span>Result</span>${chips('res', SERO_RES.map(r => [r, r]), '', true)}</div>
+        <label class="f"><span>Note (optional)</span><input name="note" placeholder="e.g. DENV-2, viral load, titre" autocomplete="off"></label></div>`}
+      <div class="sec"><h3>History</h3><div id="shist"></div></div>
+    </div>
+    ${ro ? '' : `<div class="sh-foot"><button class="btn ghost" data-close>Close</button><button class="btn primary" data-save>Save result</button></div>`}`);
+  const draw = () => {
+    const list = p.sero.filter(x => x.tid === tid).sort((a, b) => b.date.localeCompare(a.date));
+    el.querySelector('#shist').innerHTML = list.length ? list.map(x => `<div class="hrow"><span>${fmtD(x.date)}${x.note ? `<br><small class="hint">${esc(x.note)}</small>` : ''}</span>
+      <span style="display:flex;gap:6px;align-items:center"><span class="res r-${x.result.toLowerCase()}">${esc(x.result)}</span>
+      ${ro ? '' : `<button class="ibtn" data-se="${x.id}" aria-label="Edit">${ic('edit')}</button><button class="ibtn del" data-sd="${x.id}" aria-label="Delete">${ic('trash')}</button>`}</span></div>`).join('') : '<div class="hint">No result yet.</div>';
+  };
+  draw();
+  if (ro) return;
+  el.addEventListener('click', async e => {
+    const ed = e.target.closest('[data-se]');
+    if (ed){ editing = p.sero.find(x => x.id === ed.dataset.se); el.querySelector('[name=d]').value = editing.date; el.querySelector('[name=note]').value = editing.note || ''; setChip(el, 'res', editing.result); el.querySelector('[data-save]').textContent = 'Update result'; el.querySelector('.sh-body').scrollTop = 0; }
+    const dl = e.target.closest('[data-sd]');
+    if (dl && await confirmBox('Delete this result?', 'Delete', true)){ p.sero = p.sero.filter(x => x.id !== dl.dataset.sd); save(); draw(); route(); }
+  });
+  el.querySelector('[data-save]').onclick = () => {
+    const res = chipVal(el, 'res'), d = el.querySelector('[name=d]').value, note = el.querySelector('[name=note]').value.trim();
+    if (!res) return toast('Choose the result');
+    if (!d) return toast('Give the date');
+    if (editing) Object.assign(editing, {date:d, result:res, note});
+    else p.sero.push({id:uid(), tid, date:d, result:res, note});
+    save(); closeSheet(el); route(); toast('Saved');
+  };
+}
+function openSeroDefs(){
+  const el = sheet(`<div class="sh-head"><h2>Serology / Virology tests</h2><button class="x" data-close>✕</button></div>
+    <div class="sh-sub">Rename by typing over a test. Deleting a test hides its results.</div>
+    <div class="sh-body"><div id="sdl"></div>
+      <div class="bedrow" style="margin-top:14px"><input id="newsd" placeholder="New test, e.g. Leptospira IgM" autocomplete="off" style="flex:1;width:auto"><button class="btn primary" id="addsd">${ic('plus')} Add</button></div></div>`, {onClose:() => route()});
+  const draw = () => { el.querySelector('#sdl').innerHTML = S.seroDefs.map(d => `<div class="bedrow"><input value="${esc(d.name)}" data-sdn="${d.id}" autocomplete="off" style="flex:1;width:auto"><button class="ibtn del" data-sdd="${d.id}" aria-label="Delete">${ic('trash')}</button></div>`).join(''); };
+  draw();
+  el.addEventListener('change', e => { const id = e.target.dataset.sdn; if (!id) return; const d = S.seroDefs.find(x => x.id === id), v = e.target.value.trim(); if (v) d.name = v; else e.target.value = d.name; save(); });
+  el.addEventListener('click', async e => {
+    const dd = e.target.closest('[data-sdd]');
+    if (dd){ const d = S.seroDefs.find(x => x.id === dd.dataset.sdd); if (!(await confirmBox(`Delete “${d.name}”?`, 'Delete', true))) return; S.seroDefs = S.seroDefs.filter(x => x !== d); save(); draw(); }
+    if (e.target.closest('#addsd')){
+      const inp = el.querySelector('#newsd'), v = inp.value.trim(); if (!v) return toast('Type a test name');
+      if (S.seroDefs.some(x => x.name.toLowerCase() === v.toLowerCase())) return toast('That test already exists');
+      S.seroDefs.push({id:uid(), name:v}); inp.value = ''; save(); draw();
+    }
+  });
+}
+function openBiofire(p, b){
+  const t = todayStr(), v = b || {date:t, panel:'Pneumonia', detected:'', genes:'', note:''};
+  const el = sheet(`<div class="sh-head"><h2>${b ? 'Edit' : 'New'} BioFire result</h2><button class="x" data-close>✕</button></div>
+    <div class="sh-body">
+      <label class="f"><span>Date</span><input type="date" name="d" value="${esc(v.date)}" max="${t}"></label>
+      <div class="f"><span>Panel</span>${chips('panel', BF_PANELS.map(x => [x, x]), v.panel)}</div>
+      <label class="f"><span>Detected (leave blank if nothing detected)</span><textarea name="det" placeholder="e.g. Klebsiella pneumoniae, Acinetobacter baumannii complex">${esc(v.detected)}</textarea></label>
+      <label class="f"><span>Resistance genes</span><input name="genes" value="${esc(v.genes)}" placeholder="e.g. KPC, NDM, OXA-48, CTX-M, mecA" autocomplete="off"></label>
+      <label class="f"><span>Note (optional)</span><input name="note" value="${esc(v.note)}" autocomplete="off"></label>
+    </div>
+    <div class="sh-foot"><button class="btn ghost" data-close>Cancel</button><button class="btn primary" data-save>Save</button></div>`);
+  el.querySelector('[data-save]').onclick = () => {
+    const f = n => el.querySelector(`[name=${n}]`).value.trim();
+    if (!f('d')) return toast('Give the date');
+    const o = {date:f('d'), panel:chipVal(el, 'panel') || 'Other', detected:f('det'), genes:f('genes'), note:f('note')};
+    if (b) Object.assign(b, o); else p.biofire.push({id:uid(), ...o});
+    save(); closeSheet(el); route(); toast('Saved');
+  };
+}
+
+/* ---------- culture ---------- */
+function csHTML(p, ro){
+  const list = p.cultures.slice().sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+  let h = ro ? '' : `<div class="tab-actions"><button class="btn primary wide" data-act="culture" data-id="${p.id}">${ic('plus')} New culture</button></div>`;
+  if (!list.length) return h + '<div class="emptystate">No culture sent yet.</div>';
+  return h + list.map(c => {
+    const ab = c.abx || [];
+    return `<article class="cs"><div class="e-head"><span class="cs-type">${esc(c.type)}</span><span class="e-time">Sent ${fmtD(c.date, false)}${c.rdate ? ' · Report ' + fmtD(c.rdate, false) : ''}</span><span class="sp"></span>
+      ${ro ? '' : `<button class="ibtn" data-act="culture" data-id="${p.id}" data-c="${c.id}" aria-label="Edit">${ic('edit')}</button><button class="ibtn del" data-act="delcs" data-id="${p.id}" data-c="${c.id}" aria-label="Delete">${ic('trash')}</button>`}</div>
+      <div class="cs-main"><span class="cst s-${slugId(c.status)}">${esc(c.status)}</span>${c.org ? `<b class="cs-org">${esc(c.org)}</b>` : ''}${c.count ? `<small>${esc(c.count)}</small>` : ''}</div>
+      ${ab.length ? `<div class="abxs">${['S','I','R'].map(r => ab.filter(a => a.r === r).map(a => `<span class="ab ab-${r}">${esc(a.name)} <b>${r}</b></span>`).join('')).join('')}</div>` : ''}
+      ${c.note ? `<div class="hint" style="margin-top:8px">${esc(c.note)}</div>` : ''}</article>`;
+  }).join('');
+}
+function openCulture(p, c){
+  const t = todayStr(), v = c || {type:'Blood', date:t, rdate:'', status:'Pending', org:'', count:'', abx:[], note:''};
+  const other = v.type && !CS_TYPES.includes(v.type);
+  const rOf = n => (v.abx.find(a => a.name === n) || {}).r || '';
+  const names = [...S.abxList, ...v.abx.map(a => a.name).filter(n => !S.abxList.includes(n))];
+  const abc = n => `<button type="button" class="abc ${rOf(n) ? 'r-' + rOf(n) : ''}" data-n="${esc(n)}" data-r="${rOf(n)}">${esc(n)}<b>${rOf(n)}</b></button>`;
+  const el = sheet(`<div class="sh-head"><h2>${c ? 'Edit' : 'New'} culture</h2><button class="x" data-close>✕</button></div>
+    <div class="sh-body">
+      <div class="f"><span>Sample</span>${chips('type', [...CS_TYPES, 'Other'].map(x => [x, x]), other ? 'Other' : v.type)}</div>
+      <label class="f" data-other ${other ? '' : 'hidden'}><span>Other sample</span><input name="otype" value="${other ? esc(v.type) : ''}" placeholder="e.g. Pleural fluid" autocomplete="off"></label>
+      <div class="row2"><label class="f"><span>Date sent</span><input type="date" name="d" value="${esc(v.date)}" max="${t}"></label><label class="f"><span>Report date</span><input type="date" name="rd" value="${esc(v.rdate || '')}" max="${t}"></label></div>
+      <div class="f"><span>Result</span>${chips('status', CS_STATUS.map(x => [x, x]), v.status)}</div>
+      <div data-growth ${v.status === 'No growth' ? 'hidden' : ''}>
+        <label class="f"><span>Organism</span><input name="org" list="orglist" value="${esc(v.org)}" placeholder="Type or pick" autocomplete="off"></label>
+        <datalist id="orglist">${ORGANISMS.map(o => `<option value="${esc(o)}">`).join('')}</datalist>
+        <label class="f"><span>Colony count / comment</span><input name="count" value="${esc(v.count)}" placeholder="e.g. >10⁵ CFU/mL, Gram-negative bacilli" autocomplete="off"></label>
+        <div class="f"><span>Sensitivity — tap again to change: S → I → R → off</span><div class="abxpick">${names.map(abc).join('')}</div></div>
+        <div class="bedrow"><input id="newabx" placeholder="Other antibiotic" autocomplete="off" style="flex:1;width:auto"><button type="button" class="btn ghost" id="addabx">${ic('plus')} Add</button></div>
+      </div>
+      <label class="f" style="margin-top:8px"><span>Note (optional)</span><textarea name="note">${esc(v.note)}</textarea></label>
+    </div>
+    <div class="sh-foot"><button class="btn ghost" data-close>Cancel</button><button class="btn primary" data-save>Save</button></div>`);
+  const NEXT = {'':'S', S:'I', I:'R', R:''};
+  el.addEventListener('click', e => {
+    const b = e.target.closest('.abc');
+    if (b){ const r = NEXT[b.dataset.r]; b.dataset.r = r; b.className = 'abc' + (r ? ' r-' + r : ''); b.querySelector('b').textContent = r; }
+    if (e.target.closest('#addabx')){
+      const inp = el.querySelector('#newabx'), n = inp.value.trim(); if (!n) return toast('Type the antibiotic name');
+      if ([...el.querySelectorAll('.abc')].some(x => x.dataset.n.toLowerCase() === n.toLowerCase())) return toast('Already in the list');
+      if (!S.abxList.includes(n)){ S.abxList.push(n); save(); }
+      el.querySelector('.abxpick').insertAdjacentHTML('beforeend', abc(n)); inp.value = '';
+    }
+  });
+  el.querySelector('[data-group=type]').addEventListener('change', e => { el.querySelector('[data-other]').hidden = e.currentTarget.dataset.value !== 'Other'; });
+  el.querySelector('[data-group=status]').addEventListener('change', e => { el.querySelector('[data-growth]').hidden = e.currentTarget.dataset.value === 'No growth'; });
+  el.querySelector('[data-save]').onclick = () => {
+    const f = n => el.querySelector(`[name=${n}]`).value.trim();
+    let type = chipVal(el, 'type'); if (type === 'Other') type = f('otype') || 'Other';
+    if (!f('d')) return toast('Give the date sent');
+    if (f('rd') && f('rd') < f('d')) return toast('Report date is before date sent');
+    const status = chipVal(el, 'status') || 'Pending', growth = status !== 'No growth';
+    const o = {type, date:f('d'), rdate:f('rd'), status, org:growth ? f('org') : '', count:growth ? f('count') : '',
+      abx:growth ? [...el.querySelectorAll('.abc')].filter(x => x.dataset.r).map(x => ({name:x.dataset.n, r:x.dataset.r})) : [], note:f('note')};
+    if (c) Object.assign(c, o); else p.cultures.push({id:uid(), ...o});
+    save(); closeSheet(el); route(); toast('Saved');
+  };
+}
+
+function renderPatient(id, tab, ro){
+  const p = getP(id);
+  if (!p || (ro && !p.discharge) || (!ro && p.discharge)){ go(ro ? '#/archive' : '#/'); return; }
+  const [g1, g2] = colorFor(p);
+  const meta = (p.age || p.sex) ? ` <small>${esc(p.age || '')}${esc(p.sex || '')}</small>` : '';
+  const tabs = [['plan','Plan'],['icuc','ICU Consultant'],['cons','Consultants'],['labs','Investigation'],['cs','Culture'],['sero','Serology'],['info','Info']];
+  const body = tab === 'info' ? infoHTML(p, ro) : tab === 'labs' ? labsHTML(p, ro) : tab === 'cs' ? csHTML(p, ro) : tab === 'sero' ? seroHTML(p, ro)
+    : entriesHTML(p, tab === 'icuc' ? 'icuc' : tab === 'cons' ? 'consults' : 'plans', ro);
+  view.innerHTML = `
+  <header class="ptop" style="--g1:${g1};--g2:${g2}">
+    <button class="hbtn" data-act="go" data-to="${ro ? '#/archive' : '#/'}" aria-label="Back">${ic('back')}</button>
+    <div class="pt-main">
+      <div class="pt-bed">Bed ${esc(bedNoOf(p))}${ro ? ' · Archived' : ''}</div>
+      <div class="pt-name">${esc(p.name || 'Unnamed')}${meta}</div>
+      ${p.dx ? `<div class="pt-dx">${esc(p.dx)}</div>` : ''}
+      <div class="pt-st"><button class="st ${p.status}" ${ro ? '' : `data-act="status" data-id="${p.id}"`}>${STATUS[p.status]}${ro ? '' : ' ▾'}</button>${tagChips(p)}${ro ? '' : `<button class="tgadd" data-act="ptags" data-id="${p.id}">${pTags(p).length ? 'Edit tags' : '+ Tag'}</button>`}</div>
+    </div>
+    <button class="hbtn" data-act="${ro ? 'amenu' : 'pmenu'}" data-id="${p.id}" aria-label="Menu">${ic('more', 'fill')}</button>
+  </header>
+  ${ro ? `<div class="arch-note">${esc(p.discharge.outcome)} on ${fmtD(p.discharge.date)} ${esc(p.discharge.time || '')} — read only</div>` : ''}
+  <div class="ctr-row big">${ctrChips(p, 'm')}</div>
+  <nav class="tabs">${tabs.map(([v, l]) => `<button class="${tab === v ? 'on' : ''}" data-act="tab" data-v="${v}" data-id="${p.id}" data-ro="${ro ? 1 : ''}">${l}</button>`).join('')}</nav>
+  <section>${body}</section>`;
+}
+
+/* ================= patient form ================= */
+function openPatientForm({bedId = null, p = null} = {}){
+  const isNew = !p, t = todayStr();
+  const v = p || {status:'serious', source:'Emergency', hospDate:t, icuDate:t, dengue:{on:false, onset:'', lastFever:''}};
+  const ettOn = !!(p && p.ett && !p.ett.ext);
+  const dg = v.dengue || {};
+  const fb = freeBeds();
+  if (isNew && !fb.length){ toast('No empty bed. Add a bed first.'); return; }
+  const el = sheet(`
+    <div class="sh-head"><h2>${isNew ? 'New admission' : 'Edit patient'}</h2><button class="x" data-close aria-label="Close">✕</button></div>
+    <div class="sh-body">
+      ${isNew ? `<label class="f"><span>Bed</span><select name="bed">${fb.map(b => `<option value="${b.id}" ${b.id === bedId ? 'selected' : ''}>${esc(b.no)}</option>`).join('')}</select></label>` : ''}
+      <label class="f"><span>Name / Initials</span><input name="name" value="${esc(v.name || '')}" placeholder="e.g. AK or Abdul Karim" autocomplete="off"></label>
+      <div class="row2">
+        <label class="f"><span>Age</span><input name="age" value="${esc(v.age || '')}" placeholder="e.g. 45Y" autocomplete="off"></label>
+        <div class="f"><span>Sex</span>${chips('sex', [['M','Male'],['F','Female']], v.sex)}</div>
+      </div>
+      <label class="f"><span>Diagnosis</span><input name="dx" value="${esc(v.dx || '')}" placeholder="Short diagnosis" autocomplete="off"></label>
+      <div class="f"><span>Condition</span>${chips('status', [['critical','Critical'],['serious','Serious'],['stable','Stable']], v.status, true)}</div>
+      <div class="f"><span>Tags</span>${tagPick(v.tags || [])}</div>
+      <div class="f"><span>Came to ICU from</span>${chips('source', SOURCES.map(s => [s, s]), v.source)}</div>
+      <div class="row2">
+        <label class="f"><span>Hospital admission</span><input type="date" name="hosp" value="${esc(v.hospDate || '')}" max="${t}"></label>
+        <label class="f"><span>ICU admission</span><input type="date" name="icu" value="${esc(v.icuDate || '')}" max="${t}"></label>
+      </div>
+      <label class="sw"><input type="checkbox" name="ettOn" ${ettOn ? 'checked' : ''}><i></i>Intubated</label>
+      <div class="sub-f" data-show="ettOn" ${ettOn ? '' : 'hidden'}><label class="f"><span>Intubation date</span><input type="date" name="ettDate" value="${esc(ettOn ? p.ett.date : t)}" max="${t}"></label></div>
+      <label class="sw"><input type="checkbox" name="dengue" ${dg.on ? 'checked' : ''}><i></i>Dengue patient</label>
+      <div class="sub-f" data-show="dengue" ${dg.on ? '' : 'hidden'}>
+        <div class="row2">
+          <label class="f"><span>Fever started</span><input type="date" name="onset" value="${esc(dg.onset || '')}" max="${t}"></label>
+          <label class="f"><span>Last fever day</span><input type="date" name="lastFever" value="${esc(dg.lastFever || '')}" max="${t}"></label>
+        </div>
+        <div class="hint" style="margin-top:-6px">Leave "Last fever day" blank while fever continues.</div>
+      </div>
+    </div>
+    <div class="sh-foot"><button class="btn ghost" data-close>Cancel</button><button class="btn primary" data-save>${isNew ? 'Admit' : 'Save'}</button></div>`);
+  const f = n => el.querySelector(`[name="${n}"]`);
+  const sync = () => { if (chipVal(el, 'source') === 'Emergency') f('icu').value = f('hosp').value; };
+  f('hosp').addEventListener('change', sync);
+  el.querySelector('[data-group="source"]').addEventListener('change', sync);
+  el.querySelector('[data-save]').onclick = () => {
+    const hosp = f('hosp').value, icu = f('icu').value;
+    if (!hosp || !icu) return toast('Give both admission dates');
+    if (icu < hosp) return toast('ICU date cannot be before hospital date');
+    const eOn = f('ettOn').checked, eDate = f('ettDate').value;
+    if (eOn && !eDate) return toast('Give the intubation date');
+    const dOn = f('dengue').checked, onset = f('onset').value, lf = f('lastFever').value;
+    if (dOn && onset && lf && lf < onset) return toast('Last fever day is before fever start');
+    const obj = p || {id:uid(), plans:[], icuc:[], ettHist:[], ett:null, labs:{}, labStar:[], sero:[], biofire:[], cultures:[], consults:[], createdAt:new Date().toISOString()};
+    Object.assign(obj, {name:f('name').value.trim(), age:f('age').value.trim(), sex:chipVal(el, 'sex'), dx:f('dx').value.trim(),
+      status:chipVal(el, 'status') || 'serious', source:chipVal(el, 'source'), hospDate:hosp, icuDate:icu,
+      tags:chipVal(el, 'tags').split(',').filter(Boolean)});
+    if (isNew) obj.bedId = f('bed').value;
+    if (eOn){
+      if (obj.ett && !obj.ett.ext) obj.ett.date = eDate;
+      else { if (obj.ett) obj.ettHist.push(obj.ett); obj.ett = {date:eDate, ext:null}; }
+    } else if (obj.ett && !obj.ett.ext){
+      obj.ett = obj.ettHist.pop() || null; // unticked = correction
+    }
+    obj.dengue = {on:dOn, onset, lastFever:lf};
+    if (isNew) S.patients.push(obj);
+    save(); closeSheet(el);
+    if (isNew){ toast(`Admitted to bed ${bedById(obj.bedId).no}`); go('#/p/' + obj.id); } else route();
+  };
+}
+
+/* ================= editor ================= */
+function openEditor(p, kind, entry){
+  const isC = kind === 'icuc', isK = kind === 'consults';
+  const depts = [...new Set([...DEPTS, ...S.patients.flatMap(x => (x.consults || []).map(e => e.dept)).filter(Boolean)])];
+  const names = [...new Set(S.patients.flatMap(x => (x.consults || []).map(e => e.by)).filter(Boolean))];
+  const last = p[kind].slice().sort(byTsDesc)[0];
+  const [d, tm] = entry ? [entry.ts.slice(0, 10), entry.ts.slice(11, 16)] : [todayStr(), nowTime()];
+  const HL = [['#fff176','Yellow'],['#b2f2bb','Green'],['#ffc9de','Pink'],['#a5d8ff','Blue']];
+  const FC = [['#f03e3e','Red'],['#fd7e14','Orange'],['#37b24d','Green'],['#339af0','Blue'],['#cc5de8','Purple']];
+  let saved = null;
+  const onSel = () => { const s = getSelection(); if (s.rangeCount && ed.contains(s.anchorNode)) saved = s.getRangeAt(0).cloneRange(); };
+  const el = sheet(`
+    <div class="sh-head"><button class="btn ghost sm" data-cancel>Cancel</button><h2 style="text-align:center">${entry ? 'Edit' : 'New'} ${isC ? 'ICU consultant note' : isK ? 'consultant note' : 'plan'}</h2><button class="btn primary sm" data-save>Save</button></div>
+    <div class="ed-meta"><input type="date" name="d" value="${d}"><input type="time" name="t" value="${tm}">
+      ${isC ? `<input name="by" placeholder="ICU consultant name" value="${esc(entry ? entry.by || '' : S.settings.lastBy || '')}" autocomplete="off">` : ''}
+      ${isK ? `<input name="dept" list="deptlist" placeholder="Department, e.g. Nephrology" value="${esc(entry ? entry.dept || '' : '')}" autocomplete="off" style="flex-basis:100%">
+        <datalist id="deptlist">${depts.map(x => `<option value="${esc(x)}">`).join('')}</datalist>
+        <input name="by" list="conslist" placeholder="Consultant name" value="${esc(entry ? entry.by || '' : '')}" autocomplete="off">
+        <datalist id="conslist">${names.map(x => `<option value="${esc(x)}">`).join('')}</datalist>` : ''}</div>
+    <div class="tb">
+      <button data-cmd="bold" aria-label="Bold"><b>B</b></button><button data-cmd="italic" aria-label="Italic"><i>I</i></button><button data-cmd="underline" aria-label="Underline"><u>U</u></button>
+      <span class="sep"></span>
+      <button class="sz s" data-cmd="fontSize" data-val="2">A</button><button class="sz m" data-cmd="fontSize" data-val="3">A</button><button class="sz l" data-cmd="fontSize" data-val="5">A</button><button class="sz xl" data-cmd="fontSize" data-val="6">A</button>
+      <span class="sep"></span>
+      <button data-cmd="insertUnorderedList" aria-label="Bullets">${ic('list')}</button><button data-cmd="insertOrderedList" aria-label="Numbers">${ic('olist')}</button>
+      <button data-cmd="clear" aria-label="Clear formatting">${ic('eraser')}</button>
+    </div>
+    <div class="tb">
+      <span class="lb">Mark</span>${HL.map(([c, n]) => `<button class="swc" style="background:${c}" data-cmd="hiliteColor" data-val="${c}" aria-label="Mark ${n}"></button>`).join('')}
+      <button class="swc" data-cmd="hiliteColor" data-val="transparent" aria-label="No mark" style="background:var(--s1)">⌀</button>
+      <span class="sep"></span>
+      <span class="lb">Text</span>${FC.map(([c, n]) => `<button class="swc" style="background:${c}" data-cmd="foreColor" data-val="${c}" aria-label="Text ${n}"></button>`).join('')}
+    </div>
+    <div class="ed rich" contenteditable="true" data-ph="${isC ? 'What the ICU consultant said / planned…' : isK ? 'Opinion and advice of the consultant…' : 'Write today\'s plan…'}"></div>
+    ${!entry && last ? `<div class="sh-foot"><button class="btn ghost" data-copy>${ic('copy')} Copy last ${isC || isK ? 'note' : 'plan'} (${fmtD(last.ts.slice(0, 10), false)})</button></div>` : ''}`,
+    {full:true, onClose:() => document.removeEventListener('selectionchange', onSel)});
+  const ed = el.querySelector('.ed');
+  ed.innerHTML = entry ? clean(entry.html) : '';
+  const startHTML = ed.innerHTML;
+  document.addEventListener('selectionchange', onSel);
+  try { document.execCommand('styleWithCSS', false, true); } catch(e) {}
+  el.querySelectorAll('.tb').forEach(tb => {
+    tb.addEventListener('mousedown', e => { if (e.target.closest('button')) e.preventDefault(); });
+    tb.addEventListener('pointerdown', e => { if (e.target.closest('button')) e.preventDefault(); });
+    tb.addEventListener('click', e => {
+      const b = e.target.closest('[data-cmd]'); if (!b) return;
+      ed.focus();
+      if (saved){ const s = getSelection(); s.removeAllRanges(); s.addRange(saved); }
+      const cmd = b.dataset.cmd, val = b.dataset.val;
+      try { document.execCommand('styleWithCSS', false, true); } catch(err) {}
+      if (cmd === 'clear'){ document.execCommand('removeFormat'); document.execCommand('hiliteColor', false, 'transparent'); }
+      else if (cmd === 'hiliteColor'){ if (!document.execCommand('hiliteColor', false, val)) document.execCommand('backColor', false, val); }
+      else document.execCommand(cmd, false, val || null);
+      onSel();
+    });
+  });
+  const cp = el.querySelector('[data-copy]');
+  if (cp) cp.onclick = () => { ed.innerHTML = clean(last.html); if ((isC || isK) && last.by) el.querySelector('[name=by]').value = last.by; if (isK && last.dept) el.querySelector('[name=dept]').value = last.dept; toast('Copied — edit what changed'); };
+  el.querySelector('[data-cancel]').onclick = async () => {
+    if (ed.innerHTML !== startHTML && textOf(ed.innerHTML)){ if (!(await confirmBox('Discard what you wrote?', 'Discard', true))) return; }
+    closeSheet(el);
+  };
+  el.querySelector('[data-save]').onclick = () => {
+    const h = clean(ed.innerHTML).trim();
+    if (!textOf(h)) return toast('Write something first');
+    const dd = el.querySelector('[name=d]').value || todayStr(), tt = el.querySelector('[name=t]').value || nowTime();
+    const by = isC || isK ? el.querySelector('[name=by]').value.trim() : '';
+    const dept = isK ? el.querySelector('[name=dept]').value.trim() : undefined;
+    if (isK && !dept) return toast('Give the department');
+    const ts = `${dd}T${tt}`;
+    if (entry) Object.assign(entry, {ts, html:h, by}, isK ? {dept} : {});
+    else p[kind].push(Object.assign({id:uid(), ts, html:h, by}, isK ? {dept} : {}));
+    if (isC && by) S.settings.lastBy = by;
+    save(); closeSheet(el); route(); toast('Saved');
+  };
+  if (!entry) setTimeout(() => ed.focus(), 250);
+}
+
+/* ================= patient actions ================= */
+function openPMenu(p){
+  const no = bedNoOf(p);
+  const el = sheet(`<div class="sh-head"><h2>Bed ${esc(no)} · ${esc(p.name || 'Unnamed')}</h2><button class="x" data-close>✕</button></div>
+    <div class="menu">
+      <button data-m="send">${ic('send')}<span>Send today's decisions<small>WhatsApp — plans and consultant advice of today</small></span></button>
+      <button data-m="edit">${ic('edit')}<span>Edit details</span></button>
+      <button data-m="move">${ic('move')}<span>Move to another bed</span></button>
+      <button data-m="leave">${ic('out')}<span>Patient leaving ICU<small>Discharge · Ward transfer · Death · DAMA</small></span></button>
+      <button data-m="replace">${ic('newp')}<span>New patient in this bed<small>Current patient goes to archive first</small></span></button>
+      <button data-m="del" class="danger">${ic('trash')}<span>Delete record permanently</span></button>
+    </div>`);
+  el.addEventListener('click', e => {
+    const m = e.target.closest('[data-m]')?.dataset.m; if (!m) return;
+    closeSheet(el);
+    setTimeout(() => {
+      if (m === 'send') openShare([p], `Today's decisions — Bed ${bedNoOf(p)}`);
+      if (m === 'edit') openPatientForm({p});
+      if (m === 'move') openMove(p);
+      if (m === 'leave') openLeave(p);
+      if (m === 'replace') openLeave(p, true);
+      if (m === 'del') delPatient(p, '#/');
+    }, 230);
+  });
+}
+function openAMenu(p){
+  const el = sheet(`<div class="sh-head"><h2>${esc(p.name || 'Unnamed')}</h2><button class="x" data-close>✕</button></div>
+    <div class="menu">
+      <button data-m="restore">${ic('restore')}<span>Bring back to a bed<small>If admitted again or archived by mistake</small></span></button>
+      <button data-m="del" class="danger">${ic('trash')}<span>Delete record permanently</span></button>
+    </div>`);
+  el.addEventListener('click', e => {
+    const m = e.target.closest('[data-m]')?.dataset.m; if (!m) return;
+    closeSheet(el);
+    setTimeout(() => { if (m === 'restore') openRestore(p); if (m === 'del') delPatient(p, '#/archive'); }, 230);
+  });
+}
+async function delPatient(p, back){
+  if (!(await confirmBox(`Delete ${p.name || 'this patient'} permanently?`, 'Delete', true, 'All plans and notes of this patient will be removed. This cannot be undone.'))) return;
+  S.patients = S.patients.filter(x => x !== p); save(); toast('Deleted'); go(back);
+}
+function bedPicker(title, sub, onPick){
+  const fb = freeBeds();
+  if (!fb.length){ toast('No empty bed'); return; }
+  const el = sheet(`<div class="sh-head"><h2>${esc(title)}</h2><button class="x" data-close>✕</button></div>${sub ? `<div class="sh-sub">${esc(sub)}</div>` : ''}
+    <div class="sh-body"><div class="pickgrid">${fb.map(b => { const [g1, g2] = bedColor(b); return `<button style="--g1:${g1};--g2:${g2}" data-pick="${b.id}">${esc(b.no)}</button>`; }).join('')}</div></div>`);
+  el.addEventListener('click', e => { const b = e.target.closest('[data-pick]'); if (b){ closeSheet(el); onPick(b.dataset.pick); } });
+}
+function openMove(p){
+  bedPicker('Move to which bed?', `Now in bed ${bedNoOf(p)}. All plans and notes move with the patient.`, id => {
+    p.bedId = id; save(); route(); toast(`Moved to bed ${bedById(id).no}`);
+  });
+}
+function openRestore(p){
+  bedPicker('Bring back to which bed?', 'Old plans and notes stay with the patient.', id => {
+    (p.pastStays = p.pastStays || []).push(p.discharge);
+    p.discharge = null; p.bedId = id; save(); toast(`Back in bed ${bedById(id).no}`); go('#/p/' + p.id);
+  });
+}
+function openLeave(p, replace = false){
+  const bed = bedById(p.bedId), t = todayStr();
+  const el = sheet(`<div class="sh-head"><h2>${replace ? `Bed ${esc(bed.no)}: previous patient leaving` : 'Patient leaving ICU'}</h2><button class="x" data-close>✕</button></div>
+    <div class="sh-sub">${esc(p.name || 'Unnamed')} · ICU from ${fmtD(p.icuDate)}. The record goes to the archive.</div>
+    <div class="sh-body">
+      <div class="f"><span>Reason</span>${chips('oc', OUTCOMES.map(o => [o, o]), '')}</div>
+      <div class="row2"><label class="f"><span>Date</span><input type="date" name="d" value="${t}" max="${t}"></label><label class="f"><span>Time</span><input type="time" name="t" value="${nowTime()}"></label></div>
+      <label class="f"><span>Note (optional)</span><textarea name="note" placeholder="e.g. transferred to Medicine ward"></textarea></label>
+    </div>
+    <div class="sh-foot"><button class="btn ghost" data-close>Cancel</button><button class="btn primary" data-save>${replace ? 'Next: new patient' : 'Confirm'}</button></div>`);
+  el.querySelector('[data-save]').onclick = () => {
+    const oc = chipVal(el, 'oc'), d = el.querySelector('[name=d]').value;
+    if (!oc) return toast('Choose a reason');
+    if (!d) return toast('Give the date');
+    if (p.icuDate && d < p.icuDate) return toast('Date is before ICU admission');
+    p.discharge = {outcome:oc, date:d, time:el.querySelector('[name=t]').value, note:el.querySelector('[name=note]').value.trim(), bedNo:bed ? bed.no : '?'};
+    p.bedId = null; save(); closeSheet(el);
+    toast(`${p.name || 'Patient'} moved to archive`);
+    go('#/');
+    if (replace && bed) setTimeout(() => openPatientForm({bedId:bed.id}), 260);
+  };
+}
+function openStatus(p){
+  const el = sheet(`<div class="sh-head"><h2>Condition</h2><button class="x" data-close>✕</button></div>
+    <div class="sh-body">${chips('st', [['critical','Critical'],['serious','Serious'],['stable','Stable']], p.status, true)}</div>`);
+  el.querySelector('[data-group=st]').addEventListener('change', e => { p.status = e.currentTarget.dataset.value; save(); closeSheet(el); route(); });
+}
+function openDateAsk(title, min, onOk){
+  const t = todayStr();
+  const el = sheet(`<div class="sh-head"><h2>${esc(title)}</h2><button class="x" data-close>✕</button></div>
+    <div class="sh-body"><label class="f"><span>Date</span><input type="date" name="d" value="${t}" max="${t}" ${min ? `min="${min}"` : ''}></label></div>
+    <div class="sh-foot"><button class="btn ghost" data-close>Cancel</button><button class="btn primary" data-save>Save</button></div>`);
+  el.querySelector('[data-save]').onclick = () => {
+    const d = el.querySelector('[name=d]').value;
+    if (!d) return toast('Give the date');
+    if (min && d < min) return toast('Date is too early');
+    closeSheet(el); onOk(d);
+  };
+}
+
+/* ================= tags ================= */
+function openPTags(p){
+  const el = sheet(`<div class="sh-head"><h2>Tags · Bed ${esc(bedNoOf(p))}</h2><button class="x" data-close>✕</button></div>
+    <div class="sh-sub">Tap to put a tag on or take it off.</div>
+    <div class="sh-body">${tagPick(p.tags || [])}<div style="margin-top:14px"><button class="btn ghost sm" data-manage>${ic('edit')} Add or delete tags</button></div></div>
+    <div class="sh-foot"><button class="btn ghost" data-close>Cancel</button><button class="btn primary" data-save>Save</button></div>`);
+  el.querySelector('[data-save]').onclick = () => { p.tags = chipVal(el, 'tags').split(',').filter(Boolean); save(); closeSheet(el); route(); };
+  el.querySelector('[data-manage]').onclick = () => { closeSheet(el); setTimeout(() => openTags(() => openPTags(p)), 230); };
+}
+function openTags(after){
+  const el = sheet(`<div class="sh-head"><h2>Tags</h2><button class="x" data-close>✕</button></div>
+    <div class="sh-sub">Rename by typing over a tag. Tap the colour dot to change colour. Deleting a tag takes it off every patient.</div>
+    <div class="sh-body"><div id="taglist"></div>
+      <div class="bedrow" style="margin-top:14px"><input id="newtag" placeholder="New tag name" autocomplete="off" style="flex:1;width:auto"><button class="btn primary" id="addtag">${ic('plus')} Add</button></div>
+    </div>`, {onClose:() => { if (after) setTimeout(after, 230); }});
+  const used = id => S.patients.filter(p => !p.discharge && (p.tags || []).includes(id)).length;
+  const draw = () => {
+    el.querySelector('#taglist').innerHTML = S.tags.map(t => `<div class="bedrow">
+      <button class="cdot" style="background:${t.color}" data-cyc="${t.id}" aria-label="Change colour"></button>
+      <input value="${esc(t.name)}" data-tagin="${t.id}" autocomplete="off" style="flex:1;width:auto">
+      <span class="occ" style="flex:none">${used(t.id)} pt</span>
+      <button class="ibtn del" data-deltag="${t.id}" aria-label="Delete tag">${ic('trash')}</button></div>`).join('') || '<div class="emptystate">No tags. Add one below.</div>';
+  };
+  draw();
+  el.addEventListener('change', e => {
+    const id = e.target.dataset.tagin; if (!id) return;
+    const t = tagById(id), v = e.target.value.trim();
+    if (!v){ e.target.value = t.name; return toast('Tag name cannot be empty'); }
+    if (S.tags.some(x => x.id !== id && x.name.toLowerCase() === v.toLowerCase())){ e.target.value = t.name; return toast('That tag already exists'); }
+    t.name = v; save(); route(); toast('Tag renamed');
+  });
+  el.addEventListener('click', async e => {
+    const cy = e.target.closest('[data-cyc]');
+    if (cy){ const t = tagById(cy.dataset.cyc); t.color = TAG_COLORS[(TAG_COLORS.indexOf(t.color) + 1) % TAG_COLORS.length]; save(); draw(); route(); }
+    const dl = e.target.closest('[data-deltag]');
+    if (dl){
+      const t = tagById(dl.dataset.deltag), n = used(t.id);
+      if (!(await confirmBox(`Delete tag “${t.name}”?`, 'Delete', true, n ? `It will be taken off ${n} patient${n > 1 ? 's' : ''}.` : ''))) return;
+      S.tags = S.tags.filter(x => x !== t);
+      S.patients.forEach(p => { p.tags = (p.tags || []).filter(x => x !== t.id); });
+      if (S.settings.tagFilter === t.id) S.settings.tagFilter = '';
+      save(); draw(); route();
+    }
+    if (e.target.closest('#addtag')){
+      const inp = el.querySelector('#newtag'), v = inp.value.trim();
+      if (!v) return toast('Type a tag name');
+      if (S.tags.some(x => x.name.toLowerCase() === v.toLowerCase())) return toast('That tag already exists');
+      S.tags.push({id:uid(), name:v, color:TAG_COLORS[S.tags.length % TAG_COLORS.length]});
+      save(); inp.value = ''; draw(); route(); toast(`Tag “${v}” added`);
+    }
+  });
+}
+
+/* ================= WhatsApp text ================= */
+function htmlToText(html){
+  const root = new DOMParser().parseFromString(`<div>${clean(html)}</div>`, 'text/html').body.firstChild;
+  let out = '';
+  const nl = () => { if (out && !out.endsWith('\n')) out += '\n'; };
+  const walk = n => {
+    for (const c of n.childNodes){
+      if (c.nodeType === 3){ out += c.nodeValue; continue; }
+      if (c.nodeType !== 1) continue;
+      const tag = c.tagName;
+      if (tag === 'BR'){ out += '\n'; continue; }
+      if (tag === 'UL' || tag === 'OL'){
+        nl(); let i = 0;
+        for (const li of c.children){ i++; out += tag === 'OL' ? i + '. ' : '• '; walk(li); nl(); }
+        continue;
+      }
+      const block = tag === 'DIV' || tag === 'P' || tag === 'LI';
+      if (block) nl();
+      const fw = (c.style && c.style.fontWeight) || '';
+      const bold = tag === 'B' || tag === 'STRONG' || fw === 'bold' || Number(fw) >= 600;
+      const txt = c.textContent.trim();
+      if (bold && txt && !c.querySelector('div,p,li,br')){ out += '*' + txt + '*'; }
+      else walk(c);
+      if (block) nl();
+    }
+  };
+  walk(root);
+  return out.replace(/ /g, ' ').split('\n').map(x => x.trim()).filter(Boolean).join('\n');
+}
+const onDay = (arr, date) => (arr || []).filter(e => e.ts.slice(0, 10) === date).sort((a, b) => a.ts.localeCompare(b.ts));
+function decisionLines(p, opt, date){
+  const L = [];
+  if (opt.plan){ const es = onDay(p.plans, date); if (es.length){ L.push('_Plan_'); es.forEach(e => L.push(htmlToText(e.html))); } }
+  if (opt.icuc) onDay(p.icuc, date).forEach(e => { L.push(`_ICU consultant${e.by ? ' (' + e.by + ')' : ''}_`); L.push(htmlToText(e.html)); });
+  if (opt.cons) onDay(p.consults, date).forEach(e => { L.push(`_${e.dept || 'Consultant'}${e.by ? ' (' + e.by + ')' : ''}_`); L.push(htmlToText(e.html)); });
+  return L.filter(Boolean);
+}
+function bedHeader(p, date){
+  const c = ctrs(p, date), bits = [];
+  if (c.icu) bits.push('ICU D' + c.icu); if (c.ett) bits.push('ETT D' + c.ett);
+  if (c.dengue) bits.push('Dengue D' + c.dengue); if (c.afeb != null) bits.push('Afebrile D' + c.afeb);
+  const who = `${p.name || 'Unnamed'}${p.age || p.sex ? ' ' + (p.age || '') + (p.sex || '') : ''}`;
+  return `*Bed ${bedNoOf(p)} · ${who}*` + (p.dx ? `\n${p.dx}` : '') + (bits.length ? ` (${bits.join(', ')})` : '');
+}
+function roundText(pts, opt, date){
+  const blocks = [], none = [];
+  pts.forEach(p => { const l = decisionLines(p, opt, date); if (l.length) blocks.push(bedHeader(p, date) + '\n' + l.join('\n')); else none.push(bedNoOf(p)); });
+  let txt = `*ICU Round · ${fmtLong(date)}*\n\n` + (blocks.join('\n\n') || 'No new decision written today.');
+  if (none.length && pts.length > 1 && blocks.length) txt += `\n\nNo new decision: Bed ${none.join(', ')}`;
+  return txt;
+}
+const sortedActive = () => active().filter(p => bedById(p.bedId)).sort((a, b) => numCmp(bedNoOf(a), bedNoOf(b)));
+function openShare(pts, title){
+  const date = todayStr(), opt = {plan:true, icuc:true, cons:true};
+  const el = sheet(`<div class="sh-head"><h2>${esc(title)}</h2><button class="x" data-close>✕</button></div>
+    <div class="sh-sub">Only today's written decisions go — no investigation results. You can edit the text before sending.</div>
+    <div class="sh-body">
+      <div class="chips" data-group="opt" data-multi data-value="plan,icuc,cons">
+        <button type="button" class="chip on" data-v="plan">Plan</button><button type="button" class="chip on" data-v="icuc">ICU consultant</button><button type="button" class="chip on" data-v="cons">Other consultants</button>
+      </div>
+      <textarea id="sharetxt" style="margin-top:12px;min-height:280px;font-size:15px;line-height:1.45"></textarea>
+    </div>
+    <div class="sh-foot">
+      <button class="btn ghost" data-copy>${ic('copy')} Copy</button>
+      ${navigator.share && !IS_PREVIEW ? `<button class="btn ghost" data-sharesys>Share…</button>` : ''}
+      <a class="btn primary" id="wa" href="#" target="_blank" rel="noopener" style="text-decoration:none">${ic('send')} WhatsApp</a>
+    </div>`);
+  const ta = el.querySelector('#sharetxt'), wa = el.querySelector('#wa');
+  const sync = () => { wa.href = 'https://wa.me/?text=' + encodeURIComponent(ta.value); };
+  const gen = () => { ta.value = roundText(pts, opt, date); sync(); };
+  gen();
+  ta.addEventListener('input', sync);
+  el.querySelector('[data-group=opt]').addEventListener('change', e => {
+    const v = e.currentTarget.dataset.value.split(','); opt.plan = v.includes('plan'); opt.icuc = v.includes('icuc'); opt.cons = v.includes('cons'); gen();
+  });
+  el.querySelector('[data-copy]').onclick = () => {
+    const done = () => toast('Copied — paste it in WhatsApp');
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(ta.value).then(done, () => { ta.select(); document.execCommand('copy'); done(); });
+    else { ta.select(); document.execCommand('copy'); done(); }
+  };
+  const ss = el.querySelector('[data-sharesys]');
+  if (ss) ss.onclick = () => navigator.share({text:ta.value}).catch(() => {});
+}
+function openRound(){
+  const n = sortedActive().length;
+  const el = sheet(`<div class="sh-head"><h2>After the round</h2><button class="x" data-close>✕</button></div>
+    <div class="menu">
+      <button data-m="wa">${ic('send')}<span>Send today's decisions<small>WhatsApp message for all ${n} patients — plans and consultant advice only</small></span></button>
+      <button data-m="rp">${ic('report')}<span>Today's round report<small>Full page with labs, cultures and plans — print, save as PDF or share</small></span></button>
+    </div>`);
+  el.addEventListener('click', e => {
+    const m = e.target.closest('[data-m]')?.dataset.m; if (!m) return;
+    closeSheet(el);
+    setTimeout(() => { if (m === 'wa') openShare(sortedActive(), "Today's decisions — all beds"); if (m === 'rp'){ UI.reportDate = todayStr(); go('/report'); } }, 230);
+  });
+}
+
+/* ================= round report ================= */
+function reportBed(p, date){
+  const c = ctrs(p, date), bits = [];
+  if (c.hosp) bits.push('Hosp D' + c.hosp); if (c.icu) bits.push('ICU D' + c.icu); if (c.ett) bits.push('ETT D' + c.ett);
+  if (c.dengue) bits.push('Dengue D' + c.dengue); if (c.afeb != null) bits.push('Afebrile D' + c.afeb);
+  const sec = (title, inner) => inner ? `<div class="rp-sec"><h4>${title}</h4>${inner}</div>` : '';
+  const notes = (arr, who) => onDay(arr, date).map(e => `<div class="rp-note">${who(e) ? `<div class="rp-by">${esc(who(e))} · ${esc(e.ts.slice(11, 16))}</div>` : ''}<div class="rich">${clean(e.html)}</div></div>`).join('');
+  // labs of this date: morning and evening, with the last earlier value
+  const am = p.labs[date] || {}, pm = p.labs[date + '~pm'] || {};
+  const prevKey = labDates(p).filter(k => kDate(k) < date).pop();
+  const prev = prevKey ? p.labs[prevKey] : {};
+  const hasPM = Object.keys(pm).length > 0;
+  let rows = '';
+  S.labDefs.forEach(g => g.tests.forEach(t => {
+    const a = (am[t.id] || {}).v, b = (pm[t.id] || {}).v; if (!has(a) && !has(b)) return;
+    const pv = (prev[t.id] || {}).v;
+    const cell = (v, x) => `<td class="${flagOf(t, v)} ${x && x.c ? 'mk-' + x.c : ''}">${has(v) ? esc(v) : ''}</td>`;
+    rows += `<tr><th>${esc(t.name)}${t.unit ? ` <small>${esc(t.unit)}</small>` : ''}</th><td class="pv">${has(pv) ? esc(pv) : ''}</td>${cell(a, am[t.id])}${hasPM ? cell(b, pm[t.id]) : ''}</tr>`;
+  }));
+  const labs = rows ? `<table class="rp-lab"><thead><tr><th></th><th>${prevKey ? kLabel(prevKey, true) : 'Earlier'}</th><th>${hasPM ? 'Morning' : fmtD(date, false)}</th>${hasPM ? '<th>Evening</th>' : ''}</tr></thead><tbody>${rows}</tbody></table>` : '';
+  const cs = p.cultures.filter(x => x.date === date || x.rdate === date || x.status === 'Pending').map(x =>
+    `<div class="rp-line"><b>${esc(x.type)}</b> (sent ${fmtD(x.date, false)}) — ${esc(x.status)}${x.org ? ': <i>' + esc(x.org) + '</i>' : ''}${(x.abx || []).length ? `<div class="rp-abx">${['S','I','R'].map(r => { const l = x.abx.filter(a => a.r === r).map(a => a.name); return l.length ? `<span class="ab ab-${r}">${r}: ${esc(l.join(', '))}</span>` : ''; }).join(' ')}</div>` : ''}</div>`).join('');
+  const se = p.sero.filter(x => x.date === date).map(x => { const d = S.seroDefs.find(y => y.id === x.tid); return `<span class="rp-sero">${esc(d ? d.name : 'Test')}: <b class="r-${x.result.toLowerCase()}">${esc(x.result)}</b>${x.note ? ' (' + esc(x.note) + ')' : ''}</span>`; }).join('')
+    + p.biofire.filter(x => x.date === date).map(x => `<span class="rp-sero">BioFire ${esc(x.panel)}: <b>${esc(x.detected || 'Not detected')}</b>${x.genes ? ' · ' + esc(x.genes) : ''}</span>`).join('');
+  return `<section class="rp-bed">
+    <div class="rp-h"><span class="rp-no">${esc(bedNoOf(p))}</span><div><b>${esc(p.name || 'Unnamed')}</b> <small>${esc(p.age || '')}${esc(p.sex || '')} · ${STATUS[p.status]}</small><div class="rp-dx">${esc(p.dx || '')}</div></div></div>
+    <div class="rp-meta">${bits.join(' · ')}${pTags(p).length ? ' · ' + pTags(p).map(t => esc(t.name)).join(', ') : ''}</div>
+    ${sec('Plan', notes(p.plans, () => ''))}
+    ${sec('ICU consultant', notes(p.icuc, e => e.by || 'ICU consultant'))}
+    ${sec('Other consultants', notes(p.consults, e => (e.dept || 'Consultant') + (e.by ? ' — ' + e.by : '')))}
+    ${sec('Investigation', labs)}
+    ${sec('Culture', cs)}
+    ${sec('Serology / BioFire', se ? `<div class="rp-serol">${se}</div>` : '')}
+  </section>`;
+}
+function reportBody(date){
+  const pts = sortedActive().filter(p => p.icuDate <= date);
+  return `<div class="rp-title"><h2>ICU Round · ${fmtLong(date)}</h2><div>${pts.length} patient${pts.length === 1 ? '' : 's'} · beds ${pts.map(p => esc(bedNoOf(p))).join(', ') || '—'}</div></div>`
+    + (pts.map(p => reportBed(p, date)).join('') || '<div class="emptystate">No patient in the ICU.</div>');
+}
+function renderReport(){
+  const date = UI.reportDate || todayStr(), t = todayStr();
+  view.innerHTML = `
+  <header class="top noprint"><div class="brand"><button class="hbtn" data-act="go" data-to="#/" aria-label="Back">${ic('back')}</button><div><h1>Round report</h1><div class="sub">Plans, consultant advice, labs and cultures</div></div></div></header>
+  <div class="rp-tools noprint">
+    <input type="date" id="rpdate" value="${date}" max="${t}" aria-label="Report date">
+    <button class="btn primary" data-act="rpprint">Print / PDF</button>
+    <button class="btn ghost" data-act="rpfile">Share file</button>
+  </div>
+  <div class="rp">${reportBody(date)}</div>`;
+}
+const REPORT_CSS = `body{font-family:-apple-system,Segoe UI,Roboto,sans-serif;color:#111;margin:16px;font-size:13px}
+h2{margin:0 0 2px;font-size:18px}.rp-title{margin-bottom:12px}.rp-title div{color:#555}
+.rp-bed{border:1px solid #ccc;border-radius:10px;padding:10px 12px;margin-bottom:12px;break-inside:avoid}
+.rp-h{display:flex;gap:10px;align-items:center}.rp-no{background:#ff5f45;color:#fff;font-weight:700;border-radius:8px;padding:4px 9px}
+.rp-h small{color:#555}.rp-dx{color:#444;font-size:12px}.rp-meta{font-size:11px;color:#555;margin:6px 0 4px}
+.rp-sec{margin-top:8px}.rp-sec h4{margin:0 0 3px;font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:#777}
+.rp-by{font-size:11px;font-weight:700;color:#7048e8}.rp-note{margin-bottom:4px}
+.rich ul,.rich ol{padding-left:18px;margin:2px 0}.rich [style*="background-color"]{color:#111}
+table.rp-lab{border-collapse:collapse;font-size:12px}.rp-lab th,.rp-lab td{border:1px solid #ddd;padding:3px 7px;text-align:right}
+.rp-lab th:first-child,.rp-lab tbody th{text-align:left;font-weight:600}.rp-lab small{color:#777;font-weight:400}.rp-lab .pv{color:#777}
+.hi,.lo{color:#d6001c;font-weight:700}.mk-red{background:#ffc9c9}.mk-yellow{background:#ffec99}.mk-green{background:#b2f2bb}.mk-blue{background:#a5d8ff}.mk-purple{background:#e5dbff}
+.rp-line{margin-bottom:4px}.rp-abx{margin-top:2px}.ab{font-size:11px;padding:1px 6px;border-radius:5px;margin-right:4px;display:inline-block}
+.ab-S{background:#d3f9d8}.ab-I{background:#fff3bf}.ab-R{background:#ffe3e3}.rp-sero{display:inline-block;margin-right:12px}
+.r-positive{color:#d6001c}.r-negative{color:#2b8a3e}`;
+async function shareReportFile(){
+  if (IS_PREVIEW){ toast('Sharing the file works in the installed app'); return; }
+  const date = UI.reportDate || todayStr();
+  const html = `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ICU Round ${date}</title><style>${REPORT_CSS}</style></head><body>${reportBody(date)}</body></html>`;
+  const name = `ICU-Round-${date}.html`, file = new File([html], name, {type:'text/html'});
+  if (navigator.canShare && navigator.canShare({files:[file]})){ try { await navigator.share({files:[file], title:'ICU Round ' + date}); return; } catch(e){ if (e.name === 'AbortError') return; } }
+  const a = document.createElement('a'); a.href = URL.createObjectURL(file); a.download = name; document.body.appendChild(a); a.click();
+  setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1500);
+}
+
+/* ================= archive ================= */
+function renderArchive(){
+  const list = archived().sort((a, b) => (b.discharge.date + b.discharge.time).localeCompare(a.discharge.date + a.discharge.time));
+  view.innerHTML = `
+  <header class="top">
+    <div class="brand"><button class="hbtn" data-act="go" data-to="#/" aria-label="Back">${ic('back')}</button><div><h1>Archive</h1><div class="sub">${list.length} past patient${list.length === 1 ? '' : 's'}</div></div></div>
+  </header>
+  <div class="search"><input type="search" id="aq" placeholder="Search bed, name or diagnosis" autocomplete="off"></div>
+  <div id="alist"></div>`;
+  const draw = () => {
+    const q = $('#aq').value.trim().toLowerCase();
+    const rows = list.filter(p => !q || [p.discharge.bedNo, p.name, p.dx, p.discharge.outcome, ...pTags(p).map(t => t.name)].join(' ').toLowerCase().includes(q));
+    $('#alist').innerHTML = rows.length ? rows.map(p => {
+      const [g1, g2] = colorFor(p), d = p.discharge;
+      const stay = p.icuDate ? diff(p.icuDate, d.date) + 1 : '—';
+      return `<div class="arow" data-act="openA" data-id="${p.id}" style="--g1:${g1};--g2:${g2}">
+        <div class="a-bed">${esc(d.bedNo)}</div>
+        <div class="a-main"><b>${esc(p.name || 'Unnamed')}</b> <small>${esc(p.age || '')}${esc(p.sex || '')}</small>
+          ${p.dx ? `<div class="a-dx">${esc(p.dx)}</div>` : ''}
+          <div class="a-meta">ICU ${fmtD(p.icuDate, false)} → ${fmtD(d.date, false)} · ${stay} day${stay === 1 ? '' : 's'}</div></div>
+        <span class="oc oc-${d.outcome.toLowerCase().replace(/\s+/g, '-')}">${esc(d.outcome)}</span></div>`;
+    }).join('') : `<div class="emptystate">${list.length ? 'Nothing matches.' : 'No past patients yet. When a patient leaves the ICU, the record comes here.'}</div>`;
+  };
+  $('#aq').addEventListener('input', draw); draw();
+}
+
+/* ================= beds ================= */
+function openBeds(){
+  const el = sheet(`<div class="sh-head"><h2>Manage beds</h2><button class="x" data-close>✕</button></div>
+    <div class="sh-sub">Change a bed number by typing over it. A bed can be deleted only when empty.</div>
+    <div class="sh-body"><div id="bedlist"></div>
+      <div class="bedrow" style="margin-top:14px"><input id="newbed" placeholder="New bed no." autocomplete="off" style="flex:1;width:auto"><button class="btn primary" id="addbed">${ic('plus')} Add</button></div>
+    </div>`);
+  const draw = () => {
+    el.querySelector('#bedlist').innerHTML = S.beds.slice().sort((a, b) => numCmp(a.no, b.no)).map(b => {
+      const p = occupant(b.id);
+      return `<div class="bedrow"><input value="${esc(b.no)}" data-bedin="${b.id}" autocomplete="off"><span class="occ ${p ? 'o' : ''}">${p ? esc(p.name || 'Patient') : 'Empty'}</span><button class="ibtn del" data-delbed="${b.id}" aria-label="Delete bed">${ic('trash')}</button></div>`;
+    }).join('') || '<div class="emptystate">No beds.</div>';
+  };
+  draw();
+  el.addEventListener('change', e => {
+    const id = e.target.dataset.bedin; if (!id) return;
+    const v = e.target.value.trim(), b = bedById(id);
+    if (!v){ e.target.value = b.no; return toast('Bed number cannot be empty'); }
+    if (S.beds.some(x => x.id !== id && x.no.toLowerCase() === v.toLowerCase())){ e.target.value = b.no; return toast('That bed number already exists'); }
+    b.no = v; save(); route(); toast('Bed number changed');
+  });
+  el.addEventListener('click', async e => {
+    const db = e.target.closest('[data-delbed]');
+    if (db){
+      const b = bedById(db.dataset.delbed);
+      if (occupant(b.id)) return toast('Move or discharge the patient first');
+      if (!(await confirmBox(`Delete bed ${b.no}?`, 'Delete', true))) return;
+      S.beds = S.beds.filter(x => x !== b); save(); draw(); route();
+    }
+    if (e.target.closest('#addbed')){
+      const inp = el.querySelector('#newbed'), v = inp.value.trim();
+      if (!v) return toast('Type a bed number');
+      if (S.beds.some(x => x.no.toLowerCase() === v.toLowerCase())) return toast('That bed number already exists');
+      S.beds.push({id:uid(), no:v}); save(); inp.value = ''; draw(); route(); toast(`Bed ${v} added`);
+    }
+  });
+}
+
+/* ================= settings & backup ================= */
+function openSettings(){
+  const el = sheet(`<div class="sh-head"><h2>Look & backup</h2><button class="x" data-close>✕</button></div><div class="sh-body" id="setbody"></div>`);
+  const draw = () => {
+    const st = S.settings;
+    el.querySelector('#setbody').innerHTML = `
+      <div class="sec"><h3>Theme</h3><div class="thm">${THEMES.map(t => `<button class="${st.theme === t.id ? 'on' : ''}" data-th="${t.id}"><div class="pv" style="background:${t.pv[0]}"><i style="background:${t.pv[1]}"></i><i style="background:${t.pv[2]}"></i></div>${t.name}<small>${t.kind}</small></button>`).join('')}</div></div>
+      <div class="sec"><h3>Font</h3>${chips('font', [['Lato','Lato'],['Roboto','Roboto'],['Poppins','Poppins']], st.font)}</div>
+      <div class="sec"><h3>Font style</h3>${chips('bold', [['0','Normal'],['1','Bold']], st.bold ? '1' : '0')}</div>
+      <div class="sec"><h3>Text size</h3><div class="stepper"><button class="btn ghost" data-scale="-5">A−</button><b>${st.scale}%</b><button class="btn ghost" data-scale="5">A+</button></div></div>
+      <div class="sec"><h3>Investigation tests</h3><button class="btn ghost" data-labmgr>${ic('edit')} Tests, units & normal ranges</button></div>
+      <div class="sec"><h3>Tags</h3><button class="btn ghost" data-tagmgr>${ic('edit')} Add, rename or delete tags</button></div>
+      <div class="sec"><h3>Backup</h3>
+        <div class="hint" style="margin-bottom:10px">All data stays only on this phone. Save a backup file regularly (Files / Google Drive). Last backup: <b>${st.lastBackup ? fmtD(st.lastBackup) : 'never'}</b></div>
+        <div class="row2"><button class="btn primary" data-bk>${ic('download')} Save backup</button><button class="btn ghost" data-rs>${ic('upload')} Restore</button></div>
+        <input type="file" accept=".json,application/json" id="rsfile" hidden>
+      </div>
+      <div class="hint" style="text-align:center">ICU Round v${VERSION}</div>`;
+    el.querySelectorAll('.chip').forEach(c => { const g = c.parentElement.dataset.group; if (g === 'font') c.style.fontFamily = `'${c.dataset.v}'`; });
+  };
+  draw();
+  el.addEventListener('click', e => {
+    const th = e.target.closest("[data-th]");
+    if (th){ S.settings.theme = th.dataset.th; save(); applySettings(); draw(); route(); }
+    const sc = e.target.closest('[data-scale]');
+    if (sc){ S.settings.scale = Math.min(130, Math.max(85, S.settings.scale + Number(sc.dataset.scale))); save(); applySettings(); draw(); }
+    if (e.target.closest('[data-tagmgr]')){ closeSheet(el); setTimeout(() => openTags(), 230); }
+    if (e.target.closest('[data-labmgr]')){ closeSheet(el); setTimeout(() => openLabDefs(), 230); }
+    if (e.target.closest('[data-bk]')) doBackup().then(draw);
+    if (e.target.closest('[data-rs]')) el.querySelector('#rsfile').click();
+  });
+  el.addEventListener('change', e => {
+    const g = e.target.dataset && e.target.dataset.group;
+    if (g === 'font'){ S.settings.font = e.target.dataset.value; save(); applySettings(); route(); }
+    if (g === 'bold'){ S.settings.bold = e.target.dataset.value === '1'; save(); applySettings(); route(); }
+    if (e.target.id === 'rsfile' && e.target.files[0]) doRestore(e.target.files[0], el);
+  });
+}
+async function doBackup(){
+  if (IS_PREVIEW){ toast('Backup file works in the installed app, not in this preview'); return; }
+  const data = JSON.stringify({app:'icu-round', v:1, exported:new Date().toISOString(), data:S});
+  const name = `ICU-Round-backup-${todayStr()}.json`;
+  const file = new File([data], name, {type:'application/json'});
+  const mark = () => { S.settings.lastBackup = todayStr(); save(); route(); toast('Backup saved'); };
+  if (navigator.canShare && navigator.canShare({files:[file]})){
+    try { await navigator.share({files:[file], title:'ICU Round backup'}); mark(); return; }
+    catch(e){ if (e.name === 'AbortError') return; }
+  }
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(file); a.download = name; document.body.appendChild(a); a.click();
+  setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1500);
+  mark();
+}
+async function doRestore(file, sheetEl){
+  try {
+    const obj = JSON.parse(await file.text());
+    const data = obj && obj.app === 'icu-round' ? obj.data : obj;
+    if (!data || !Array.isArray(data.beds)) throw new Error('bad');
+    const n = (data.patients || []).length;
+    if (!(await confirmBox('Replace all data with this backup?', 'Restore', true, `Backup has ${data.beds.length} beds and ${n} patient records. Current data on this phone will be replaced.`))) return;
+    S = migrate(data); save(); applySettings(); closeSheet(sheetEl); go('#/'); route(); toast('Backup restored');
+  } catch(e){ toast('This is not an ICU Round backup file'); }
+}
+
+/* ================= global events ================= */
+document.addEventListener('click', e => {
+  const t = e.target.closest('[data-act]'); if (!t) return;
+  const d = t.dataset, p = d.id ? getP(d.id) : null;
+  switch (d.act){
+    case 'admit': openPatientForm({bedId:d.bed}); break;
+    case 'openP': go('#/p/' + d.id); break;
+    case 'openA': go('#/a/' + d.id); break;
+    case 'go': go(d.to); break;
+    case 'sort': S.settings.sort = d.v; save(); route(); break;
+    case 'size': S.settings.card = d.v; save(); route(); break;
+    case 'archive': go('#/archive'); break;
+    case 'round': openRound(); break;
+    case 'share': openShare([p], `Today's decisions — Bed ${bedNoOf(p)}`); break;
+    case 'rpprint': if (IS_PREVIEW) toast('Printing works in the installed app'); else window.print(); break;
+    case 'rpfile': shareReportFile(); break;
+    case 'beds': openBeds(); break;
+    case 'settings': openSettings(); break;
+    case 'backup': doBackup(); break;
+    case 'tab': curRoute = lastRoute = `/${d.ro ? 'a' : 'p'}/${d.id}/${d.v}`; route(); break;
+    case 'tagf': S.settings.tagFilter = d.v; save(); route(); break;
+    case 'tags': openTags(); break;
+    case 'ptags': openPTags(p); break;
+    case 'pmenu': openPMenu(p); break;
+    case 'amenu': openAMenu(p); break;
+    case 'status': openStatus(p); break;
+    case 'editP': openPatientForm({p}); break;
+    case 'newEntry': openEditor(p, d.kind, null); break;
+    case 'editEntry': openEditor(p, d.kind, p[d.kind].find(x => x.id === d.e)); break;
+    case 'delEntry':
+      confirmBox('Delete this entry?', 'Delete', true).then(ok => { if (ok){ p[d.kind] = p[d.kind].filter(x => x.id !== d.e); save(); route(); } });
+      break;
+    case 'intubate':
+      openDateAsk('Intubation date', p.ett && p.ett.ext ? p.ett.ext : p.hospDate, date => {
+        if (p.ett) p.ettHist.push(p.ett);
+        p.ett = {date, ext:null}; save(); route(); toast('Intubation recorded');
+      });
+      break;
+    case 'extubate':
+      openDateAsk('Extubation date', p.ett.date, date => { p.ett.ext = date; save(); route(); toast('Extubation recorded'); });
+      break;
+    case 'stillFever': p.dengue.lastFever = ''; save(); route(); break;
+    case 'labrow': openLabRow(p, d.t); break;
+    case 'labdefs': openLabDefs(); break;
+    case 'labcol': openLabCol(p, Number(d.i)); break;
+    case 'labeve': { const t = todayStr(); UI.cols[p.id] = [addDays(t, -1), t, t + '~pm']; route(); break; }
+    case 'sero': openSero(p, d.t); break;
+    case 'serodefs': openSeroDefs(); break;
+    case 'biofire': openBiofire(p, d.b ? p.biofire.find(x => x.id === d.b) : null); break;
+    case 'delbf': confirmBox('Delete this BioFire result?', 'Delete', true).then(ok => { if (ok){ p.biofire = p.biofire.filter(x => x.id !== d.b); save(); route(); } }); break;
+    case 'culture': openCulture(p, d.c ? p.cultures.find(x => x.id === d.c) : null); break;
+    case 'delcs': confirmBox('Delete this culture?', 'Delete', true).then(ok => { if (ok){ p.cultures = p.cultures.filter(x => x.id !== d.c); save(); route(); } }); break;
+  }
+});
+document.addEventListener('keydown', e => {
+  if ((e.key === 'Enter' || e.key === ' ') && e.target.matches('.card[role=button], .arow')){ e.preventDefault(); e.target.click(); }
+  if (e.key === 'Enter' && e.target.classList.contains('lin')){
+    e.preventDefault();
+    const all = [...view.querySelectorAll(`.lin[data-k="${e.target.dataset.k}"]`)], i = all.indexOf(e.target), next = all[i + 1];
+    if (next){ const g = next.closest('details'); if (g && !g.open) g.open = true; next.focus(); next.select(); } else e.target.blur();
+  }
+});
+document.addEventListener('toggle', e => { const g = e.target.dataset && e.target.dataset.g; if (g) UI.closed[g] = !e.target.open; }, true);
+document.addEventListener('change', e => {
+  const t = e.target;
+  if (t.id === 'rpdate'){ if (t.value){ UI.reportDate = t.value; route(); } return; }
+  if (t.classList.contains('lin')){
+    const p = getP(t.dataset.id), d = t.dataset.k, tid = t.dataset.lab, v = t.value.trim();
+    const day = p.labs[d] = p.labs[d] || {};
+    if (v) day[tid] = Object.assign(day[tid] || {}, {v});
+    else if (day[tid]){ delete day[tid].v; if (!day[tid].c) delete day[tid]; }
+    if (!Object.keys(day).length) delete p.labs[d];
+    save();
+    const tt = testById(tid); t.classList.remove('hi', 'lo'); const fl = flagOf(tt, v); if (fl) t.classList.add(fl);
+    const rin = [...t.closest('.lrow').querySelectorAll('.lin')];
+    rin.forEach((x, i) => { x.previousElementSibling.textContent = i ? arrowOf(x.value.trim(), rin[i - 1].value.trim()) : ''; });
+    const g = t.closest('.lgrp'), ins = [...g.querySelectorAll('.lcell:last-child .lin')];
+    g.querySelector('summary small').textContent = `${ins.filter(x => x.value.trim()).length}/${ins.length}`;
+    return;
+  }
+  if (t.dataset.dtoggle){ const p = getP(t.dataset.dtoggle); p.dengue = p.dengue || {}; p.dengue.on = t.checked; save(); route(); }
+  if (t.dataset.dfield){
+    const p = getP(t.dataset.id), f = t.dataset.dfield;
+    const other = f === 'onset' ? p.dengue.lastFever : p.dengue.onset;
+    if (t.value && other && ((f === 'onset' && t.value > other) || (f === 'lastFever' && t.value < other))){ toast('Last fever day cannot be before fever start'); route(); return; }
+    p.dengue[f] = t.value; save(); route();
+  }
+});
+
+/* ================= start ================= */
+applySettings();
+route();
+// refresh day counters when the app comes back after midnight
+let shownDay = todayStr();
+document.addEventListener('visibilitychange', () => { if (!document.hidden && todayStr() !== shownDay){ shownDay = todayStr(); route(); } });
+if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(() => {});
+if ('serviceWorker' in navigator && location.protocol !== 'file:') navigator.serviceWorker.register('sw.js').catch(() => {});
+</script>
+</body>
+</html>
