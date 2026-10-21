@@ -441,12 +441,17 @@ textarea{min-height:80px;resize:vertical}
 'use strict';
 /* ================= data ================= */
 const KEY = 'icuRound.v1';
-const VERSION = '1.4';
+const VERSION = '1.5';
 const IS_PREVIEW = false;
 const TAG_COLORS = ['#e8384f','#f08c00','#d9a400','#2b9e5f','#0c8599','#3b82f6','#7048e8','#d6336c','#868e96'];
 const DEFAULT_TAGS = [['Isolation','#e8384f'],['Sepsis','#f08c00'],['Post-op','#3b82f6'],['MDR','#7048e8'],['Renal/CRRT','#0c8599'],['Watch closely','#d9a400']];
 // normal ranges are common adult reference values; editable in the app to match the hospital lab
+const ABG_GROUP = {id:'g-abg', name:'ABG', tests:[
+    {id:'abg-ph', name:'pH', unit:'', lo:7.35, hi:7.45}, {id:'abg-pco2', name:'pCO2', unit:'mmHg', lo:35, hi:45},
+    {id:'abg-po2', name:'pO2', unit:'mmHg', lo:80, hi:100}, {id:'abg-hco3', name:'HCO3', unit:'mmol/L', lo:22, hi:26},
+    {id:'abg-lac', name:'Lactate', unit:'mmol/L', lo:0.5, hi:2}]};
 const DEFAULT_LABS = [
+  ABG_GROUP,
   {id:'g-inf', name:'Inflammatory & Cardiac', tests:[
     {id:'crp', name:'CRP', unit:'mg/L', lo:0, hi:5}, {id:'pct', name:'Procalcitonin', unit:'ng/mL', lo:0, hi:0.5},
     {id:'tropi', name:'Troponin I', unit:'ng/mL', lo:0, hi:0.04}, {id:'bnp', name:'BNP', unit:'pg/mL', lo:0, hi:100}]},
@@ -542,6 +547,7 @@ function migrate(s){
   s.patients = Array.isArray(s.patients) ? s.patients : [];
   if (!Array.isArray(s.tags)) s.tags = defTags();
   if (!Array.isArray(s.labDefs)) s.labDefs = clone(DEFAULT_LABS);
+  if (!s.settings.abgAdded){ if (!s.labDefs.some(g => g.id === 'g-abg')) s.labDefs.unshift(clone(ABG_GROUP)); s.settings.abgAdded = true; } // added in v1.5
   if (!Array.isArray(s.seroDefs)) s.seroDefs = DEFAULT_SERO.map(n => ({id:slugId(n), name:n}));
   if (!Array.isArray(s.abxList)) s.abxList = DEFAULT_ABX.slice();
   s.patients.forEach(p => {
@@ -566,9 +572,10 @@ function seedDemo(){
   mk('2203', {name:'Example RB', age:'62', sex:'F', dx:'Severe CAP with septic shock', status:'critical', hospDate:d(4), icuDate:d(3), ett:{date:d(3), ext:null}, tags:tg(['Sepsis','MDR']),
     plans:[{id:uid(), ts:`${d(0)}T08:30`, by:'', html:'<b>Continue NA 0.12 mcg/kg/min</b>, taper if MAP &gt; 70<div><span style="background-color:#fff176">Repeat lactate 12 noon</span></div>'}],
     consults:[{id:uid(), ts:`${d(1)}T12:00`, by:'Dr Example N', dept:'Nephrology', html:'No dialysis now. Keep urine output > 0.5 mL/kg/h.'}, {id:uid(), ts:`${d(0)}T10:00`, by:'Dr Example', dept:'ICU', html:'Change to meropenem as per culture. SBT tomorrow.'}],
-    labs:{[d(1)]:L({crp:210, pct:8.4, hb:10.2, hct:31, wbc:'18,400', plt:'1,32,000', cr:1.9, urea:68, na:132, k:3.3}),
-          [d(0)]:L({crp:145, pct:4.1, hb:9.8, hct:30, wbc:'14,200', plt:'1,10,000', cr:1.5, urea:55, na:135, k:3.9})},
-    labStar:['crp','pct','cr'],
+    labs:{[d(2)]:L({'abg-ph':7.21, 'abg-pco2':52, 'abg-po2':64, 'abg-hco3':18, 'abg-lac':5.8}),
+          [d(1)]:L({'abg-ph':7.29, 'abg-pco2':46, 'abg-po2':78, 'abg-hco3':20, 'abg-lac':3.4, crp:210, pct:8.4, hb:10.2, hct:31, wbc:'18,400', plt:'1,32,000', cr:1.9, urea:68, na:132, k:3.3}),
+          [d(0)]:L({'abg-ph':7.36, 'abg-pco2':41, 'abg-po2':92, 'abg-hco3':23, 'abg-lac':1.8, crp:145, pct:4.1, hb:9.8, hct:30, wbc:'14,200', plt:'1,10,000', cr:1.5, urea:55, na:135, k:3.9})},
+    labStar:['abg-lac','crp','pct','cr'],
     cultures:[{id:uid(), type:'Blood', date:d(3), rdate:d(1), status:'Growth', org:'Klebsiella pneumoniae', count:'Growth after 36 h', note:'',
       abx:[{name:'Meropenem', r:'S'}, {name:'Amikacin', r:'S'}, {name:'Colistin', r:'S'}, {name:'Ceftriaxone', r:'R'}, {name:'Piperacillin-tazobactam', r:'R'}, {name:'Ciprofloxacin', r:'R'}]},
       {id:uid(), type:'Tracheal aspirate', date:d(2), rdate:'', status:'Pending', org:'', count:'Gram-negative bacilli seen', note:'', abx:[]}],
@@ -583,9 +590,9 @@ function seedDemo(){
   mk('2214', {name:'Example NS', age:'51', sex:'F', dx:'DKA, AKI', status:'serious', hospDate:d(0), icuDate:d(0), tags:tg(['Renal/CRRT'])});
   save();
 }
-if (IS_PREVIEW && !(() => { try { return localStorage.getItem(KEY + '.seeded4'); } catch(e){ return true; } })()){
+if (IS_PREVIEW && !(() => { try { return localStorage.getItem(KEY + '.seeded5'); } catch(e){ return true; } })()){
   const keep = S.settings; S = fresh(); S.settings = keep; seedDemo();
-  try { localStorage.setItem(KEY + '.seeded4', '1'); } catch(e) {}
+  try { localStorage.setItem(KEY + '.seeded5', '1'); } catch(e) {}
 }
 function save(){ try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e){ toast('Could not save — storage full'); } }
 
@@ -1851,10 +1858,10 @@ function openCaseSheet(opts = {}){
       out.innerHTML = `<div class="pdfcard">${ic('report')}<div><b>${esc(name)}</b><small>${pts.length} patient${pts.length > 1 ? 's' : ''} · ${kb} KB</small></div></div>
         ${IS_PREVIEW ? '<div class="hint">PDF is ready. Sending the file works in the installed app — this preview cannot hand over files.</div>'
           : `<div class="row2" style="margin-top:10px">${canShare ? `<button class="btn primary" data-send>${ic('send')} Send PDF</button>` : ''}<button class="btn ghost" data-open ${canShare ? '' : 'style="grid-column:1/-1"'}>Open / save</button></div>
-             ${canShare ? '<div class="hint">Send PDF opens the share menu — choose WhatsApp, Messenger or Mail.</div>' : ''}`}`;
+             <div class="hint">${canShare ? 'Send PDF opens the share menu — choose WhatsApp, Messenger or Mail. ' : ''}If WhatsApp is still missing: tap <b>Open / save</b>, then the share button on the PDF page, or save it to Files and attach it from WhatsApp.</div>`}`;
       out.hidden = false;
       const sb = out.querySelector('[data-send]');
-      if (sb) sb.onclick = () => navigator.share({files:[file], title:name}).catch(e => { if (e.name !== 'AbortError') toast('Could not open the share menu'); });
+      if (sb) sb.onclick = () => navigator.share({files:[file]}).catch(e => { if (e.name !== 'AbortError') toast('Could not open the share menu'); });
       const ob = out.querySelector('[data-open]');
       if (ob) ob.onclick = () => {
         const url = URL.createObjectURL(file), a = document.createElement('a');
@@ -1937,7 +1944,7 @@ async function shareReportFile(){
   const date = UI.reportDate || todayStr();
   const html = `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ICU Round ${date}</title><style>${REPORT_CSS}</style></head><body>${reportBody(date)}</body></html>`;
   const name = `ICU-Round-${date}.html`, file = new File([html], name, {type:'text/html'});
-  if (navigator.canShare && navigator.canShare({files:[file]})){ try { await navigator.share({files:[file], title:'ICU Round ' + date}); return; } catch(e){ if (e.name === 'AbortError') return; } }
+  if (navigator.canShare && navigator.canShare({files:[file]})){ try { await navigator.share({files:[file]}); return; } catch(e){ if (e.name === 'AbortError') return; } }
   const a = document.createElement('a'); a.href = URL.createObjectURL(file); a.download = name; document.body.appendChild(a); a.click();
   setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1500);
 }
@@ -2053,7 +2060,7 @@ async function doBackup(){
   const file = new File([data], name, {type:'application/json'});
   const mark = () => { S.settings.lastBackup = todayStr(); save(); route(); toast('Backup saved'); };
   if (navigator.canShare && navigator.canShare({files:[file]})){
-    try { await navigator.share({files:[file], title:'ICU Round backup'}); mark(); return; }
+    try { await navigator.share({files:[file]}); mark(); return; }
     catch(e){ if (e.name === 'AbortError') return; }
   }
   const a = document.createElement('a');
