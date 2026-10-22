@@ -1,5 +1,5 @@
 // ICU Round service worker — change VERSION on every update so phones get the new files
-const VERSION = 'icu-round-v1.5';
+const VERSION = 'icu-round-v1.6';
 const ASSETS = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png', './icon-maskable-512.png', './apple-touch-icon.png', './vendor/jspdf.umd.min.js', './vendor/jspdf.plugin.autotable.min.js'];
 
 self.addEventListener('install', e => {

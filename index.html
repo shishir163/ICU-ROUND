@@ -81,6 +81,14 @@ html[data-skin=rednight] .banner{background:#2a0a06;color:var(--tx)}
 .c-name{font-weight:700;font-size:1rem;line-height:1.25;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .c-name small{font-weight:500;color:var(--mu);font-size:.8rem}
 .card.s .c-name{font-size:.86rem}
+.c-under{display:flex;align-items:center;gap:4px;font-size:.78rem;font-weight:700;color:var(--p1);min-width:0}
+.c-under span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.c-under .ico svg{width:13px;height:13px;flex:none}
+.card.s .c-under{font-size:.68rem}.card.s .c-under .ico{display:none}
+html[data-skin=ocean] .c-under,html[data-skin=royal] .c-under,html[data-skin=midnight] .c-under,html[data-skin=amoled] .c-under{color:color-mix(in srgb,var(--p1) 65%,#fff)}
+html[data-skin=candy] .card.occ .c-under,html[data-skin=rednight] .c-under{color:inherit}
+.pt-under{font-size:.82rem;font-weight:700;opacity:.95;margin-top:3px;display:flex;align-items:center;gap:5px}
+.pt-under .ico svg{width:14px;height:14px}
 .c-dx{font-size:.82rem;color:var(--mu);line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .c-ct{display:flex;flex-wrap:wrap;gap:4px;margin-top:auto;padding-top:2px}
 .c-last{font-size:.82rem;background:var(--s2);border-radius:10px;padding:8px 9px;line-height:1.35;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
@@ -441,7 +449,7 @@ textarea{min-height:80px;resize:vertical}
 'use strict';
 /* ================= data ================= */
 const KEY = 'icuRound.v1';
-const VERSION = '1.5';
+const VERSION = '1.6';
 const IS_PREVIEW = false;
 const TAG_COLORS = ['#e8384f','#f08c00','#d9a400','#2b9e5f','#0c8599','#3b82f6','#7048e8','#d6336c','#868e96'];
 const DEFAULT_TAGS = [['Isolation','#e8384f'],['Sepsis','#f08c00'],['Post-op','#3b82f6'],['MDR','#7048e8'],['Renal/CRRT','#0c8599'],['Watch closely','#d9a400']];
@@ -450,10 +458,13 @@ const ABG_GROUP = {id:'g-abg', name:'ABG', tests:[
     {id:'abg-ph', name:'pH', unit:'', lo:7.35, hi:7.45}, {id:'abg-pco2', name:'pCO2', unit:'mmHg', lo:35, hi:45},
     {id:'abg-po2', name:'pO2', unit:'mmHg', lo:80, hi:100}, {id:'abg-hco3', name:'HCO3', unit:'mmol/L', lo:22, hi:26},
     {id:'abg-lac', name:'Lactate', unit:'mmol/L', lo:0.5, hi:2}]};
+const THYROID_GROUP = {id:'g-thy', name:'Thyroid profile', tests:[
+    {id:'t3', name:'T3', unit:'ng/mL', lo:0.8, hi:2.0}, {id:'ft3', name:'FT3', unit:'pg/mL', lo:2.3, hi:4.2},
+    {id:'ft4', name:'FT4', unit:'ng/dL', lo:0.8, hi:1.8}, {id:'tsh', name:'TSH', unit:'mIU/L', lo:0.4, hi:4.0}]};
 const DEFAULT_LABS = [
   ABG_GROUP,
   {id:'g-inf', name:'Inflammatory & Cardiac', tests:[
-    {id:'crp', name:'CRP', unit:'mg/L', lo:0, hi:5}, {id:'pct', name:'Procalcitonin', unit:'ng/mL', lo:0, hi:0.5},
+    {id:'crp', name:'CRP', unit:'mg/L', lo:0, hi:5}, {id:'pct', name:'Procalcitonin', unit:'ng/mL', lo:0, hi:0.5}, {id:'cpk', name:'CPK', unit:'U/L', lo:30, hi:200},
     {id:'tropi', name:'Troponin I', unit:'ng/mL', lo:0, hi:0.04}, {id:'bnp', name:'BNP', unit:'pg/mL', lo:0, hi:100}]},
   {id:'g-cbc', name:'CBC', tests:[
     {id:'hb', name:'Hb', unit:'g/dL', lo:12, hi:17}, {id:'hct', name:'HCT', unit:'%', lo:36, hi:50},
@@ -473,8 +484,9 @@ const DEFAULT_LABS = [
     {id:'bil', name:'Bilirubin', unit:'mg/dL', lo:0.2, hi:1.2}, {id:'alt', name:'ALT', unit:'U/L', lo:0, hi:40},
     {id:'ast', name:'AST', unit:'U/L', lo:0, hi:40}, {id:'ggt', name:'GGT', unit:'U/L', lo:0, hi:55},
     {id:'alb', name:'Albumin', unit:'g/dL', lo:3.5, hi:5}]},
+  THYROID_GROUP,
 ];
-const DEFAULT_SERO = ['COVID RT-PCR','Dengue NS1','Dengue IgM','Dengue IgG','Dengue PCR','CMV','HIV','HBsAg','Anti-HCV'];
+const DEFAULT_SERO = ['COVID RT-PCR','Dengue NS1','Dengue IgM','Dengue IgG','Dengue PCR','Respiratory panel PCR','CMV','HIV','HBsAg','Anti-HCV'];
 const DEFAULT_ABX = ['Amikacin','Gentamicin','Ciprofloxacin','Levofloxacin','Ceftriaxone','Ceftazidime','Cefepime','Cefoperazone-sulbactam','Piperacillin-tazobactam','Amoxicillin-clavulanate','Meropenem','Imipenem','Ceftazidime-avibactam','Colistin','Polymyxin B','Tigecycline','Minocycline','Doxycycline','Co-trimoxazole','Nitrofurantoin','Fosfomycin','Azithromycin','Vancomycin','Teicoplanin','Linezolid'];
 const ORGANISMS = ['Escherichia coli','Klebsiella pneumoniae','Acinetobacter baumannii','Pseudomonas aeruginosa','Staphylococcus aureus','MRSA','Coagulase-negative Staphylococcus','Enterococcus faecalis','Enterococcus faecium','Proteus mirabilis','Enterobacter spp.','Citrobacter spp.','Serratia marcescens','Stenotrophomonas maltophilia','Burkholderia cepacia','Salmonella Typhi','Streptococcus pneumoniae','Candida albicans','Candida auris','Candida spp.'];
 const CS_TYPES = ['Blood','Urine','Wound','Tracheal aspirate','Sputum','CSF','Catheter tip'];
@@ -516,6 +528,7 @@ const I = {
   trash:'<path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/>',
   move:'<path d="M7 7h13l-4-4M17 17H4l4 4"/>',
   out:'<path d="M14 4h5a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-5M10 16l-4-4 4-4M6 12h10"/>',
+  user:'<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>',
   newp:'<circle cx="10" cy="8" r="4"/><path d="M3 21a7 7 0 0 1 14 0M19 8v6M16 11h6"/>',
   restore:'<path d="M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5"/>',
   pulse:'<path d="M3 12h4l2-5 4 10 2-5h6"/>',
@@ -547,6 +560,20 @@ function migrate(s){
   s.patients = Array.isArray(s.patients) ? s.patients : [];
   if (!Array.isArray(s.tags)) s.tags = defTags();
   if (!Array.isArray(s.labDefs)) s.labDefs = clone(DEFAULT_LABS);
+  if (!Array.isArray(s.underList)) s.underList = [];
+  s.patients.forEach(p => { if (p.under && !s.underList.includes(p.under)) s.underList.push(p.under); });
+  if (!s.settings.v16){ // added in v1.6: thyroid profile, CPK, respiratory panel PCR
+    if (!s.labDefs.some(g => g.id === 'g-thy')) s.labDefs.push(clone(THYROID_GROUP));
+    if (!s.labDefs.some(g => g.tests.some(t => t.id === 'cpk'))){
+      const g = s.labDefs.find(x => x.id === 'g-inf'), cpk = {id:'cpk', name:'CPK', unit:'U/L', lo:30, hi:200};
+      if (g) g.tests.push(cpk); else s.labDefs.push({id:'g-cpk', name:'CPK', tests:[cpk]});
+    }
+    if (Array.isArray(s.seroDefs) && !s.seroDefs.some(x => x.id === 'respiratory-panel-pcr')){
+      const k = s.seroDefs.findIndex(x => x.id === 'dengue-pcr');
+      s.seroDefs.splice(k < 0 ? s.seroDefs.length : k + 1, 0, {id:'respiratory-panel-pcr', name:'Respiratory panel PCR'});
+    }
+    s.settings.v16 = true;
+  }
   if (!s.settings.abgAdded){ if (!s.labDefs.some(g => g.id === 'g-abg')) s.labDefs.unshift(clone(ABG_GROUP)); s.settings.abgAdded = true; } // added in v1.5
   if (!Array.isArray(s.seroDefs)) s.seroDefs = DEFAULT_SERO.map(n => ({id:slugId(n), name:n}));
   if (!Array.isArray(s.abxList)) s.abxList = DEFAULT_ABX.slice();
@@ -569,7 +596,7 @@ function seedDemo(){
   const tg = n => S.tags.filter(t => n.includes(t.name)).map(t => t.id);
   const mk = (no, o) => { const b = S.beds.find(x => x.no === no); S.patients.push(Object.assign({id:uid(), bedId:b.id, plans:[], icuc:[], ettHist:[], ett:null, tags:[], dengue:{on:false, onset:'', lastFever:''}, source:'Emergency', labs:{}, labStar:[], sero:[], biofire:[], cultures:[], consults:[]}, o)); };
   const L = o => Object.fromEntries(Object.entries(o).map(([k, v]) => [k, {v:String(v)}]));
-  mk('2203', {name:'Example RB', age:'62', sex:'F', dx:'Severe CAP with septic shock', status:'critical', hospDate:d(4), icuDate:d(3), ett:{date:d(3), ext:null}, tags:tg(['Sepsis','MDR']),
+  mk('2203', {name:'Example RB', under:'Prof Dr Example A', age:'62', sex:'F', dx:'Severe CAP with septic shock', status:'critical', hospDate:d(4), icuDate:d(3), ett:{date:d(3), ext:null}, tags:tg(['Sepsis','MDR']),
     plans:[{id:uid(), ts:`${d(0)}T08:30`, by:'', html:'<b>Continue NA 0.12 mcg/kg/min</b>, taper if MAP &gt; 70<div><span style="background-color:#fff176">Repeat lactate 12 noon</span></div>'}],
     consults:[{id:uid(), ts:`${d(1)}T12:00`, by:'Dr Example N', dept:'Nephrology', html:'No dialysis now. Keep urine output > 0.5 mL/kg/h.'}, {id:uid(), ts:`${d(0)}T10:00`, by:'Dr Example', dept:'ICU', html:'Change to meropenem as per culture. SBT tomorrow.'}],
     labs:{[d(2)]:L({'abg-ph':7.21, 'abg-pco2':52, 'abg-po2':64, 'abg-hco3':18, 'abg-lac':5.8}),
@@ -580,19 +607,20 @@ function seedDemo(){
       abx:[{name:'Meropenem', r:'S'}, {name:'Amikacin', r:'S'}, {name:'Colistin', r:'S'}, {name:'Ceftriaxone', r:'R'}, {name:'Piperacillin-tazobactam', r:'R'}, {name:'Ciprofloxacin', r:'R'}]},
       {id:uid(), type:'Tracheal aspirate', date:d(2), rdate:'', status:'Pending', org:'', count:'Gram-negative bacilli seen', note:'', abx:[]}],
     biofire:[{id:uid(), date:d(2), panel:'Pneumonia', detected:'Klebsiella pneumoniae (10^6)', genes:'CTX-M', note:''}]});
-  mk('2205', {name:'Example AK', age:'28', sex:'M', dx:'Dengue with plasma leakage', status:'serious', source:'Ward', hospDate:d(3), icuDate:d(1), tags:tg(['Watch closely']), dengue:{on:true, onset:d(5), lastFever:d(1)},
+  mk('2205', {name:'Example AK', under:'Dr Example B', age:'28', sex:'M', dx:'Dengue with plasma leakage', status:'serious', source:'Ward', hospDate:d(3), icuDate:d(1), tags:tg(['Watch closely']), dengue:{on:true, onset:d(5), lastFever:d(1)},
     labs:{[d(3)]:L({hct:40, plt:'95,000'}), [d(1)]:L({hct:44, plt:'38,000', alt:210, ast:340}), [d(0)]:L({hct:49, plt:'22,000', alt:260, ast:410, alb:2.8}), [d(0) + '~pm']:L({hct:46, plt:'19,000', k:3.2, na:131})}, labStar:['hct','plt'],
     plans:[{id:uid(), ts:`${d(0)}T09:15`, by:'', html:'<ul><li>Fluid as per HCT trend, CBC + HCT 6 hourly</li><li><b>Evening: Na, K and DIC profile</b></li></ul>'}],
     consults:[{id:uid(), ts:`${d(0)}T11:30`, by:'Dr Example', dept:'Medicine', html:'Agree with plan. Platelet transfusion only if active bleeding.'}],
     sero:[{id:uid(), tid:'dengue-ns1', date:d(4), result:'Positive', note:''}, {id:uid(), tid:'dengue-igm', date:d(1), result:'Pending', note:''}]});
   S.patients[1].labs[d(0)].hct.c = 'red';
-  mk('2210', {name:'Example MH', age:'45', sex:'M', dx:'Post-op laparotomy', status:'stable', source:'OT', hospDate:d(2), icuDate:d(2), tags:tg(['Post-op'])});
-  mk('2214', {name:'Example NS', age:'51', sex:'F', dx:'DKA, AKI', status:'serious', hospDate:d(0), icuDate:d(0), tags:tg(['Renal/CRRT'])});
+  mk('2210', {name:'Example MH', under:'Prof Dr Example A', age:'45', sex:'M', dx:'Post-op laparotomy', status:'stable', source:'OT', hospDate:d(2), icuDate:d(2), tags:tg(['Post-op'])});
+  mk('2214', {name:'Example NS', under:'Dr Example C', age:'51', sex:'F', dx:'DKA, AKI', status:'serious', hospDate:d(0), icuDate:d(0), tags:tg(['Renal/CRRT'])});
+  S.patients.forEach(p => { if (p.under && !S.underList.includes(p.under)) S.underList.push(p.under); });
   save();
 }
-if (IS_PREVIEW && !(() => { try { return localStorage.getItem(KEY + '.seeded5'); } catch(e){ return true; } })()){
+if (IS_PREVIEW && !(() => { try { return localStorage.getItem(KEY + '.seeded6'); } catch(e){ return true; } })()){
   const keep = S.settings; S = fresh(); S.settings = keep; seedDemo();
-  try { localStorage.setItem(KEY + '.seeded5', '1'); } catch(e) {}
+  try { localStorage.setItem(KEY + '.seeded6', '1'); } catch(e) {}
 }
 function save(){ try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e){ toast('Could not save — storage full'); } }
 
@@ -769,6 +797,7 @@ function cardHTML(b){
   return `<div class="card occ ${sz} st-${p.status}" role="button" tabindex="0" data-act="openP" data-id="${p.id}" ${style}>
     <div class="c-top"><span class="bedno">${esc(b.no)}</span><span class="st ${p.status}">${sz === 's' ? '' : STATUS[p.status]}</span></div>
     <div class="c-name">${esc(p.name || 'Unnamed')}${sz === 's' ? '' : meta}</div>
+    ${p.under ? `<div class="c-under">${ic('user')}<span>${esc(p.under)}</span></div>` : ''}
     ${sz !== 's' && p.dx ? `<div class="c-dx">${esc(p.dx)}</div>` : ''}
     ${pTags(p).length ? `<div class="c-tags">${tagChips(p, sz === 's')}</div>` : ''}
     <div class="c-ct">${ctrChips(p, sz)}</div>
@@ -881,6 +910,7 @@ function infoHTML(p, ro){
       <dt>Name</dt><dd>${esc(p.name || '—')}</dd>
       <dt>Age / Sex</dt><dd>${esc(p.age || '—')} ${esc(p.sex || '')}</dd>
       <dt>Diagnosis</dt><dd>${esc(p.dx || '—')}</dd>
+      <dt>Admitted under</dt><dd>${esc(p.under || '—')}</dd>
       <dt>Condition</dt><dd><span class="st ${p.status}">${STATUS[p.status]}</span></dd>
       <dt>Came from</dt><dd>${esc(p.source || '—')}</dd>
       <dt>Hospital admission</dt><dd>${fmtD(p.hospDate)} · <b>D${c.hosp ?? '—'}</b></dd>
@@ -1256,6 +1286,7 @@ function renderPatient(id, tab, ro){
       <div class="pt-bed">Bed ${esc(bedNoOf(p))}${ro ? ' · Archived' : ''}</div>
       <div class="pt-name">${esc(p.name || 'Unnamed')}${meta}</div>
       ${p.dx ? `<div class="pt-dx">${esc(p.dx)}</div>` : ''}
+      ${p.under ? `<div class="pt-under">${ic('user')}Under ${esc(p.under)}</div>` : ''}
       <div class="pt-st"><button class="st ${p.status}" ${ro ? '' : `data-act="status" data-id="${p.id}"`}>${STATUS[p.status]}${ro ? '' : ' ▾'}</button>${tagChips(p)}${ro ? '' : `<button class="tgadd" data-act="ptags" data-id="${p.id}">${pTags(p).length ? 'Edit tags' : '+ Tag'}</button>`}</div>
     </div>
     <button class="hbtn" data-act="${ro ? 'amenu' : 'pmenu'}" data-id="${p.id}" aria-label="Menu">${ic('more', 'fill')}</button>
@@ -1284,6 +1315,8 @@ function openPatientForm({bedId = null, p = null} = {}){
         <div class="f"><span>Sex</span>${chips('sex', [['M','Male'],['F','Female']], v.sex)}</div>
       </div>
       <label class="f"><span>Diagnosis</span><input name="dx" value="${esc(v.dx || '')}" placeholder="Short diagnosis" autocomplete="off"></label>
+      <label class="f"><span>Admitted under (consultant)</span><input name="under" list="underlist" value="${esc(v.under || '')}" placeholder="e.g. Prof Dr Rahman" autocomplete="off">
+        <datalist id="underlist">${S.underList.map(n => `<option value="${esc(n)}">`).join('')}</datalist></label>
       <div class="f"><span>Condition</span>${chips('status', [['critical','Critical'],['serious','Serious'],['stable','Stable']], v.status, true)}</div>
       <div class="f"><span>Tags</span>${tagPick(v.tags || [])}</div>
       <div class="f"><span>Came to ICU from</span>${chips('source', SOURCES.map(s => [s, s]), v.source)}</div>
@@ -1318,7 +1351,8 @@ function openPatientForm({bedId = null, p = null} = {}){
     const obj = p || {id:uid(), plans:[], icuc:[], ettHist:[], ett:null, labs:{}, labStar:[], sero:[], biofire:[], cultures:[], consults:[], createdAt:new Date().toISOString()};
     Object.assign(obj, {name:f('name').value.trim(), age:f('age').value.trim(), sex:chipVal(el, 'sex'), dx:f('dx').value.trim(),
       status:chipVal(el, 'status') || 'serious', source:chipVal(el, 'source'), hospDate:hosp, icuDate:icu,
-      tags:chipVal(el, 'tags').split(',').filter(Boolean)});
+      tags:chipVal(el, 'tags').split(',').filter(Boolean), under:f('under').value.trim()});
+    if (obj.under && !S.underList.includes(obj.under)) S.underList.push(obj.under);
     if (isNew) obj.bedId = f('bed').value;
     if (eOn){
       if (obj.ett && !obj.ett.ext) obj.ett.date = eDate;
@@ -1513,6 +1547,43 @@ function openDateAsk(title, min, onOk){
   };
 }
 
+/* ================= admitting consultants ================= */
+function openUnderList(){
+  const el = sheet(`<div class="sh-head"><h2>Admitting consultants</h2><button class="x" data-close>✕</button></div>
+    <div class="sh-sub">These names are suggested when you admit a patient. Renaming here changes the name on every patient who has it.</div>
+    <div class="sh-body"><div id="ulist"></div>
+      <div class="bedrow" style="margin-top:14px"><input id="newunder" placeholder="New consultant name" autocomplete="off" style="flex:1;width:auto"><button class="btn primary" id="addunder">${ic('plus')} Add</button></div></div>`, {onClose:() => route()});
+  const count = n => S.patients.filter(p => p.under === n && !p.discharge).length;
+  const draw = () => {
+    el.querySelector('#ulist').innerHTML = S.underList.map((n, i) => `<div class="bedrow"><input value="${esc(n)}" data-un="${i}" autocomplete="off" style="flex:1;width:auto">
+      <span class="occ" style="flex:none">${count(n)} pt</span><button class="ibtn del" data-ud="${i}" aria-label="Delete name">${ic('trash')}</button></div>`).join('') || '<div class="emptystate">No names yet. Add one below, or type a name when admitting.</div>';
+  };
+  draw();
+  el.addEventListener('change', e => {
+    const i = e.target.dataset.un; if (i == null) return;
+    const old = S.underList[i], v = e.target.value.trim();
+    if (!v){ e.target.value = old; return toast('Name cannot be empty'); }
+    if (S.underList.some((x, k) => k != i && x.toLowerCase() === v.toLowerCase())){ e.target.value = old; return toast('That name already exists'); }
+    S.underList[i] = v; let n = 0;
+    S.patients.forEach(p => { if (p.under === old){ p.under = v; n++; } });
+    save(); draw(); toast(n ? `Renamed on ${n} patient${n > 1 ? 's' : ''}` : 'Renamed');
+  });
+  el.addEventListener('click', async e => {
+    const d = e.target.closest('[data-ud]');
+    if (d){
+      const n = S.underList[d.dataset.ud], c = count(n);
+      if (!(await confirmBox(`Remove “${n}” from the list?`, 'Remove', true, c ? `${c} current patient${c > 1 ? 's keep' : ' keeps'} this name until you edit them.` : ''))) return;
+      S.underList.splice(Number(d.dataset.ud), 1); save(); draw();
+    }
+    if (e.target.closest('#addunder')){
+      const inp = el.querySelector('#newunder'), v = inp.value.trim();
+      if (!v) return toast('Type a name');
+      if (S.underList.some(x => x.toLowerCase() === v.toLowerCase())) return toast('That name already exists');
+      S.underList.push(v); inp.value = ''; save(); draw();
+    }
+  });
+}
+
 /* ================= tags ================= */
 function openPTags(p){
   const el = sheet(`<div class="sh-head"><h2>Tags · Bed ${esc(bedNoOf(p))}</h2><button class="x" data-close>✕</button></div>
@@ -1607,7 +1678,7 @@ function bedHeader(p, date){
   if (c.icu) bits.push('ICU D' + c.icu); if (c.ett) bits.push('ETT D' + c.ett);
   if (c.dengue) bits.push('Dengue D' + c.dengue); if (c.afeb != null) bits.push('Afebrile D' + c.afeb);
   const who = `${p.name || 'Unnamed'}${p.age || p.sex ? ' ' + (p.age || '') + (p.sex || '') : ''}`;
-  return `*Bed ${bedNoOf(p)} · ${who}*` + (p.dx ? `\n${p.dx}` : '') + (bits.length ? ` (${bits.join(', ')})` : '');
+  return `*Bed ${bedNoOf(p)} · ${who}*` + (p.dx ? `\n${p.dx}` : '') + (bits.length ? ` (${bits.join(', ')})` : '') + (p.under ? `\nUnder: ${p.under}` : '');
 }
 function roundText(pts, opt, date){
   const blocks = [], none = [];
@@ -1728,6 +1799,7 @@ function casePages(doc, p, date, first){
   // details
   const c = ctrs(p, date), rows = [];
   rows.push(['Diagnosis', p.dx || '-']);
+  if (p.under) rows.push(['Admitted under', p.under]);
   rows.push(['Hospital admission', `${fmtD(p.hospDate)}  (Day ${c.hosp ?? '-'})`]);
   rows.push(['ICU admission', `${fmtD(p.icuDate)}  (ICU day ${c.icu ?? '-'})${p.source ? '  ·  from ' + p.source : ''}`]);
   const past = [...(p.ettHist || []), ...(p.ett && p.ett.ext ? [p.ett] : [])];
@@ -1901,7 +1973,7 @@ function reportBed(p, date){
     + p.biofire.filter(x => x.date === date).map(x => `<span class="rp-sero">BioFire ${esc(x.panel)}: <b>${esc(x.detected || 'Not detected')}</b>${x.genes ? ' · ' + esc(x.genes) : ''}</span>`).join('');
   return `<section class="rp-bed">
     <div class="rp-h"><span class="rp-no">${esc(bedNoOf(p))}</span><div><b>${esc(p.name || 'Unnamed')}</b> <small>${esc(p.age || '')}${esc(p.sex || '')} · ${STATUS[p.status]}</small><div class="rp-dx">${esc(p.dx || '')}</div></div></div>
-    <div class="rp-meta">${bits.join(' · ')}${pTags(p).length ? ' · ' + pTags(p).map(t => esc(t.name)).join(', ') : ''}</div>
+    <div class="rp-meta">${p.under ? 'Under ' + esc(p.under) + ' · ' : ''}${bits.join(' · ')}${pTags(p).length ? ' · ' + pTags(p).map(t => esc(t.name)).join(', ') : ''}</div>
     ${sec('Plan', notes(p.plans, () => ''))}
     ${sec('Consultants', notes(p.consults, e => (e.dept || 'Consultant') + (e.by ? ' — ' + e.by : '')))}
     ${sec('Investigation', labs)}
@@ -1960,14 +2032,14 @@ function renderArchive(){
   <div id="alist"></div>`;
   const draw = () => {
     const q = $('#aq').value.trim().toLowerCase();
-    const rows = list.filter(p => !q || [p.discharge.bedNo, p.name, p.dx, p.discharge.outcome, ...pTags(p).map(t => t.name)].join(' ').toLowerCase().includes(q));
+    const rows = list.filter(p => !q || [p.discharge.bedNo, p.name, p.dx, p.under, p.discharge.outcome, ...pTags(p).map(t => t.name)].join(' ').toLowerCase().includes(q));
     $('#alist').innerHTML = rows.length ? rows.map(p => {
       const [g1, g2] = colorFor(p), d = p.discharge;
       const stay = p.icuDate ? diff(p.icuDate, d.date) + 1 : '—';
       return `<div class="arow" data-act="openA" data-id="${p.id}" style="--g1:${g1};--g2:${g2}">
         <div class="a-bed">${esc(d.bedNo)}</div>
         <div class="a-main"><b>${esc(p.name || 'Unnamed')}</b> <small>${esc(p.age || '')}${esc(p.sex || '')}</small>
-          ${p.dx ? `<div class="a-dx">${esc(p.dx)}</div>` : ''}
+          ${p.dx ? `<div class="a-dx">${esc(p.dx)}</div>` : ''}${p.under ? `<div class="a-dx">Under ${esc(p.under)}</div>` : ''}
           <div class="a-meta">ICU ${fmtD(p.icuDate, false)} → ${fmtD(d.date, false)} · ${stay} day${stay === 1 ? '' : 's'}</div></div>
         <span class="oc oc-${d.outcome.toLowerCase().replace(/\s+/g, '-')}">${esc(d.outcome)}</span></div>`;
     }).join('') : `<div class="emptystate">${list.length ? 'Nothing matches.' : 'No past patients yet. When a patient leaves the ICU, the record comes here.'}</div>`;
@@ -2025,6 +2097,7 @@ function openSettings(){
       <div class="sec"><h3>Text size</h3><div class="stepper"><button class="btn ghost" data-scale="-5">A−</button><b>${st.scale}%</b><button class="btn ghost" data-scale="5">A+</button></div></div>
       <div class="sec"><h3>Case summary</h3><button class="btn ghost" data-casepdf>${ic('report')} Make a case summary PDF</button></div>
       <div class="sec"><h3>Investigation tests</h3><button class="btn ghost" data-labmgr>${ic('edit')} Tests, units & normal ranges</button></div>
+      <div class="sec"><h3>Admitting consultants</h3><button class="btn ghost" data-undermgr>${ic('user')} Add, rename or delete names</button></div>
       <div class="sec"><h3>Tags</h3><button class="btn ghost" data-tagmgr>${ic('edit')} Add, rename or delete tags</button></div>
       <div class="sec"><h3>Backup</h3>
         <div class="hint" style="margin-bottom:10px">All data stays only on this phone. Save a backup file regularly (Files / Google Drive). Last backup: <b>${st.lastBackup ? fmtD(st.lastBackup) : 'never'}</b></div>
@@ -2040,6 +2113,7 @@ function openSettings(){
     if (th){ S.settings.theme = th.dataset.th; save(); applySettings(); draw(); route(); }
     const sc = e.target.closest('[data-scale]');
     if (sc){ S.settings.scale = Math.min(130, Math.max(85, S.settings.scale + Number(sc.dataset.scale))); save(); applySettings(); draw(); }
+    if (e.target.closest('[data-undermgr]')){ closeSheet(el); setTimeout(() => openUnderList(), 230); }
     if (e.target.closest('[data-tagmgr]')){ closeSheet(el); setTimeout(() => openTags(), 230); }
     if (e.target.closest('[data-casepdf]')){ closeSheet(el); setTimeout(() => openCaseSheet(), 230); }
     if (e.target.closest('[data-labmgr]')){ closeSheet(el); setTimeout(() => openLabDefs(), 230); }
